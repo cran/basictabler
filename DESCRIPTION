@@ -1,7 +1,7 @@
 Package: basictabler
 Type: Package
 Title: Construct Rich Tables for Output to 'HTML'/'Excel'
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: person("Christopher", "Bailiss", email = "cbailiss@gmail.com",
   role = c("aut", "cre"))
 Description: Easily create tables from data 
@@ -21,10 +21,10 @@ LazyData: true
 URL: https://github.com/cbailiss/basictabler
 BugReports: https://github.com/cbailiss/basictabler/issues
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 NeedsCompilation: no
-Packaged: 2017-09-29 18:21:06 UTC; bailis01
+Packaged: 2019-01-05 13:05:46 UTC; Chris
 Author: Christopher Bailiss [aut, cre]
 Maintainer: Christopher Bailiss <cbailiss@gmail.com>
 Repository: CRAN
-Date/Publication: 2017-09-30 16:28:59 UTC
+Date/Publication: 2019-01-07 19:50:07 UTC
