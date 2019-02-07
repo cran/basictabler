@@ -87,18 +87,11 @@
 #                                      "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
 #              columnFormats=columnFormats)
 #  
-#  # style setting function
-#  setStyle <- function(cell, baseStyleName, declarations) {
-#    if(is.null(cell$style))
-#      cell$style <- tbl$createInlineStyle(baseStyleName=baseStyleName, declarations=declarations)
-#    else cell$style$setPropertyValues(declarations=declarations)
-#  }
 #  # set the styling on the count cells
-#  cells <- tbl$findCells(rowNumbers=2:5, columnNumbers=2:4)
-#  invisible(lapply(cells, setStyle, baseStyleName="Cell", declarations=list("xl-value-format"="#,##0")))
+#  # the arguments are (rFrom, cFrom, rTo, cTo, declarations)
+#  tbl$setStyling(2, 2, 5, 4, declarations=list("xl-value-format"="#,##0"))
 #  # set the styling on the average delay cells
-#  cells <- tbl$findCells(rowNumbers=2:5, columnNumbers=5:6)
-#  invisible(lapply(cells, setStyle, baseStyleName="Cell", declarations=list("xl-value-format"="##0.0")))
+#  tbl$setStyling(2, 5, 5, 6, declarations=list("xl-value-format"="##0.0"))
 #  
 #  # export to Excel
 #  library(openxlsx)

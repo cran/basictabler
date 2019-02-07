@@ -130,6 +130,29 @@ items <- c("Apple", "Orange", "Banana")
 quantities <- c(5, 8, 6)
 prices <- c(0.34452354, 0.4732543, 1.3443243)
 
+# construct the table
+library(basictabler)
+tbl <- BasicTable$new()
+tbl$addData(data.frame(saleIds, items, quantities, prices), 
+            firstColumnAsRowHeaders=TRUE,
+            explicitColumnHeaders=c("Sale ID", "Item", "Quantity", "Price"),
+            columnFormats=list(NULL, NULL, NULL, "%.2f"))
+
+# merge the cells and specify new heading
+tbl$mergeCells(rFrom=1, cFrom=2, rSpan=1, cSpan=2)
+cell <- tbl$cells$getCell(1, 2)
+cell$rawValue <- "Item & Qty"
+cell$formattedValue <- "Item & Qty"
+
+tbl$renderTable()
+
+## ---- message=FALSE, eval=TRUE, warning=FALSE, comment=""----------------
+# data for the table
+saleIds <- c(5334, 5336, 5338)
+items <- c("Apple", "Orange", "Banana")
+quantities <- c(5, 8, 6)
+prices <- c(0.34452354, 0.4732543, 1.3443243)
+
 # row formats
 formats <- list(NULL, NULL, NULL, NULL, "%.2f")
 

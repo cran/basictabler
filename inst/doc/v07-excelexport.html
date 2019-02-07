@@ -12,7 +12,7 @@
 
 <meta name="author" content="Chris Bailiss" />
 
-<meta name="date" content="2019-01-05" />
+<meta name="date" content="2019-02-07" />
 
 <title></title>
 
@@ -94,7 +94,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Excel Export</li>
 </ol></h1>
 <h4 class="author"><em>Chris Bailiss</em></h4>
-<h4 class="date"><em>2019-01-05</em></h4>
+<h4 class="date"><em>2019-02-07</em></h4>
 
 
 
@@ -229,7 +229,7 @@ tbl<span class="op">$</span><span class="kw">writeToExcelWorksheet</span>(<span 
 <div id="using-excel-to-format-the-values" class="section level3">
 <h3>Using Excel to format the values</h3>
 <p>The <code>outputValuesAs</code> parameter provides a simple way to control value formatting. However, this applies to every cell in the table, so is not a very fine grained control.</p>
-<p>Another option is to output the raw unformatted values to Excel and then specify an Excel format string to allow Excel to format the values. The Excel format string is specified in the styling of cells, either as part of the theme (but this leaves little flexibility for different calculations) or more flexibly, by adding format codes to individual cells / groups of cells after the table has been populated. To do this, a new style is applied to each cell, based on an existing style in the theme. In the example below, the new style is based on the existing “Cell” style, but with a value format string applied.</p>
+<p>Another option is to output the raw unformatted values to Excel and then specify an Excel format string to allow Excel to format the values. The Excel format string is specified in the styling of cells, either as part of the theme (but this leaves little flexibility for different calculations) or more flexibly, by adding format codes to individual cells / groups of cells after the table has been populated as illustrated below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># aggregate the sample data to make a small data frame</span>
 <span class="kw">library</span>(basictabler)
 <span class="kw">library</span>(dplyr)
@@ -253,18 +253,11 @@ tbl<span class="op">$</span><span class="kw">addData</span>(tocsummary, <span cl
                                     <span class="st">&quot;Total Trains&quot;</span>, <span class="st">&quot;On-Time Arrival %&quot;</span>, <span class="st">&quot;On-Time Departure %&quot;</span>),
             <span class="dt">columnFormats=</span>columnFormats)
 
-<span class="co"># style setting function</span>
-setStyle &lt;-<span class="st"> </span><span class="cf">function</span>(cell, baseStyleName, declarations) {
-  <span class="cf">if</span>(<span class="kw">is.null</span>(cell<span class="op">$</span>style)) 
-    cell<span class="op">$</span>style &lt;-<span class="st"> </span>tbl<span class="op">$</span><span class="kw">createInlineStyle</span>(<span class="dt">baseStyleName=</span>baseStyleName, <span class="dt">declarations=</span>declarations)
-  <span class="cf">else</span> cell<span class="op">$</span>style<span class="op">$</span><span class="kw">setPropertyValues</span>(<span class="dt">declarations=</span>declarations)
-}
 <span class="co"># set the styling on the count cells</span>
-cells &lt;-<span class="st"> </span>tbl<span class="op">$</span><span class="kw">findCells</span>(<span class="dt">rowNumbers=</span><span class="dv">2</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">columnNumbers=</span><span class="dv">2</span><span class="op">:</span><span class="dv">4</span>)
-<span class="kw">invisible</span>(<span class="kw">lapply</span>(cells, setStyle, <span class="dt">baseStyleName=</span><span class="st">&quot;Cell&quot;</span>, <span class="dt">declarations=</span><span class="kw">list</span>(<span class="st">&quot;xl-value-format&quot;</span>=<span class="st">&quot;#,##0&quot;</span>)))
+<span class="co"># the arguments are (rFrom, cFrom, rTo, cTo, declarations)</span>
+tbl<span class="op">$</span><span class="kw">setStyling</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dt">declarations=</span><span class="kw">list</span>(<span class="st">&quot;xl-value-format&quot;</span>=<span class="st">&quot;#,##0&quot;</span>))
 <span class="co"># set the styling on the average delay cells</span>
-cells &lt;-<span class="st"> </span>tbl<span class="op">$</span><span class="kw">findCells</span>(<span class="dt">rowNumbers=</span><span class="dv">2</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">columnNumbers=</span><span class="dv">5</span><span class="op">:</span><span class="dv">6</span>)
-<span class="kw">invisible</span>(<span class="kw">lapply</span>(cells, setStyle, <span class="dt">baseStyleName=</span><span class="st">&quot;Cell&quot;</span>, <span class="dt">declarations=</span><span class="kw">list</span>(<span class="st">&quot;xl-value-format&quot;</span>=<span class="st">&quot;##0.0&quot;</span>)))
+tbl<span class="op">$</span><span class="kw">setStyling</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dt">declarations=</span><span class="kw">list</span>(<span class="st">&quot;xl-value-format&quot;</span>=<span class="st">&quot;##0.0&quot;</span>))
 
 <span class="co"># export to Excel</span>
 <span class="kw">library</span>(openxlsx)

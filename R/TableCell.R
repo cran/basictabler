@@ -22,6 +22,10 @@
 #'   row.
 #' @field columnNumber The column number of the cell.  1 = the first (i.e.
 #'   leftmost) data column.
+#' @field cellType One of the following values that specifies the type of cell:
+#' root, rowHeader, columnHeader, cell, total.  The cellType controls the
+#' default styling that is applied to the cell.
+#' @field visible TRUE or FALSE to specify whether the cell is rendered.
 #' @field rawValue The original unformatted value.
 #' @field formattedValue The formatted value (i.e. normally of character data
 #'   type).
@@ -45,7 +49,7 @@
 
 TableCell <- R6::R6Class("TableCell",
   public = list(
-   initialize = function(parentTable, rowNumber=NULL, columnNumber=NULL, cellType="cell", visible=TRUE, rawValue=NULL, formattedValue=NULL) {
+   initialize = function(parentTable, rowNumber=NULL, columnNumber=NULL, cellType="cell", visible=TRUE, rawValue=NULL, formattedValue=NULL, baseStyleName=NULL, styleDeclarations=NULL) {
      if(parentTable$argumentCheckMode > 0) {
        checkArgument(parentTable$argumentCheckMode, FALSE, "TableCell", "initialize", parentTable, missing(parentTable), allowMissing=FALSE, allowNull=FALSE, allowedClasses="BasicTable")
        checkArgument(parentTable$argumentCheckMode, FALSE, "TableCell", "initialize", rowNumber, missing(rowNumber), allowMissing=FALSE, allowNull=FALSE, allowedClasses=c("integer", "numeric"))
@@ -54,6 +58,8 @@ TableCell <- R6::R6Class("TableCell",
        checkArgument(parentTable$argumentCheckMode, FALSE, "TableCell", "initialize", visible, missing(visible), allowMissing=TRUE, allowNull=FALSE, allowedClasses="logical")
        checkArgument(parentTable$argumentCheckMode, FALSE, "TableCell", "initialize", rawValue, missing(rawValue), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("logical", "integer", "numeric", "complex", "character", "factor", "Date", "POSIXct", "POSIXlt"))
        checkArgument(parentTable$argumentCheckMode, FALSE, "TableCell", "initialize", formattedValue, missing(formattedValue), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("logical", "integer", "numeric", "complex", "character", "factor", "Date", "POSIXct", "POSIXlt"))
+       checkArgument(parentTable$argumentCheckMode, FALSE, "TableCell", "initialize", baseStyleName, missing(baseStyleName), allowMissing=TRUE, allowNull=TRUE, allowedClasses="character")
+       checkArgument(parentTable$argumentCheckMode, FALSE, "TableCell", "initialize", styleDeclarations, missing(styleDeclarations), allowMissing=TRUE, allowNull=TRUE, allowedClasses="list", allowedListElementClasses=c("character", "integer", "numeric"))
      }
      private$p_parentTable <- parentTable
      if(private$p_parentTable$traceEnabled==TRUE) private$p_parentTable$trace("TableCell$new", "Creating new TableCell",
@@ -64,6 +70,8 @@ TableCell <- R6::R6Class("TableCell",
      private$p_visible <- visible
      private$p_rawValue <- rawValue
      private$p_formattedValue <- as.character(formattedValue)
+     private$p_baseStyleName <- baseStyleName
+     if (!is.null(styleDeclarations)) private$p_style = private$p_parentTable$createInlineStyle(baseStyleName=baseStyleName, declarations=styleDeclarations)
      if(private$p_parentTable$traceEnabled==TRUE) private$p_parentTable$trace("TableCell$new", "Created new TableCell")
    },
    updatePosition = function(rowNumber=NULL, columnNumber=NULL) {
@@ -92,7 +100,16 @@ TableCell <- R6::R6Class("TableCell",
    asJSON = function() { return(jsonlite::toJSON(asList())) }
   ),
   active = list(
-   cellType = function(value) { return(invisible(private$p_cellType)) },
+   cellType = function(value) {
+     if(missing(value)) return(invisible(private$p_cellType))
+     else {
+       if(private$p_parentTable$argumentCheckMode > 0) {
+         checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCell", "cellType", value, missing(value), allowMissing=TRUE, allowNull=TRUE, allowedClasses="character", allowedValues=c("root", "rowHeader", "columnHeader", "cell", "total"))
+       }
+       private$p_cellType <- value
+       return(invisible())
+     }
+   },
    rowNumber = function(value) { return(invisible(private$p_rowNumber)) },
    columnNumber = function(value) { return(invisible(private$p_columnNumber)) },
    visible = function(value) {
@@ -125,6 +142,27 @@ TableCell <- R6::R6Class("TableCell",
        return(invisible())
      }
    },
+   isMerged = function(value) { # for internal use by the renderers only
+     if(missing(value)) { return(invisible(private$p_isMerged)) }
+     else {
+       private$p_isMerged <- value
+       return(invisible())
+     }
+   },
+   isMergeRoot = function(value) { # for internal use by the renderers only
+     if(missing(value)) { return(invisible(private$p_isMergeRoot)) }
+     else {
+       private$p_isMergeRoot <- value
+       return(invisible())
+     }
+   },
+   mergeIndex = function(value) { # for internal use by the renderers only
+     if(missing(value)) { return(invisible(private$p_mergeIndex)) }
+     else {
+       private$p_mergeIndex <- value
+       return(invisible())
+     }
+   },
    baseStyleName = function(value) {
      if(missing(value)) { return(invisible(private$p_baseStyleName)) }
      else {
@@ -151,6 +189,9 @@ TableCell <- R6::R6Class("TableCell",
     p_rowNumber = NULL,               # an integer
     p_columnNumber = NULL,            # an integer
     p_cellType = NULL,                # root, rowHeader, columnHeader, cell, total
+    p_isMerged = NULL,                # TRUE if the cell is part of a merged cell (but only set by BasicTable$applyCellMerges())
+    p_isMergeRoot = NULL,             # TRUE if the cell is the top-most, left-most cell in the merged cell (also only set by...)
+    p_mergeIndex = NULL,              # the index of the merged cell (also only set by...)
     p_visible = NULL,
     p_rawValue = NULL ,               # a value (unique to this cell)
     p_formattedValue = NULL,          # a value (unique to this cell)

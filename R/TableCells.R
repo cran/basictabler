@@ -27,7 +27,6 @@
 #'   the extensive vignettes supplied with this package.}
 #'   \item{\code{new(...)}}{Create a new set of table cells, specifying
 #'   the field values documented above.}
-#'
 #'   \item{\code{reset())}}{Clears and removes all of the cells.}
 #'   \item{\code{getCell(r, c))}}{Get the TableCell at the specified row and
 #'   column coordinates in the table.}
@@ -40,29 +39,34 @@
 #'   formattedValue=FALSE, asList=FALSE, rebase=TRUE)}}{Get a vector or list of
 #'   the values in a column.}
 #'   \item{\code{setCell(r, c, cellType="cell", rawValue=NULL,
-#'   formattedValue=NULL, visible=TRUE)}}{Set the details of a cell in the
-#'   table.}
-#'   \item{\code{setBlankCell(r, c, cellType="cell", visible=TRUE)}}{Set a
-#'   cell to be empty in the table.}
+#'   formattedValue=NULL, visible=TRUE, baseStyleName=NULL,
+#'   styleDeclarations=NULL, rowSpan=NULL, colSpan=NULL)}}{Set the details of a
+#'   cell in the table.}
+#'   \item{\code{setBlankCell(r, c, cellType="cell", visible=TRUE,
+#'   baseStyleName=NULL, styleDeclarations=NULL, rowSpan=NULL,
+#'   colSpan=NULL)}}{Set a cell to be empty in the table.}
 #'   \item{\code{deleteCell(r, c)}}{Remove a cell from the table (replacing it
 #'   with a blank one).}
 #'   \item{\code{setValue(r, c, rawValue=NULL, formattedValue=NULL)}}{Set the
 #'   value of a cell.}
+#'   \item{\code{setRow(rowNumber=NULL, startAtColumnNumber=1, cellTypes=NULL,
+#'   rawValues=NULL, formattedValues=NULL, formats=NULL, visiblity=TRUE,
+#'   baseStyleNames=NULL)}}{Set multiple cells across a row at once.}
+#'   \item{\code{setColumn(columnNumber=NULL, startAtRowNumber=1,
+#'   cellTypes=NULL, rawValues=NULL, formattedValues=NULL, formats=NULL,
+#'   visiblity=TRUE, baseStyleNames=NULL)}}{Set multiple cells down a column at
+#'   once.}
 #'   \item{\code{extendCells(rowCount=NULL, columnCount=NULL)}}{.}
 #'   \item{\code{moveCell(r, c, cell))}}{Move the cell to the specified row
 #'   and column coordinates in the table.}
-#'   \item{\code{insertRow(rowNumber=NULL)}}{Insert a new row (moving the rows
-#'   underneath down).}
-#'   \item{\code{setRow(rowNumber=NULL, startAtColumnNumber=1, cellTypes=NULL,
-#'   rawValues=NULL, formattedValues=NULL, formats=NULL, visiblity=TRUE)}}{Set
-#'   multiple cells across a row at once.}
-#'   \item{\code{setColumn(columnNumber=NULL, startAtRowNumber=1,
-#'   cellTypes=NULL, rawValues=NULL, formattedValues=NULL, formats=NULL,
-#'   visiblity=TRUE)}}{Set multiple cells down a column at once.}
+#'   \item{\code{insertRow(rowNumber, insertBlankCells=TRUE, headerCells=1,
+#'   totalCells=0)}}{Insert a new row (moving the rows underneath down), where
+#'   headerCells and totalCells control default styling.}
 #'   \item{\code{deleteRow(rowNumber=NULL)}}{Delete a row (moving the rows
 #'   underneath up.}
-#'   \item{\code{insertColumn(columnNumber=NULL)}}{Insert a new column (moving
-#'   other columns rightwards.}
+#'   \item{\code{insertColumn(columnNumber, insertBlankCells=TRUE,
+#'   headerCells=1, totalCells=0)}}{Insert a new column (moving other columns
+#'   rightwards, where headerCells and totalCells control default styling.}
 #'   \item{\code{deleteColumn(columnNumber=NULL)}}{Delete a column (moving other
 #'   columns leftwards.}
 #'   \item{\code{getCells(specifyCellsAsList=FALSE, rowNumbers=NULL,
@@ -94,6 +98,7 @@ TableCells <- R6::R6Class("TableCells",
      if(private$p_parentTable$traceEnabled==TRUE) private$p_parentTable$trace("TableCells$resetCells", "Resetting cells...")
      private$p_rows <- NULL
      private$p_columnCount <- 0
+     private$p_parentTable$mergedCells$clear()
      if(private$p_parentTable$traceEnabled==TRUE) private$p_parentTable$trace("TableCells$resetCells", "Reset cells.")
    },
    getCell = function(r=NULL, c=NULL) {
@@ -187,7 +192,7 @@ TableCells <- R6::R6Class("TableCells",
      }
      return(invisible(cv))
    },
-   setCell = function(r=NULL, c=NULL, cellType="cell", rawValue=NULL, formattedValue=NULL, visible=TRUE) {
+   setCell = function(r=NULL, c=NULL, cellType="cell", rawValue=NULL, formattedValue=NULL, visible=TRUE, baseStyleName=NULL, styleDeclarations=NULL, rowSpan=NULL, colSpan=NULL) {
      if(private$p_parentTable$argumentCheckMode > 0) {
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setCell", r, missing(r), allowMissing=FALSE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=1)
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setCell", c, missing(c), allowMissing=FALSE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=1)
@@ -195,15 +200,41 @@ TableCells <- R6::R6Class("TableCells",
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setCell", rawValue, missing(rawValue), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("logical", "integer", "numeric", "complex", "character", "factor", "Date", "POSIXct", "POSIXlt"))
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setCell", formattedValue, missing(formattedValue), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("logical", "integer", "numeric", "complex", "character", "factor", "Date", "POSIXct", "POSIXlt"))
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setCell", visible, missing(visible), allowMissing=TRUE, allowNull=FALSE, allowedClasses="logical")
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setCell", baseStyleName, missing(baseStyleName), allowMissing=TRUE, allowNull=TRUE, allowedClasses="character")
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setCell", styleDeclarations, missing(styleDeclarations), allowMissing=TRUE, allowNull=TRUE, allowedClasses="list", allowedListElementClasses=c("character", "integer", "numeric"))
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setCell", rowSpan, missing(rowSpan), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("integer", "numeric"), minValue=1)
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setCell", colSpan, missing(colSpan), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("integer", "numeric"), minValue=1)
      }
      if(missing(formattedValue)) formattedValue <- rawValue
-     cell <- TableCell$new(parentTable=private$p_parentTable, rowNumber=r, columnNumber=c, cellType=cellType, rawValue=rawValue, formattedValue=formattedValue)
+     cell <- TableCell$new(parentTable=private$p_parentTable, rowNumber=r, columnNumber=c, cellType=cellType, rawValue=rawValue, formattedValue=formattedValue, baseStyleName=baseStyleName, styleDeclarations=styleDeclarations)
      self$moveCell(r, c, cell)
+     if((!is.null(rowSpan))||(!is.null(colSpan))) {
+       if(is.null(rowSpan)) { rowSpan <- 1 }
+       if(is.null(colSpan)) { colSpan <- 1 }
+       if((rowSpan>1)||(colSpan>1)) { private$p_parentTable$mergeCells(rFrom=r, cFrom=c, rSpan=rowSpan, cSpan=colSpan) }
+     }
      return(invisible(cell))
    },
-   setBlankCell = function(r=NULL, c=NULL, cellType="cell", visible=TRUE) {
-     cell <- TableCell$new(parentTable=private$p_parentTable, rowNumber=r, columnNumber=c, cellType=cellType, visible=visible, rawValue=NULL, formattedValue=NULL)
+   setBlankCell = function(r=NULL, c=NULL, cellType="cell", visible=TRUE, baseStyleName=NULL, styleDeclarations=NULL, rowSpan=NULL, colSpan=NULL) {
+     if(private$p_parentTable$argumentCheckMode > 0) {
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setBlankCell", r, missing(r), allowMissing=FALSE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=1)
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setBlankCell", c, missing(c), allowMissing=FALSE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=1)
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setBlankCell", cellType, missing(cellType), allowMissing=TRUE, allowNull=FALSE, allowedClasses="character", allowedValues=c("root", "rowHeader", "columnHeader", "cell", "total"))
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setBlankCell", visible, missing(visible), allowMissing=TRUE, allowNull=FALSE, allowedClasses="logical")
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setBlankCell", baseStyleName, missing(baseStyleName), allowMissing=TRUE, allowNull=TRUE, allowedClasses="character")
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setBlankCell", styleDeclarations, missing(styleDeclarations), allowMissing=TRUE, allowNull=TRUE, allowedClasses="list", allowedListElementClasses=c("character", "integer", "numeric"))
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setBlankCell", rowSpan, missing(rowSpan), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("integer", "numeric"), minValue=1)
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setBlankCell", colSpan, missing(colSpan), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("integer", "numeric"), minValue=1)
+     }
+     cell <- TableCell$new(parentTable=private$p_parentTable, rowNumber=r, columnNumber=c, cellType=cellType, visible=visible, rawValue=NULL, formattedValue=NULL, baseStyleName=baseStyleName, styleDeclarations=styleDeclarations)
      self$moveCell(r, c, cell)
+     if((!is.null(rowSpan))||(!is.null(colSpan))) {
+       rs <- rowSpan
+       cs <- colSpan
+       if(is.null(rowSpan)) { rowSpan <- 1 }
+       if(is.null(colSpan)) { colSpan <- 1 }
+       if((rowSpan>1)||(colSpan>1)) { private$p_parentTable$mergeCells(rFrom=r, cFrom=c, rSpan=rowSpan, cSpan=colSpan) }
+     }
      return(invisible(cell))
    },
    deleteCell = function(r=NULL, c=NULL) {
@@ -222,7 +253,7 @@ TableCells <- R6::R6Class("TableCells",
      if(missing(formattedValue)) cell$formattedValue <- rawValue
      else cell$formattedValue <- formattedValue
    },
-   setRow = function(rowNumber=NULL, startAtColumnNumber=1, cellTypes="cell", rawValues=NULL, formattedValues=NULL, formats=NULL, visiblity=TRUE) {
+   setRow = function(rowNumber=NULL, startAtColumnNumber=1, cellTypes="cell", rawValues=NULL, formattedValues=NULL, formats=NULL, visiblity=TRUE, baseStyleNames=NULL) {
      if(private$p_parentTable$argumentCheckMode > 0) {
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setRow", rowNumber, missing(rowNumber), allowMissing=FALSE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=1)
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setRow", startAtColumnNumber, missing(startAtColumnNumber), allowMissing=TRUE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=1, maxValue=self$columnCount)
@@ -231,6 +262,7 @@ TableCells <- R6::R6Class("TableCells",
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setRow", formattedValues, missing(formattedValues), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("list", "logical", "integer", "numeric", "complex", "character", "factor", "Date", "POSIXct", "POSIXlt"), allowedListElementClasses=c("logical", "integer", "numeric", "complex", "character", "factor", "Date", "POSIXct", "POSIXlt"))
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setRow", formats, missing(formats), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("character", "list", "function"))
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setRow", visiblity, missing(visiblity), allowMissing=TRUE, allowNull=FALSE, allowedClasses="logical")
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setRow", baseStyleNames, missing(baseStyleNames), allowMissing=TRUE, allowNull=TRUE, allowedClasses="character")
      }
      if(length(rowNumber)!=1) stop(paste0("TableCells$setRow(): rowNumber (length ", length(rowNumber), ") must be one value."), call. = FALSE)
      if(length(startAtColumnNumber)!=1) stop(paste0("TableCells$setRow(): startAtColumnNumber (length ", length(startAtColumnNumber), ") must be one value."), call. = FALSE)
@@ -240,6 +272,7 @@ TableCells <- R6::R6Class("TableCells",
      if((length(formattedValues)>1)&&(length(formattedValues)!=cellCount)) stop("TableCells$setRow(): formattedValues must be either NULL, one value or the same length as rawValues.")
      if((length(formats)>1)&&(length(formats)!=cellCount)) stop("TableCells$setRow(): formats must be either NULL, one value or the same length as rawValues.")
      if((length(visiblity)>1)&&(length(visiblity)!=cellCount)) stop("TableCells$setRow(): visiblity must be either one value or the same length as rawValues.")
+     if((length(baseStyleNames)>1)&&(length(baseStyleNames)!=cellCount)) stop("TableCells$setRow(): baseStyleNames must be either one value or the same length as rawValues.")
      c <- startAtColumnNumber - 1
      for(x in 1:length(rawValues)) {
        c <- c + 1
@@ -263,10 +296,12 @@ TableCells <- R6::R6Class("TableCells",
        }
        if(length(visiblity)==1) visible <- visiblity[1]
        else visible <- visiblity[x]
-       self$setCell(r=rowNumber, c=c, cellType=cellType, rawValue=v, formattedValue=formattedValue, visible=visible)
+       if(length(baseStyleNames)==1) baseStyleName <- baseStyleNames[1]
+       else baseStyleName <- baseStyleNames[x]
+       self$setCell(r=rowNumber, c=c, cellType=cellType, rawValue=v, formattedValue=formattedValue, visible=visible, baseStyleName=baseStyleName)
      }
    },
-   setColumn = function(columnNumber=NULL, startAtRowNumber=2, cellTypes="cell", rawValues=NULL, formattedValues=NULL, formats=NULL, visiblity=TRUE) {
+   setColumn = function(columnNumber=NULL, startAtRowNumber=2, cellTypes="cell", rawValues=NULL, formattedValues=NULL, formats=NULL, visiblity=TRUE, baseStyleNames=NULL) {
      if(private$p_parentTable$argumentCheckMode > 0) {
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setColumn", columnNumber, missing(columnNumber), allowMissing=FALSE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=1)
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setColumn", startAtRowNumber, missing(startAtRowNumber), allowMissing=TRUE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=1, maxValue=self$columnCount)
@@ -275,6 +310,7 @@ TableCells <- R6::R6Class("TableCells",
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setColumn", formattedValues, missing(formattedValues), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("list", "logical", "integer", "numeric", "complex", "character", "factor", "Date", "POSIXct", "POSIXlt"), allowedListElementClasses=c("logical", "integer", "numeric", "complex", "character", "factor", "Date", "POSIXct", "POSIXlt"))
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setColumn", formats, missing(formats), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("character", "list", "function"))
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setColumn", visiblity, missing(visiblity), allowMissing=TRUE, allowNull=FALSE, allowedClasses="logical")
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "setColumn", baseStyleNames, missing(baseStyleNames), allowMissing=TRUE, allowNull=TRUE, allowedClasses="character")
      }
      if(length(columnNumber)!=1) stop(paste0("TableCells$setColumn(): columnNumber (length ", length(columnNumber), ") must be one value."), call. = FALSE)
      if(length(startAtRowNumber)!=1) stop(paste0("TableCells$setColumn(): startAtRowNumber (length ", length(startAtRowNumber), ") must be one value."), call. = FALSE)
@@ -284,6 +320,7 @@ TableCells <- R6::R6Class("TableCells",
      if((length(formattedValues)>1)&&(length(formattedValues)!=cellCount)) stop("TableCells$setColumn(): formattedValues must be either NULL, one value or the same length as rawValues.")
      if((length(formats)>1)&&(length(formats)!=cellCount)) stop("TableCells$setColumn(): formats must be either NULL, one value or the same length as rawValues.")
      if((length(visiblity)>1)&&(length(visiblity)!=cellCount)) stop("TableCells$setColumn(): visiblity must be either one value or the same length as rawValues.")
+     if((length(baseStyleNames)>1)&&(length(baseStyleNames)!=cellCount)) stop("TableCells$setColumn(): baseStyleNames must be either one value or the same length as rawValues.")
      r <- startAtRowNumber - 1
      for(x in 1:length(rawValues)) {
        r <- r + 1
@@ -307,7 +344,9 @@ TableCells <- R6::R6Class("TableCells",
        }
        if(length(visiblity)==1) visible <- visiblity[1]
        else visible <- visiblity[x]
-       self$setCell(r=r, c=columnNumber, cellType=cellType, rawValue=v, formattedValue=formattedValue, visible=visible)
+       if(length(baseStyleNames)==1) baseStyleName <- baseStyleNames[1]
+       else baseStyleName <- baseStyleNames[x]
+       self$setCell(r=r, c=columnNumber, cellType=cellType, rawValue=v, formattedValue=formattedValue, visible=visible, baseStyleName=baseStyleName)
      }
    },
    extendCells = function(rowCount=NULL, columnCount=NULL) {
@@ -348,9 +387,12 @@ TableCells <- R6::R6Class("TableCells",
      cell$updatePosition(r, c)
      return(invisible())
    },
-   insertRow = function(rowNumber=NULL) {
+   insertRow = function(rowNumber=NULL, insertBlankCells=TRUE, headerCells=1, totalCells=0) {
      if(private$p_parentTable$argumentCheckMode > 0) {
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "insertRow", rowNumber, missing(rowNumber), allowMissing=FALSE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=1)
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "insertRow", insertBlankCells, missing(insertBlankCells), allowMissing=TRUE, allowNull=FALSE, allowedClasses="logical")
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "insertRow", headerCells, missing(headerCells), allowMissing=TRUE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=0)
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "insertRow", totalCells, missing(totalCells), allowMissing=TRUE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=0)
      }
      if(private$p_parentTable$traceEnabled==TRUE) private$p_parentTable$trace("TableCells$insertRow", "Inserting row...")
      if(rowNumber<=self$rowCount) {
@@ -361,9 +403,15 @@ TableCells <- R6::R6Class("TableCells",
          }
        }
      }
-     for(c in 1:self$columnCount) {
-       self$setBlankCell(rowNumber, c)
+     if(insertBlankCells) {
+       for(c in 1:self$columnCount) {
+         cellType <- "cell"
+         if(c<=headerCells) { cellType <- "rowHeader" }
+         else if(c>=(self$columnCount-totalCells+1))  { cellType <- "total" }
+         self$setBlankCell(rowNumber, c, cellType=cellType)
+       }
      }
+     private$p_parentTable$mergedCells$updateAfterRowInsert(rowNumber)
      if(private$p_parentTable$traceEnabled==TRUE) private$p_parentTable$trace("TableCells$insertRow", "Inserted row.")
      return(invisible())
    },
@@ -381,12 +429,16 @@ TableCells <- R6::R6Class("TableCells",
        }
      }
      private$p_rows[[self$rowCount]] <- NULL # can set last cell in the list to NULL to shorten the array
+     private$p_parentTable$mergedCells$updateAfterRowDelete(rowNumber)
      if(private$p_parentTable$traceEnabled==TRUE) private$p_parentTable$trace("TableCells$deleteRow", "Deleted row.")
      return(invisible())
    },
-   insertColumn = function(columnNumber=NULL) {
+   insertColumn = function(columnNumber=NULL, insertBlankCells=TRUE, headerCells=1, totalCells=0) {
      if(private$p_parentTable$argumentCheckMode > 0) {
        checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "insertColumn", columnNumber, missing(columnNumber), allowMissing=FALSE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=1)
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "insertColumn", insertBlankCells, missing(insertBlankCells), allowMissing=TRUE, allowNull=FALSE, allowedClasses="logical")
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "insertColumn", headerCells, missing(headerCells), allowMissing=TRUE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=0)
+       checkArgument(private$p_parentTable$argumentCheckMode, FALSE, "TableCells", "insertColumn", totalCells, missing(totalCells), allowMissing=TRUE, allowNull=FALSE, allowedClasses=c("integer", "numeric"), minValue=0)
      }
      if(private$p_parentTable$traceEnabled==TRUE) private$p_parentTable$trace("TableCells$insertColumn", "Inserting column...")
      if(columnNumber<=self$columnCount) {
@@ -397,9 +449,15 @@ TableCells <- R6::R6Class("TableCells",
          }
        }
      }
-     for(r in 1:self$rowCount) {
-       self$setBlankCell(r, columnNumber)
+     if(insertBlankCells) {
+       for(r in 1:self$rowCount) {
+         cellType <- "cell"
+         if(r<=headerCells) { cellType <- "columnHeader" }
+         else if(r>=(self$rowCount-totalCells+1))  { cellType <- "total" }
+         self$setBlankCell(r, columnNumber)
+       }
      }
+     private$p_parentTable$mergedCells$updateAfterColumnInsert(columnNumber)
      if(private$p_parentTable$traceEnabled==TRUE) private$p_parentTable$trace("TableCells$insertColumn", "Inserted column")
      return(invisible())
    },
@@ -420,6 +478,7 @@ TableCells <- R6::R6Class("TableCells",
        private$p_rows[[r]][[self$columnCount]] <- NULL # can set last cell in the list to NULL to shorten the array
      }
      private$p_columnCount <- private$p_columnCount - 1
+     private$p_parentTable$mergedCells$updateAfterColumnDelete(columnNumber)
      if(private$p_parentTable$traceEnabled==TRUE) private$p_parentTable$trace("TableCells$deleteColumn", "Deleted column.")
      return(invisible())
    },

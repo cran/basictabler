@@ -12,7 +12,7 @@
 
 <meta name="author" content="Chris Bailiss" />
 
-<meta name="date" content="2019-01-05" />
+<meta name="date" content="2019-02-07" />
 
 <title></title>
 
@@ -96,7 +96,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Styling</li>
 </ol></h1>
 <h4 class="author"><em>Chris Bailiss</em></h4>
-<h4 class="date"><em>2019-01-05</em></h4>
+<h4 class="date"><em>2019-02-07</em></h4>
 
 
 
@@ -108,8 +108,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>XL Styles</li>
 <li>Included Themes</li>
 <li>Simple Themes</li>
+<li>Styling with the quick table functions</li>
+<li>Styling Rows/Columns/Cells</li>
+<li>Changing styling/formating after table creation using <code>tbl$setStyling()</code></li>
 <li>Creating a New Theme</li>
-<li>Changing the appearance of individual cells</li>
+<li>Summary of Styling Rules</li>
+<li>Styling Output</li>
 <li>Further Reading</li>
 </ul>
 </div>
@@ -128,6 +132,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>A theme is a collection of styles that can easily be applied to a table.</li>
 </ul>
 <p>The <code>basictabler</code> package is supplied with some basic themes. Additional themes can be defined.</p>
+<p>In addition, for each cell in the table, a set of style overrides can be set. These are style declarations that apply to individual cells.</p>
 </div>
 <div id="styles-and-css" class="section level2">
 <h2>Styles and CSS</h2>
@@ -172,8 +177,8 @@ tbl<span class="op">$</span><span class="kw">addData</span>(<span class="kw">dat
 <span class="co"># theme the table and render</span>
 tbl<span class="op">$</span>theme &lt;-<span class="st"> &quot;default&quot;</span>  <span class="co"># this theme is already the default, so this line isn't really needed</span>
 tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t0&quot;</span>)</code></pre></div>
-<div id="htmlwidget-1b6bc4073dc9c9ab8310" style="width:auto;height:auto;" class="basictabler html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1b6bc4073dc9c9ab8310">{"x":{"tableCss":".t0Table {border-collapse: collapse; }\r\n.t0ColumnHeader {font-family: Arial; font-size: 0.75em; padding: 2px; border: 1px solid lightgray; vertical-align: middle; text-align: center; font-weight: bold; background-color: #F2F2F2; }\r\n.t0RowHeader {font-family: Arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid lightgray; vertical-align: middle; text-align: left; font-weight: bold; background-color: #F2F2F2; }\r\n.t0Cell {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; }\r\n.t0Total {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; font-weight: bold; }\r\n","tableHtml":"<table class=\"t0Table\">\n  <tr>\n    <td class=\"t0ColumnHeader\">Sale ID<\/td>\n    <td class=\"t0ColumnHeader\">Item<\/td>\n    <td class=\"t0ColumnHeader\">Quantity<\/td>\n    <td class=\"t0ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t0RowHeader\">5334<\/td>\n    <td class=\"t0Cell\">Apple<\/td>\n    <td class=\"t0Cell\">5<\/td>\n    <td class=\"t0Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t0RowHeader\">5336<\/td>\n    <td class=\"t0Cell\">Orange<\/td>\n    <td class=\"t0Cell\">8<\/td>\n    <td class=\"t0Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t0RowHeader\">5338<\/td>\n    <td class=\"t0Cell\">Banana<\/td>\n    <td class=\"t0Cell\">6<\/td>\n    <td class=\"t0Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-db3523c47d9d498304d3" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-db3523c47d9d498304d3">{"x":{"tableCss":".t0Table {border-collapse: collapse; }\r\n.t0ColumnHeader {font-family: Arial; font-size: 0.75em; padding: 2px; border: 1px solid lightgray; vertical-align: middle; text-align: center; font-weight: bold; background-color: #F2F2F2; }\r\n.t0RowHeader {font-family: Arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid lightgray; vertical-align: middle; text-align: left; font-weight: bold; background-color: #F2F2F2; }\r\n.t0Cell {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; }\r\n.t0Total {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; font-weight: bold; }\r\n","tableHtml":"<table class=\"t0Table\">\n  <tr>\n    <td class=\"t0ColumnHeader\">Sale ID<\/td>\n    <td class=\"t0ColumnHeader\">Item<\/td>\n    <td class=\"t0ColumnHeader\">Quantity<\/td>\n    <td class=\"t0ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t0RowHeader\">5334<\/td>\n    <td class=\"t0Cell\">Apple<\/td>\n    <td class=\"t0Cell\">5<\/td>\n    <td class=\"t0Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t0RowHeader\">5336<\/td>\n    <td class=\"t0Cell\">Orange<\/td>\n    <td class=\"t0Cell\">8<\/td>\n    <td class=\"t0Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t0RowHeader\">5338<\/td>\n    <td class=\"t0Cell\">Banana<\/td>\n    <td class=\"t0Cell\">6<\/td>\n    <td class=\"t0Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data for the table</span>
 saleIds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5334</span>, <span class="dv">5336</span>, <span class="dv">5338</span>)
 items &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Apple&quot;</span>, <span class="st">&quot;Orange&quot;</span>, <span class="st">&quot;Banana&quot;</span>)
@@ -191,8 +196,8 @@ tbl<span class="op">$</span><span class="kw">addData</span>(<span class="kw">dat
 <span class="co"># theme the table and render</span>
 tbl<span class="op">$</span>theme &lt;-<span class="st"> &quot;compact&quot;</span>
 tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t1&quot;</span>)</code></pre></div>
-<div id="htmlwidget-dc4f6f07ba8577128e21" style="width:auto;height:auto;" class="basictabler html-widget"></div>
-<script type="application/json" data-for="htmlwidget-dc4f6f07ba8577128e21">{"x":{"tableCss":".t1Table {border-collapse: collapse; }\r\n.t1ColumnHeader {font-family: Arial; font-size: 0.625em; padding: 2px; border: 1px solid lightgray; vertical-align: middle; text-align: center; font-weight: bold; background-color: #F2F2F2; }\r\n.t1RowHeader {font-family: Arial; font-size: 0.625em; padding: 2px 4px 2px 2px; border: 1px solid lightgray; vertical-align: middle; text-align: left; font-weight: bold; background-color: #F2F2F2; }\r\n.t1Cell {font-family: Arial; font-size: 0.625em; padding: 2px 2px 2px 6px; border: 1px solid lightgray; vertical-align: middle; text-align: right; }\r\n","tableHtml":"<table class=\"t1Table\">\n  <tr>\n    <td class=\"t1ColumnHeader\">Sale ID<\/td>\n    <td class=\"t1ColumnHeader\">Item<\/td>\n    <td class=\"t1ColumnHeader\">Quantity<\/td>\n    <td class=\"t1ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t1RowHeader\">5334<\/td>\n    <td class=\"t1Cell\">Apple<\/td>\n    <td class=\"t1Cell\">5<\/td>\n    <td class=\"t1Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t1RowHeader\">5336<\/td>\n    <td class=\"t1Cell\">Orange<\/td>\n    <td class=\"t1Cell\">8<\/td>\n    <td class=\"t1Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t1RowHeader\">5338<\/td>\n    <td class=\"t1Cell\">Banana<\/td>\n    <td class=\"t1Cell\">6<\/td>\n    <td class=\"t1Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e0f023e0fa5d98110738" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e0f023e0fa5d98110738">{"x":{"tableCss":".t1Table {border-collapse: collapse; }\r\n.t1ColumnHeader {font-family: Arial; font-size: 0.625em; padding: 2px; border: 1px solid lightgray; vertical-align: middle; text-align: center; font-weight: bold; background-color: #F2F2F2; }\r\n.t1RowHeader {font-family: Arial; font-size: 0.625em; padding: 2px 4px 2px 2px; border: 1px solid lightgray; vertical-align: middle; text-align: left; font-weight: bold; background-color: #F2F2F2; }\r\n.t1Cell {font-family: Arial; font-size: 0.625em; padding: 2px 2px 2px 6px; border: 1px solid lightgray; vertical-align: middle; text-align: right; }\r\n","tableHtml":"<table class=\"t1Table\">\n  <tr>\n    <td class=\"t1ColumnHeader\">Sale ID<\/td>\n    <td class=\"t1ColumnHeader\">Item<\/td>\n    <td class=\"t1ColumnHeader\">Quantity<\/td>\n    <td class=\"t1ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t1RowHeader\">5334<\/td>\n    <td class=\"t1Cell\">Apple<\/td>\n    <td class=\"t1Cell\">5<\/td>\n    <td class=\"t1Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t1RowHeader\">5336<\/td>\n    <td class=\"t1Cell\">Orange<\/td>\n    <td class=\"t1Cell\">8<\/td>\n    <td class=\"t1Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t1RowHeader\">5338<\/td>\n    <td class=\"t1Cell\">Banana<\/td>\n    <td class=\"t1Cell\">6<\/td>\n    <td class=\"t1Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data for the table</span>
 saleIds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5334</span>, <span class="dv">5336</span>, <span class="dv">5338</span>)
 items &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Apple&quot;</span>, <span class="st">&quot;Orange&quot;</span>, <span class="st">&quot;Banana&quot;</span>)
@@ -210,14 +215,15 @@ tbl<span class="op">$</span><span class="kw">addData</span>(<span class="kw">dat
 <span class="co"># theme the table and render</span>
 tbl<span class="op">$</span>theme &lt;-<span class="st"> &quot;largeplain&quot;</span>
 tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t2&quot;</span>)</code></pre></div>
-<div id="htmlwidget-c205bace0a14f831e651" style="width:auto;height:auto;" class="basictabler html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c205bace0a14f831e651">{"x":{"tableCss":".t2Table {border-collapse: collapse; }\r\n.t2ColumnHeader {font-family: Arial; font-size: 0.875em; padding: 4px; min-width: 100px; border: 1px solid lightgray; vertical-align: middle; text-align: center; font-weight: bold; }\r\n.t2RowHeader {font-family: Arial; font-size: 0.875em; padding: 4px; min-width: 100px; border: 1px solid lightgray; vertical-align: middle; text-align: left; font-weight: bold; }\r\n.t2Cell {font-family: Arial; font-size: 0.875em; padding: 4px; min-width: 100px; border: 1px solid lightgray; vertical-align: middle; text-align: right; }\r\n","tableHtml":"<table class=\"t2Table\">\n  <tr>\n    <td class=\"t2ColumnHeader\">Sale ID<\/td>\n    <td class=\"t2ColumnHeader\">Item<\/td>\n    <td class=\"t2ColumnHeader\">Quantity<\/td>\n    <td class=\"t2ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t2RowHeader\">5334<\/td>\n    <td class=\"t2Cell\">Apple<\/td>\n    <td class=\"t2Cell\">5<\/td>\n    <td class=\"t2Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t2RowHeader\">5336<\/td>\n    <td class=\"t2Cell\">Orange<\/td>\n    <td class=\"t2Cell\">8<\/td>\n    <td class=\"t2Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t2RowHeader\">5338<\/td>\n    <td class=\"t2Cell\">Banana<\/td>\n    <td class=\"t2Cell\">6<\/td>\n    <td class=\"t2Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b5f3af1d67a6d6025737" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b5f3af1d67a6d6025737">{"x":{"tableCss":".t2Table {border-collapse: collapse; }\r\n.t2ColumnHeader {font-family: Arial; font-size: 0.875em; padding: 4px; min-width: 100px; border: 1px solid lightgray; vertical-align: middle; text-align: center; font-weight: bold; }\r\n.t2RowHeader {font-family: Arial; font-size: 0.875em; padding: 4px; min-width: 100px; border: 1px solid lightgray; vertical-align: middle; text-align: left; font-weight: bold; }\r\n.t2Cell {font-family: Arial; font-size: 0.875em; padding: 4px; min-width: 100px; border: 1px solid lightgray; vertical-align: middle; text-align: right; }\r\n","tableHtml":"<table class=\"t2Table\">\n  <tr>\n    <td class=\"t2ColumnHeader\">Sale ID<\/td>\n    <td class=\"t2ColumnHeader\">Item<\/td>\n    <td class=\"t2ColumnHeader\">Quantity<\/td>\n    <td class=\"t2ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t2RowHeader\">5334<\/td>\n    <td class=\"t2Cell\">Apple<\/td>\n    <td class=\"t2Cell\">5<\/td>\n    <td class=\"t2Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t2RowHeader\">5336<\/td>\n    <td class=\"t2Cell\">Orange<\/td>\n    <td class=\"t2Cell\">8<\/td>\n    <td class=\"t2Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t2RowHeader\">5338<\/td>\n    <td class=\"t2Cell\">Banana<\/td>\n    <td class=\"t2Cell\">6<\/td>\n    <td class=\"t2Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="simple-themes" class="section level2">
 <h2>Simple Themes</h2>
-<p>The <code>basictabler</code> package includes the <code>getSimpleColoredTblTheme()</code> function that helps define basic new themes quickly. Several examples of using this function are shown below.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the colours</span>
-blue1Colors &lt;-<span class="st"> </span><span class="kw">list</span>(
+<p>Simple themes can be defined using a list. Several examples are shown below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the font and colours</span>
+simpleBlueTheme &lt;-<span class="st"> </span><span class="kw">list</span>(
+  <span class="dt">fontName=</span><span class="st">&quot;Verdana, Arial&quot;</span>,
   <span class="dt">headerBackgroundColor =</span> <span class="st">&quot;rgb(68, 114, 196)&quot;</span>,
   <span class="dt">headerColor =</span> <span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
   <span class="dt">cellBackgroundColor =</span> <span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
@@ -242,13 +248,13 @@ tbl<span class="op">$</span><span class="kw">addData</span>(<span class="kw">dat
             <span class="dt">columnFormats=</span><span class="kw">list</span>(<span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="st">&quot;%.2f&quot;</span>))
 
 <span class="co"># theme the table and render</span>
-theme &lt;-<span class="st"> </span><span class="kw">getSimpleColoredTblTheme</span>(<span class="dt">parentTable=</span>tbl, <span class="dt">colors=</span>blue1Colors, <span class="dt">fontName=</span><span class="st">&quot;Verdana, Arial&quot;</span>)
-tbl<span class="op">$</span>theme &lt;-<span class="st"> </span>theme
+tbl<span class="op">$</span>theme &lt;-<span class="st"> </span>simpleBlueTheme
 tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t3&quot;</span>)</code></pre></div>
-<div id="htmlwidget-76e7f2a31167ed19e54a" style="width:auto;height:auto;" class="basictabler html-widget"></div>
-<script type="application/json" data-for="htmlwidget-76e7f2a31167ed19e54a">{"x":{"tableCss":".t3Table {border-collapse: collapse; border: 2px solid rgb(48, 84, 150); }\r\n.t3ColumnHeader {font-family: Verdana, Arial; font-size: 0.75em; padding: 2px; border: 1px solid rgb(48, 84, 150); vertical-align: middle; text-align: center; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(68, 114, 196); }\r\n.t3RowHeader {font-family: Verdana, Arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid rgb(48, 84, 150); vertical-align: middle; text-align: left; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(68, 114, 196); }\r\n.t3Cell {font-family: Verdana, Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(48, 84, 150); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); }\r\n.t3Total {font-family: Verdana, Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(48, 84, 150); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(186, 202, 233); }\r\n","tableHtml":"<table class=\"t3Table\">\n  <tr>\n    <td class=\"t3ColumnHeader\">Sale ID<\/td>\n    <td class=\"t3ColumnHeader\">Item<\/td>\n    <td class=\"t3ColumnHeader\">Quantity<\/td>\n    <td class=\"t3ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t3RowHeader\">5334<\/td>\n    <td class=\"t3Cell\">Apple<\/td>\n    <td class=\"t3Cell\">5<\/td>\n    <td class=\"t3Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t3RowHeader\">5336<\/td>\n    <td class=\"t3Cell\">Orange<\/td>\n    <td class=\"t3Cell\">8<\/td>\n    <td class=\"t3Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t3RowHeader\">5338<\/td>\n    <td class=\"t3Cell\">Banana<\/td>\n    <td class=\"t3Cell\">6<\/td>\n    <td class=\"t3Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5d3dcf2e91316d075a9f" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5d3dcf2e91316d075a9f">{"x":{"tableCss":".t3Table {border-collapse: collapse; border: 2px solid rgb(48, 84, 150); }\r\n.t3ColumnHeader {font-family: Verdana, Arial; font-size: 0.75em; padding: 2px; border: 1px solid rgb(48, 84, 150); vertical-align: middle; text-align: center; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(68, 114, 196); }\r\n.t3RowHeader {font-family: Verdana, Arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid rgb(48, 84, 150); vertical-align: middle; text-align: left; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(68, 114, 196); }\r\n.t3Cell {font-family: Verdana, Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(48, 84, 150); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); }\r\n.t3Total {font-family: Verdana, Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(48, 84, 150); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(186, 202, 233); }\r\n","tableHtml":"<table class=\"t3Table\">\n  <tr>\n    <td class=\"t3ColumnHeader\">Sale ID<\/td>\n    <td class=\"t3ColumnHeader\">Item<\/td>\n    <td class=\"t3ColumnHeader\">Quantity<\/td>\n    <td class=\"t3ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t3RowHeader\">5334<\/td>\n    <td class=\"t3Cell\">Apple<\/td>\n    <td class=\"t3Cell\">5<\/td>\n    <td class=\"t3Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t3RowHeader\">5336<\/td>\n    <td class=\"t3Cell\">Orange<\/td>\n    <td class=\"t3Cell\">8<\/td>\n    <td class=\"t3Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t3RowHeader\">5338<\/td>\n    <td class=\"t3Cell\">Banana<\/td>\n    <td class=\"t3Cell\">6<\/td>\n    <td class=\"t3Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the colours</span>
-grayColors &lt;-<span class="st"> </span><span class="kw">list</span>(
+simpleGrayTheme &lt;-<span class="st"> </span><span class="kw">list</span>(
+  <span class="dt">fontName=</span><span class="st">&quot;Courier New, Courier&quot;</span>,
   <span class="dt">headerBackgroundColor =</span> <span class="st">&quot;rgb(128, 128, 128)&quot;</span>,
   <span class="dt">headerColor =</span> <span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
   <span class="dt">cellBackgroundColor =</span> <span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
@@ -273,11 +279,323 @@ tbl<span class="op">$</span><span class="kw">addData</span>(<span class="kw">dat
             <span class="dt">columnFormats=</span><span class="kw">list</span>(<span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="st">&quot;%.2f&quot;</span>))
 
 <span class="co"># theme the table and render</span>
-theme &lt;-<span class="st"> </span><span class="kw">getSimpleColoredTblTheme</span>(<span class="dt">parentTable=</span>tbl, <span class="dt">colors=</span>grayColors, <span class="dt">fontName=</span><span class="st">&quot;Courier New, Courier&quot;</span>)
-tbl<span class="op">$</span>theme &lt;-<span class="st"> </span>theme
+tbl<span class="op">$</span>theme &lt;-<span class="st"> </span>simpleGrayTheme
 tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t4&quot;</span>)</code></pre></div>
-<div id="htmlwidget-55fbd9d251f448b1a976" style="width:auto;height:auto;" class="basictabler html-widget"></div>
-<script type="application/json" data-for="htmlwidget-55fbd9d251f448b1a976">{"x":{"tableCss":".t4Table {border-collapse: collapse; border: 2px solid rgb(64, 64, 64); }\r\n.t4ColumnHeader {font-family: Courier New, Courier; font-size: 0.75em; padding: 2px; border: 1px solid rgb(64, 64, 64); vertical-align: middle; text-align: center; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(128, 128, 128); }\r\n.t4RowHeader {font-family: Courier New, Courier; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid rgb(64, 64, 64); vertical-align: middle; text-align: left; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(128, 128, 128); }\r\n.t4Cell {font-family: Courier New, Courier; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(64, 64, 64); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); }\r\n.t4Total {font-family: Courier New, Courier; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(64, 64, 64); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(192, 192, 192); }\r\n","tableHtml":"<table class=\"t4Table\">\n  <tr>\n    <td class=\"t4ColumnHeader\">Sale ID<\/td>\n    <td class=\"t4ColumnHeader\">Item<\/td>\n    <td class=\"t4ColumnHeader\">Quantity<\/td>\n    <td class=\"t4ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t4RowHeader\">5334<\/td>\n    <td class=\"t4Cell\">Apple<\/td>\n    <td class=\"t4Cell\">5<\/td>\n    <td class=\"t4Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t4RowHeader\">5336<\/td>\n    <td class=\"t4Cell\">Orange<\/td>\n    <td class=\"t4Cell\">8<\/td>\n    <td class=\"t4Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t4RowHeader\">5338<\/td>\n    <td class=\"t4Cell\">Banana<\/td>\n    <td class=\"t4Cell\">6<\/td>\n    <td class=\"t4Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3d5dc0f71bad7527e00f" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3d5dc0f71bad7527e00f">{"x":{"tableCss":".t4Table {border-collapse: collapse; border: 2px solid rgb(64, 64, 64); }\r\n.t4ColumnHeader {font-family: Courier New, Courier; font-size: 0.75em; padding: 2px; border: 1px solid rgb(64, 64, 64); vertical-align: middle; text-align: center; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(128, 128, 128); }\r\n.t4RowHeader {font-family: Courier New, Courier; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid rgb(64, 64, 64); vertical-align: middle; text-align: left; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(128, 128, 128); }\r\n.t4Cell {font-family: Courier New, Courier; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(64, 64, 64); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); }\r\n.t4Total {font-family: Courier New, Courier; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(64, 64, 64); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(192, 192, 192); }\r\n","tableHtml":"<table class=\"t4Table\">\n  <tr>\n    <td class=\"t4ColumnHeader\">Sale ID<\/td>\n    <td class=\"t4ColumnHeader\">Item<\/td>\n    <td class=\"t4ColumnHeader\">Quantity<\/td>\n    <td class=\"t4ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t4RowHeader\">5334<\/td>\n    <td class=\"t4Cell\">Apple<\/td>\n    <td class=\"t4Cell\">5<\/td>\n    <td class=\"t4Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t4RowHeader\">5336<\/td>\n    <td class=\"t4Cell\">Orange<\/td>\n    <td class=\"t4Cell\">8<\/td>\n    <td class=\"t4Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t4RowHeader\">5338<\/td>\n    <td class=\"t4Cell\">Banana<\/td>\n    <td class=\"t4Cell\">6<\/td>\n    <td class=\"t4Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the colours</span>
+simpleGreenTheme &lt;-<span class="st"> </span><span class="kw">list</span>(
+  <span class="dt">fontName=</span><span class="st">&quot;Helvetica, arial&quot;</span>,
+  <span class="dt">headerBackgroundColor =</span> <span class="st">&quot;rgb(112, 173, 71)&quot;</span>,
+  <span class="dt">headerColor =</span> <span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
+  <span class="dt">cellBackgroundColor=</span><span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
+  <span class="dt">cellColor=</span><span class="st">&quot;rgb(0, 0, 0)&quot;</span>,
+  <span class="dt">totalBackgroundColor =</span> <span class="st">&quot;rgb(182, 216, 158)&quot;</span>,
+  <span class="dt">totalColor=</span><span class="st">&quot;rgb(0, 0, 0)&quot;</span>,
+  <span class="dt">borderColor =</span> <span class="st">&quot;rgb(84, 130, 53)&quot;</span>
+)
+
+<span class="co"># data for the table</span>
+saleIds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5334</span>, <span class="dv">5336</span>, <span class="dv">5338</span>)
+items &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Apple&quot;</span>, <span class="st">&quot;Orange&quot;</span>, <span class="st">&quot;Banana&quot;</span>)
+quantities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">6</span>)
+prices &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.34452354</span>, <span class="fl">0.4732543</span>, <span class="fl">1.3443243</span>)
+
+<span class="co"># construct the table</span>
+<span class="kw">library</span>(basictabler)
+tbl &lt;-<span class="st"> </span>BasicTable<span class="op">$</span><span class="kw">new</span>()
+tbl<span class="op">$</span><span class="kw">addData</span>(<span class="kw">data.frame</span>(saleIds, items, quantities, prices), 
+            <span class="dt">firstColumnAsRowHeaders=</span><span class="ot">FALSE</span>,
+            <span class="dt">explicitColumnHeaders=</span><span class="kw">c</span>(<span class="st">&quot;Sale ID&quot;</span>, <span class="st">&quot;Item&quot;</span>, <span class="st">&quot;Quantity&quot;</span>, <span class="st">&quot;Price&quot;</span>),
+            <span class="dt">columnFormats=</span><span class="kw">list</span>(<span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="st">&quot;%.2f&quot;</span>))
+
+<span class="co"># theme the table and render</span>
+tbl<span class="op">$</span>theme &lt;-<span class="st"> </span>simpleGreenTheme
+tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t6&quot;</span>)</code></pre></div>
+<div id="htmlwidget-d97f28df6740d55ad984" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d97f28df6740d55ad984">{"x":{"tableCss":".t6Table {border-collapse: collapse; border: 2px solid rgb(84, 130, 53); }\r\n.t6ColumnHeader {font-family: Helvetica, arial; font-size: 0.75em; padding: 2px; border: 1px solid rgb(84, 130, 53); vertical-align: middle; text-align: center; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(112, 173, 71); }\r\n.t6RowHeader {font-family: Helvetica, arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid rgb(84, 130, 53); vertical-align: middle; text-align: left; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(112, 173, 71); }\r\n.t6Cell {font-family: Helvetica, arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(84, 130, 53); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); }\r\n.t6Total {font-family: Helvetica, arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(84, 130, 53); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(182, 216, 158); }\r\n","tableHtml":"<table class=\"t6Table\">\n  <tr>\n    <td class=\"t6ColumnHeader\">Sale ID<\/td>\n    <td class=\"t6ColumnHeader\">Item<\/td>\n    <td class=\"t6ColumnHeader\">Quantity<\/td>\n    <td class=\"t6ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t6Cell\">5334<\/td>\n    <td class=\"t6Cell\">Apple<\/td>\n    <td class=\"t6Cell\">5<\/td>\n    <td class=\"t6Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t6Cell\">5336<\/td>\n    <td class=\"t6Cell\">Orange<\/td>\n    <td class=\"t6Cell\">8<\/td>\n    <td class=\"t6Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t6Cell\">5338<\/td>\n    <td class=\"t6Cell\">Banana<\/td>\n    <td class=\"t6Cell\">6<\/td>\n    <td class=\"t6Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="styling-with-the-quick-table-functions" class="section level2">
+<h2>Styling with the quick table functions</h2>
+<p>The following example defines a simple theme and supplies this to the quick table function to specify styling:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># aggregate the sample data to make a small data frame</span>
+<span class="kw">library</span>(basictabler)
+<span class="kw">library</span>(dplyr)
+tocsummary &lt;-<span class="st"> </span>bhmsummary <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(TOC) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">OnTimeArrivals=</span><span class="kw">sum</span>(OnTimeArrivals),
+            <span class="dt">OnTimeDepartures=</span><span class="kw">sum</span>(OnTimeDepartures),
+            <span class="dt">TotalTrains=</span><span class="kw">sum</span>(TrainCount)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">OnTimeArrivalPercent=</span>OnTimeArrivals<span class="op">/</span>TotalTrains<span class="op">*</span><span class="dv">100</span>,
+         <span class="dt">OnTimeDeparturePercent=</span>OnTimeDepartures<span class="op">/</span>TotalTrains<span class="op">*</span><span class="dv">100</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(TOC)
+
+<span class="co"># column formats</span>
+columnFormats=<span class="kw">list</span>(<span class="ot">NULL</span>, <span class="kw">list</span>(<span class="dt">big.mark=</span><span class="st">&quot;,&quot;</span>), <span class="kw">list</span>(<span class="dt">big.mark=</span><span class="st">&quot;,&quot;</span>), <span class="kw">list</span>(<span class="dt">big.mark=</span><span class="st">&quot;,&quot;</span>), <span class="st">&quot;%.1f&quot;</span>, <span class="st">&quot;%.1f&quot;</span>)
+
+<span class="co"># simple theme</span>
+simpleBlueTheme &lt;-<span class="st"> </span><span class="kw">list</span>(
+  <span class="dt">fontName=</span><span class="st">&quot;Verdana, Arial&quot;</span>,
+  <span class="dt">headerBackgroundColor =</span> <span class="st">&quot;rgb(68, 114, 196)&quot;</span>,
+  <span class="dt">headerColor =</span> <span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
+  <span class="dt">cellBackgroundColor =</span> <span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
+  <span class="dt">cellColor =</span> <span class="st">&quot;rgb(0, 0, 0)&quot;</span>,
+  <span class="dt">totalBackgroundColor =</span> <span class="st">&quot;rgb(186, 202, 233)&quot;</span>,
+  <span class="dt">totalColor =</span> <span class="st">&quot;rgb(0, 0, 0)&quot;</span>,
+  <span class="dt">borderColor =</span> <span class="st">&quot;rgb(48, 84, 150)&quot;</span>
+)
+
+<span class="co"># headings in red text, cells in light gray</span>
+tbl &lt;-<span class="st"> </span><span class="kw">qtbl</span>(tocsummary, <span class="dt">firstColumnAsRowHeaders=</span><span class="ot">TRUE</span>,
+            <span class="dt">explicitColumnHeaders=</span><span class="kw">c</span>(<span class="st">&quot;TOC&quot;</span>, <span class="st">&quot;On-Time Arrivals&quot;</span>, <span class="st">&quot;On-Time Departures&quot;</span>,
+                                    <span class="st">&quot;Total Trains&quot;</span>, <span class="st">&quot;On-Time Arrival %&quot;</span>, <span class="st">&quot;On-Time Departure %&quot;</span>),
+            <span class="dt">columnFormats=</span>columnFormats, <span class="dt">theme=</span>simpleBlueTheme)
+
+<span class="co"># render table</span>
+tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t9&quot;</span>)</code></pre></div>
+<div id="htmlwidget-4664ece4b31651aa72de" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4664ece4b31651aa72de">{"x":{"tableCss":".t9Table {border-collapse: collapse; border: 2px solid rgb(48, 84, 150); }\r\n.t9ColumnHeader {font-family: Verdana, Arial; font-size: 0.75em; padding: 2px; border: 1px solid rgb(48, 84, 150); vertical-align: middle; text-align: center; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(68, 114, 196); }\r\n.t9RowHeader {font-family: Verdana, Arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid rgb(48, 84, 150); vertical-align: middle; text-align: left; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(68, 114, 196); }\r\n.t9Cell {font-family: Verdana, Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(48, 84, 150); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); }\r\n.t9Total {font-family: Verdana, Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(48, 84, 150); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(186, 202, 233); }\r\n","tableHtml":"<table class=\"t9Table\">\n  <tr>\n    <td class=\"t9ColumnHeader\">TOC<\/td>\n    <td class=\"t9ColumnHeader\">On-Time Arrivals<\/td>\n    <td class=\"t9ColumnHeader\">On-Time Departures<\/td>\n    <td class=\"t9ColumnHeader\">Total Trains<\/td>\n    <td class=\"t9ColumnHeader\">On-Time Arrival %<\/td>\n    <td class=\"t9ColumnHeader\">On-Time Departure %<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t9RowHeader\">Arriva Trains Wales<\/td>\n    <td class=\"t9Cell\">1,404<\/td>\n    <td class=\"t9Cell\">2,348<\/td>\n    <td class=\"t9Cell\">3,909<\/td>\n    <td class=\"t9Cell\">35.9<\/td>\n    <td class=\"t9Cell\">60.1<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t9RowHeader\">CrossCountry<\/td>\n    <td class=\"t9Cell\">5,799<\/td>\n    <td class=\"t9Cell\">10,246<\/td>\n    <td class=\"t9Cell\">22,928<\/td>\n    <td class=\"t9Cell\">25.3<\/td>\n    <td class=\"t9Cell\">44.7<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t9RowHeader\">London Midland<\/td>\n    <td class=\"t9Cell\">13,036<\/td>\n    <td class=\"t9Cell\">17,184<\/td>\n    <td class=\"t9Cell\">48,279<\/td>\n    <td class=\"t9Cell\">27.0<\/td>\n    <td class=\"t9Cell\">35.6<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t9RowHeader\">Virgin Trains<\/td>\n    <td class=\"t9Cell\">3,289<\/td>\n    <td class=\"t9Cell\">3,864<\/td>\n    <td class=\"t9Cell\">8,594<\/td>\n    <td class=\"t9Cell\">38.3<\/td>\n    <td class=\"t9Cell\">45.0<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+<p>The next example demonstrates specifying more granuar style settings when using a quick table function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># aggregate the sample data to make a small data frame</span>
+<span class="kw">library</span>(basictabler)
+<span class="kw">library</span>(dplyr)
+tocsummary &lt;-<span class="st"> </span>bhmsummary <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(TOC) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">OnTimeArrivals=</span><span class="kw">sum</span>(OnTimeArrivals),
+            <span class="dt">OnTimeDepartures=</span><span class="kw">sum</span>(OnTimeDepartures),
+            <span class="dt">TotalTrains=</span><span class="kw">sum</span>(TrainCount)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">OnTimeArrivalPercent=</span>OnTimeArrivals<span class="op">/</span>TotalTrains<span class="op">*</span><span class="dv">100</span>,
+         <span class="dt">OnTimeDeparturePercent=</span>OnTimeDepartures<span class="op">/</span>TotalTrains<span class="op">*</span><span class="dv">100</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(TOC)
+
+<span class="co"># column formats</span>
+columnFormats=<span class="kw">list</span>(<span class="ot">NULL</span>, <span class="kw">list</span>(<span class="dt">big.mark=</span><span class="st">&quot;,&quot;</span>), <span class="kw">list</span>(<span class="dt">big.mark=</span><span class="st">&quot;,&quot;</span>), <span class="kw">list</span>(<span class="dt">big.mark=</span><span class="st">&quot;,&quot;</span>), <span class="st">&quot;%.1f&quot;</span>, <span class="st">&quot;%.1f&quot;</span>)
+
+<span class="co"># create the table</span>
+tbl &lt;-<span class="st"> </span><span class="kw">qtbl</span>(tocsummary, <span class="dt">firstColumnAsRowHeaders=</span><span class="ot">FALSE</span>,
+            <span class="dt">explicitColumnHeaders=</span><span class="kw">c</span>(<span class="st">&quot;TOC&quot;</span>, <span class="st">&quot;On-Time Arrivals&quot;</span>, <span class="st">&quot;On-Time Departures&quot;</span>,
+                                    <span class="st">&quot;Total Trains&quot;</span>, <span class="st">&quot;On-Time Arrival %&quot;</span>, <span class="st">&quot;On-Time Departure %&quot;</span>),
+            <span class="dt">columnFormats=</span>columnFormats, 
+            <span class="dt">tableStyle=</span><span class="kw">list</span>(<span class="st">&quot;border-color&quot;</span>=<span class="st">&quot;maroon&quot;</span>),
+            <span class="dt">headingStyle=</span><span class="kw">list</span>(<span class="st">&quot;color&quot;</span>=<span class="st">&quot;cornsilk&quot;</span>, <span class="st">&quot;background-color&quot;</span>=<span class="st">&quot;maroon&quot;</span>, 
+                              <span class="st">&quot;font-style&quot;</span>=<span class="st">&quot;italic&quot;</span>, <span class="st">&quot;border-color&quot;</span>=<span class="st">&quot;maroon&quot;</span>), 
+            <span class="dt">cellStyle=</span><span class="kw">list</span>(<span class="st">&quot;color&quot;</span>=<span class="st">&quot;maroon&quot;</span>, <span class="st">&quot;background-color&quot;</span>=<span class="st">&quot;cornsilk&quot;</span>, 
+                           <span class="st">&quot;border-color&quot;</span>=<span class="st">&quot;maroon&quot;</span>))
+
+<span class="co"># set column alignment of first column</span>
+tbl<span class="op">$</span><span class="kw">setStyling</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dt">declarations=</span><span class="kw">list</span>(<span class="st">&quot;text-align&quot;</span>=<span class="st">&quot;left&quot;</span>))
+
+<span class="co"># render table</span>
+tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t10&quot;</span>)</code></pre></div>
+<div id="htmlwidget-52460401496a61f39507" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-52460401496a61f39507">{"x":{"tableCss":".t10Table {border-collapse: collapse; border-color: maroon; }\r\n.t10ColumnHeader {font-family: Arial; font-size: 0.75em; padding: 2px; border: 1px solid lightgray; vertical-align: middle; text-align: center; font-weight: bold; background-color: maroon; color: cornsilk; font-style: italic; border-color: maroon; }\r\n.t10RowHeader {font-family: Arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid lightgray; vertical-align: middle; text-align: left; font-weight: bold; background-color: maroon; color: cornsilk; font-style: italic; border-color: maroon; }\r\n.t10Cell {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; color: maroon; background-color: cornsilk; border-color: maroon; }\r\n.t10Total {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; font-weight: bold; }\r\n","tableHtml":"<table class=\"t10Table\">\n  <tr>\n    <td class=\"t10ColumnHeader\">TOC<\/td>\n    <td class=\"t10ColumnHeader\">On-Time Arrivals<\/td>\n    <td class=\"t10ColumnHeader\">On-Time Departures<\/td>\n    <td class=\"t10ColumnHeader\">Total Trains<\/td>\n    <td class=\"t10ColumnHeader\">On-Time Arrival %<\/td>\n    <td class=\"t10ColumnHeader\">On-Time Departure %<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t10Cell\" style=\"text-align: left; \">Arriva Trains Wales<\/td>\n    <td class=\"t10Cell\">1,404<\/td>\n    <td class=\"t10Cell\">2,348<\/td>\n    <td class=\"t10Cell\">3,909<\/td>\n    <td class=\"t10Cell\">35.9<\/td>\n    <td class=\"t10Cell\">60.1<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t10Cell\" style=\"text-align: left; \">CrossCountry<\/td>\n    <td class=\"t10Cell\">5,799<\/td>\n    <td class=\"t10Cell\">10,246<\/td>\n    <td class=\"t10Cell\">22,928<\/td>\n    <td class=\"t10Cell\">25.3<\/td>\n    <td class=\"t10Cell\">44.7<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t10Cell\" style=\"text-align: left; \">London Midland<\/td>\n    <td class=\"t10Cell\">13,036<\/td>\n    <td class=\"t10Cell\">17,184<\/td>\n    <td class=\"t10Cell\">48,279<\/td>\n    <td class=\"t10Cell\">27.0<\/td>\n    <td class=\"t10Cell\">35.6<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t10Cell\" style=\"text-align: left; \">Virgin Trains<\/td>\n    <td class=\"t10Cell\">3,289<\/td>\n    <td class=\"t10Cell\">3,864<\/td>\n    <td class=\"t10Cell\">8,594<\/td>\n    <td class=\"t10Cell\">38.3<\/td>\n    <td class=\"t10Cell\">45.0<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+<p>The quick table functions specify the same styling/formatting for all headers and all cells. To specify different styling/formatting for specific headings and/or specifc rows/columns, use the more verbose syntax for creating the table as shown in the examples below.</p>
+</div>
+<div id="styling-rowscolumnscells" class="section level2">
+<h2>Styling Rows/Columns/Cells</h2>
+<div id="specifying-cell-appearance-while-creating-a-table-from-a-data-frame" class="section level3">
+<h3>Specifying cell appearance while creating a table from a data frame</h3>
+<p>The following example defines a new style and uses this for one of the columns in the table, with the other columns using the normal cell style.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data for the table</span>
+saleIds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5334</span>, <span class="dv">5336</span>, <span class="dv">5338</span>)
+items &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Apple&quot;</span>, <span class="st">&quot;Orange&quot;</span>, <span class="st">&quot;Banana&quot;</span>)
+quantities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">6</span>)
+prices &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.34452354</span>, <span class="fl">0.4732543</span>, <span class="fl">1.3443243</span>)
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(saleIds, items, quantities, prices)
+colNames &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Sale ID&quot;</span>, <span class="st">&quot;Item&quot;</span>, <span class="st">&quot;Quantity&quot;</span>, <span class="st">&quot;Price&quot;</span>)
+colFormats &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="st">&quot;%.2f&quot;</span>)
+
+<span class="co"># construct the table</span>
+<span class="kw">library</span>(basictabler)
+tbl &lt;-<span class="st"> </span>BasicTable<span class="op">$</span><span class="kw">new</span>()
+
+<span class="co"># define a new style</span>
+tbl<span class="op">$</span><span class="kw">addStyle</span>(<span class="dt">styleName=</span><span class="st">&quot;AltCell&quot;</span>, <span class="kw">list</span>(
+  <span class="st">&quot;font-family&quot;</span>=<span class="st">&quot;Arial&quot;</span>,
+  <span class="st">&quot;font-size&quot;</span>=<span class="st">&quot;0.8em&quot;</span>,
+  <span class="st">&quot;font-weight&quot;</span>=<span class="st">&quot;bold&quot;</span>,
+  <span class="dt">padding=</span><span class="st">&quot;2px 2px 2px 8px&quot;</span>,
+  <span class="st">&quot;border-bottom&quot;</span>=<span class="st">&quot;1px solid #9C0006&quot;</span>,
+  <span class="st">&quot;text-align&quot;</span>=<span class="st">&quot;right&quot;</span>,
+  <span class="dt">color=</span><span class="st">&quot;#9C0006&quot;</span>,
+  <span class="st">&quot;background-color&quot;</span>=<span class="st">&quot;#FFC7CE&quot;</span>
+))
+colStyleNames &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Cell&quot;</span>, <span class="st">&quot;Cell&quot;</span>, <span class="st">&quot;AltCell&quot;</span>, <span class="st">&quot;Cell&quot;</span>)
+
+<span class="co"># populate the table</span>
+tbl<span class="op">$</span><span class="kw">addData</span>(df, <span class="dt">explicitColumnHeaders=</span>colNames, <span class="dt">columnFormats=</span>colFormats, <span class="dt">baseStyleNames=</span>colStyleNames)
+tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t11&quot;</span>)</code></pre></div>
+<div id="htmlwidget-b0e250a79970dd34b5d6" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b0e250a79970dd34b5d6">{"x":{"tableCss":".t11Table {border-collapse: collapse; }\r\n.t11ColumnHeader {font-family: Arial; font-size: 0.75em; padding: 2px; border: 1px solid lightgray; vertical-align: middle; text-align: center; font-weight: bold; background-color: #F2F2F2; }\r\n.t11RowHeader {font-family: Arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid lightgray; vertical-align: middle; text-align: left; font-weight: bold; background-color: #F2F2F2; }\r\n.t11Cell {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; }\r\n.t11Total {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; font-weight: bold; }\r\n.t11AltCell {font-family: Arial; font-size: 0.8em; font-weight: bold; padding: 2px 2px 2px 8px; border-bottom: 1px solid #9C0006; text-align: right; color: #9C0006; background-color: #FFC7CE; }\r\n","tableHtml":"<table class=\"t11Table\">\n  <tr>\n    <td class=\"t11ColumnHeader\">Sale ID<\/td>\n    <td class=\"t11ColumnHeader\">Item<\/td>\n    <td class=\"t11ColumnHeader\">Quantity<\/td>\n    <td class=\"t11ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t11Cell\">5334<\/td>\n    <td class=\"t11Cell\">Apple<\/td>\n    <td class=\"t11AltCell\">5<\/td>\n    <td class=\"t11Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t11Cell\">5336<\/td>\n    <td class=\"t11Cell\">Orange<\/td>\n    <td class=\"t11AltCell\">8<\/td>\n    <td class=\"t11Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t11Cell\">5338<\/td>\n    <td class=\"t11Cell\">Banana<\/td>\n    <td class=\"t11AltCell\">6<\/td>\n    <td class=\"t11Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="specifying-cell-appearance-while-creating-a-table-column-by-column" class="section level3">
+<h3>Specifying cell appearance while creating a table column-by-column</h3>
+<p>It is also possible to define a new style for an entire column when creating a table column-by-column. In the example below a new style is created and this is used as the base style for the third column.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data for the table</span>
+saleIds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5334</span>, <span class="dv">5336</span>, <span class="dv">5338</span>)
+items &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Apple&quot;</span>, <span class="st">&quot;Orange&quot;</span>, <span class="st">&quot;Banana&quot;</span>)
+quantities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">6</span>)
+prices &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.34452354</span>, <span class="fl">0.4732543</span>, <span class="fl">1.3443243</span>)
+
+<span class="co"># construct the table</span>
+<span class="kw">library</span>(basictabler)
+tbl &lt;-<span class="st"> </span>BasicTable<span class="op">$</span><span class="kw">new</span>()
+
+<span class="co"># define a new style</span>
+tbl<span class="op">$</span><span class="kw">addStyle</span>(<span class="dt">styleName=</span><span class="st">&quot;AltColumn&quot;</span>, <span class="kw">list</span>(
+  <span class="st">&quot;font-family&quot;</span>=<span class="st">&quot;Arial&quot;</span>,
+  <span class="st">&quot;font-size&quot;</span>=<span class="st">&quot;0.8em&quot;</span>,
+  <span class="st">&quot;font-weight&quot;</span>=<span class="st">&quot;bold&quot;</span>,
+  <span class="dt">padding=</span><span class="st">&quot;2px 2px 2px 8px&quot;</span>,
+  <span class="st">&quot;border-bottom&quot;</span>=<span class="st">&quot;1px solid #9C0006&quot;</span>,
+  <span class="st">&quot;text-align&quot;</span>=<span class="st">&quot;right&quot;</span>,
+  <span class="dt">color=</span><span class="st">&quot;#9C0006&quot;</span>,
+  <span class="st">&quot;background-color&quot;</span>=<span class="st">&quot;#FFC7CE&quot;</span>
+))
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">cellType=</span><span class="st">&quot;root&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Sale ID&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dt">cellType=</span><span class="st">&quot;columnHeader&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Item&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dt">cellType=</span><span class="st">&quot;columnHeader&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Quantity&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dt">cellType=</span><span class="st">&quot;columnHeader&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Price&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setColumn</span>(<span class="dv">1</span>, <span class="dt">cellTypes=</span><span class="st">&quot;rowHeader&quot;</span>, <span class="dt">rawValues=</span>saleIds)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setColumn</span>(<span class="dv">2</span>, <span class="dt">cellTypes=</span><span class="st">&quot;cell&quot;</span>, <span class="dt">rawValues=</span>items)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setColumn</span>(<span class="dv">3</span>, <span class="dt">cellTypes=</span><span class="st">&quot;cell&quot;</span>, <span class="dt">rawValues=</span>quantities, <span class="dt">baseStyleName=</span><span class="st">&quot;AltColumn&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setColumn</span>(<span class="dv">4</span>, <span class="dt">cellTypes=</span><span class="st">&quot;cell&quot;</span>, <span class="dt">rawValues=</span>prices,
+                    <span class="dt">formats=</span><span class="kw">list</span>(<span class="st">&quot;%.2f&quot;</span>))
+tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t13&quot;</span>)</code></pre></div>
+<div id="htmlwidget-7c2c670d67978343280e" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7c2c670d67978343280e">{"x":{"tableCss":".t13Table {border-collapse: collapse; }\r\n.t13ColumnHeader {font-family: Arial; font-size: 0.75em; padding: 2px; border: 1px solid lightgray; vertical-align: middle; text-align: center; font-weight: bold; background-color: #F2F2F2; }\r\n.t13RowHeader {font-family: Arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid lightgray; vertical-align: middle; text-align: left; font-weight: bold; background-color: #F2F2F2; }\r\n.t13Cell {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; }\r\n.t13Total {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; font-weight: bold; }\r\n.t13AltColumn {font-family: Arial; font-size: 0.8em; font-weight: bold; padding: 2px 2px 2px 8px; border-bottom: 1px solid #9C0006; text-align: right; color: #9C0006; background-color: #FFC7CE; }\r\n","tableHtml":"<table class=\"t13Table\">\n  <tr>\n    <td class=\"t13RowHeader\">Sale ID<\/td>\n    <td class=\"t13ColumnHeader\">Item<\/td>\n    <td class=\"t13ColumnHeader\">Quantity<\/td>\n    <td class=\"t13ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t13RowHeader\">5334<\/td>\n    <td class=\"t13Cell\">Apple<\/td>\n    <td class=\"t13AltColumn\">5<\/td>\n    <td class=\"t13Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t13RowHeader\">5336<\/td>\n    <td class=\"t13Cell\">Orange<\/td>\n    <td class=\"t13AltColumn\">8<\/td>\n    <td class=\"t13Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t13RowHeader\">5338<\/td>\n    <td class=\"t13Cell\">Banana<\/td>\n    <td class=\"t13AltColumn\">6<\/td>\n    <td class=\"t13Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="specifying-cell-appearance-while-creating-a-table-row-by-row" class="section level3">
+<h3>Specifying cell appearance while creating a table row-by-row</h3>
+<p>Similarly, it is possible to define a new style for an entire row when creating a table row-by-row. In the example below a new style is created and this is used as the base style for the……</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># cell types for the cells in each row</span>
+cellTypes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;rowHeader&quot;</span>, <span class="st">&quot;cell&quot;</span>, <span class="st">&quot;cell&quot;</span>, <span class="st">&quot;cell&quot;</span>)
+
+<span class="co"># formats for the values in each row</span>
+<span class="co"># (only the value in the fourth column needs formatting)</span>
+formats &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="st">&quot;%.2f&quot;</span>)
+
+<span class="co"># construct the table</span>
+<span class="kw">library</span>(basictabler)
+tbl &lt;-<span class="st"> </span>BasicTable<span class="op">$</span><span class="kw">new</span>()
+
+<span class="co"># define a new style</span>
+tbl<span class="op">$</span><span class="kw">addStyle</span>(<span class="dt">styleName=</span><span class="st">&quot;AltRow&quot;</span>, <span class="kw">list</span>(
+  <span class="st">&quot;font-family&quot;</span>=<span class="st">&quot;Arial&quot;</span>,
+  <span class="st">&quot;font-size&quot;</span>=<span class="st">&quot;0.8em&quot;</span>,
+  <span class="st">&quot;font-weight&quot;</span>=<span class="st">&quot;bold&quot;</span>,
+  <span class="dt">padding=</span><span class="st">&quot;2px 2px 2px 8px&quot;</span>,
+  <span class="st">&quot;border-bottom&quot;</span>=<span class="st">&quot;1px solid #9C0006&quot;</span>,
+  <span class="st">&quot;text-align&quot;</span>=<span class="st">&quot;right&quot;</span>,
+  <span class="dt">color=</span><span class="st">&quot;#9C0006&quot;</span>,
+  <span class="st">&quot;background-color&quot;</span>=<span class="st">&quot;#FFC7CE&quot;</span>
+))
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">cellType=</span><span class="st">&quot;root&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Sale ID&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dt">cellType=</span><span class="st">&quot;columnHeader&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Item&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dt">cellType=</span><span class="st">&quot;columnHeader&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Quantity&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dt">cellType=</span><span class="st">&quot;columnHeader&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Price&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setRow</span>(<span class="dv">2</span>, <span class="dt">cellTypes=</span>cellTypes, <span class="dt">formats=</span>formats,
+                 <span class="dt">rawValues=</span><span class="kw">list</span>(<span class="dv">5334</span>, <span class="st">&quot;Apple&quot;</span>, <span class="dv">5</span>, <span class="fl">0.34452354</span>))
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setRow</span>(<span class="dv">3</span>, <span class="dt">cellTypes=</span>cellTypes, <span class="dt">formats=</span>formats,
+                 <span class="dt">rawValues=</span><span class="kw">list</span>(<span class="dv">5336</span>, <span class="st">&quot;Orange&quot;</span>, <span class="dv">8</span>, <span class="fl">0.4732543</span>), <span class="dt">baseStyleNames=</span><span class="st">&quot;AltRow&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setRow</span>(<span class="dv">4</span>, <span class="dt">cellTypes=</span>cellTypes, <span class="dt">formats=</span>formats,
+                 <span class="dt">rawValues=</span><span class="kw">list</span>(<span class="dv">5338</span>, <span class="st">&quot;Banana&quot;</span>, <span class="dv">6</span>, <span class="fl">1.3443243</span>))
+tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t14&quot;</span>)</code></pre></div>
+<div id="htmlwidget-b7aa490ce1a09daf5292" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b7aa490ce1a09daf5292">{"x":{"tableCss":".t14Table {border-collapse: collapse; }\r\n.t14ColumnHeader {font-family: Arial; font-size: 0.75em; padding: 2px; border: 1px solid lightgray; vertical-align: middle; text-align: center; font-weight: bold; background-color: #F2F2F2; }\r\n.t14RowHeader {font-family: Arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid lightgray; vertical-align: middle; text-align: left; font-weight: bold; background-color: #F2F2F2; }\r\n.t14Cell {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; }\r\n.t14Total {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; font-weight: bold; }\r\n.t14AltRow {font-family: Arial; font-size: 0.8em; font-weight: bold; padding: 2px 2px 2px 8px; border-bottom: 1px solid #9C0006; text-align: right; color: #9C0006; background-color: #FFC7CE; }\r\n","tableHtml":"<table class=\"t14Table\">\n  <tr>\n    <td class=\"t14RowHeader\">Sale ID<\/td>\n    <td class=\"t14ColumnHeader\">Item<\/td>\n    <td class=\"t14ColumnHeader\">Quantity<\/td>\n    <td class=\"t14ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t14RowHeader\">5334<\/td>\n    <td class=\"t14Cell\">Apple<\/td>\n    <td class=\"t14Cell\">5<\/td>\n    <td class=\"t14Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t14AltRow\">5336<\/td>\n    <td class=\"t14AltRow\">Orange<\/td>\n    <td class=\"t14AltRow\">8<\/td>\n    <td class=\"t14AltRow\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t14RowHeader\">5338<\/td>\n    <td class=\"t14Cell\">Banana<\/td>\n    <td class=\"t14Cell\">6<\/td>\n    <td class=\"t14Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+<p>When creating tables column-by-column and row-by-row, it is possible to specify a vector for baseStyleNames of the same length as rawValues, to be able to specify different styles for each cell in the column/row:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># cell types for the cells in each row</span>
+cellTypes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;rowHeader&quot;</span>, <span class="st">&quot;cell&quot;</span>, <span class="st">&quot;cell&quot;</span>, <span class="st">&quot;cell&quot;</span>)
+
+<span class="co"># formats for the values in each row</span>
+<span class="co"># (only the value in the fourth column needs formatting)</span>
+formats &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="st">&quot;%.2f&quot;</span>)
+
+<span class="co"># construct the table</span>
+<span class="kw">library</span>(basictabler)
+tbl &lt;-<span class="st"> </span>BasicTable<span class="op">$</span><span class="kw">new</span>()
+
+<span class="co"># define a new style</span>
+tbl<span class="op">$</span><span class="kw">addStyle</span>(<span class="dt">styleName=</span><span class="st">&quot;AltRowLeftAlign&quot;</span>, <span class="kw">list</span>(
+  <span class="st">&quot;font-family&quot;</span>=<span class="st">&quot;Arial&quot;</span>,
+  <span class="st">&quot;font-size&quot;</span>=<span class="st">&quot;0.8em&quot;</span>,
+  <span class="st">&quot;font-weight&quot;</span>=<span class="st">&quot;bold&quot;</span>,
+  <span class="dt">padding=</span><span class="st">&quot;2px 2px 2px 2px&quot;</span>,
+  <span class="st">&quot;border-bottom&quot;</span>=<span class="st">&quot;1px solid #9C0006&quot;</span>,
+  <span class="st">&quot;text-align&quot;</span>=<span class="st">&quot;left&quot;</span>,
+  <span class="dt">color=</span><span class="st">&quot;#9C0006&quot;</span>,
+  <span class="st">&quot;background-color&quot;</span>=<span class="st">&quot;#FFC7CE&quot;</span>
+))
+tbl<span class="op">$</span><span class="kw">addStyle</span>(<span class="dt">styleName=</span><span class="st">&quot;AltRowRightAlign&quot;</span>, <span class="kw">list</span>(
+  <span class="st">&quot;font-family&quot;</span>=<span class="st">&quot;Arial&quot;</span>,
+  <span class="st">&quot;font-size&quot;</span>=<span class="st">&quot;0.8em&quot;</span>,
+  <span class="st">&quot;font-weight&quot;</span>=<span class="st">&quot;bold&quot;</span>,
+  <span class="dt">padding=</span><span class="st">&quot;2px 2px 2px 8px&quot;</span>,
+  <span class="st">&quot;border-bottom&quot;</span>=<span class="st">&quot;1px solid #9C0006&quot;</span>,
+  <span class="st">&quot;text-align&quot;</span>=<span class="st">&quot;right&quot;</span>,
+  <span class="dt">color=</span><span class="st">&quot;#9C0006&quot;</span>,
+  <span class="st">&quot;background-color&quot;</span>=<span class="st">&quot;#FFC7CE&quot;</span>
+))
+styleNames &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;AltRowLeftAlign&quot;</span>, <span class="st">&quot;AltRowRightAlign&quot;</span>, 
+                    <span class="st">&quot;AltRowRightAlign&quot;</span>, <span class="st">&quot;AltRowRightAlign&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">cellType=</span><span class="st">&quot;root&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Sale ID&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dt">cellType=</span><span class="st">&quot;columnHeader&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Item&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dt">cellType=</span><span class="st">&quot;columnHeader&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Quantity&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dt">cellType=</span><span class="st">&quot;columnHeader&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Price&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setRow</span>(<span class="dv">2</span>, <span class="dt">cellTypes=</span>cellTypes, <span class="dt">formats=</span>formats,
+                 <span class="dt">rawValues=</span><span class="kw">list</span>(<span class="dv">5334</span>, <span class="st">&quot;Apple&quot;</span>, <span class="dv">5</span>, <span class="fl">0.34452354</span>))
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setRow</span>(<span class="dv">3</span>, <span class="dt">cellTypes=</span>cellTypes, <span class="dt">formats=</span>formats,
+                 <span class="dt">rawValues=</span><span class="kw">list</span>(<span class="dv">5336</span>, <span class="st">&quot;Orange&quot;</span>, <span class="dv">8</span>, <span class="fl">0.4732543</span>), <span class="dt">baseStyleNames=</span>styleNames)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setRow</span>(<span class="dv">4</span>, <span class="dt">cellTypes=</span>cellTypes, <span class="dt">formats=</span>formats,
+                 <span class="dt">rawValues=</span><span class="kw">list</span>(<span class="dv">5338</span>, <span class="st">&quot;Banana&quot;</span>, <span class="dv">6</span>, <span class="fl">1.3443243</span>))
+tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t15&quot;</span>)</code></pre></div>
+<div id="htmlwidget-6f56d134f02afdf808ed" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6f56d134f02afdf808ed">{"x":{"tableCss":".t15Table {border-collapse: collapse; }\r\n.t15ColumnHeader {font-family: Arial; font-size: 0.75em; padding: 2px; border: 1px solid lightgray; vertical-align: middle; text-align: center; font-weight: bold; background-color: #F2F2F2; }\r\n.t15RowHeader {font-family: Arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid lightgray; vertical-align: middle; text-align: left; font-weight: bold; background-color: #F2F2F2; }\r\n.t15Cell {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; }\r\n.t15Total {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; font-weight: bold; }\r\n.t15AltRowLeftAlign {font-family: Arial; font-size: 0.8em; font-weight: bold; padding: 2px 2px 2px 2px; border-bottom: 1px solid #9C0006; text-align: left; color: #9C0006; background-color: #FFC7CE; }\r\n.t15AltRowRightAlign {font-family: Arial; font-size: 0.8em; font-weight: bold; padding: 2px 2px 2px 8px; border-bottom: 1px solid #9C0006; text-align: right; color: #9C0006; background-color: #FFC7CE; }\r\n","tableHtml":"<table class=\"t15Table\">\n  <tr>\n    <td class=\"t15RowHeader\">Sale ID<\/td>\n    <td class=\"t15ColumnHeader\">Item<\/td>\n    <td class=\"t15ColumnHeader\">Quantity<\/td>\n    <td class=\"t15ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t15RowHeader\">5334<\/td>\n    <td class=\"t15Cell\">Apple<\/td>\n    <td class=\"t15Cell\">5<\/td>\n    <td class=\"t15Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t15AltRowLeftAlign\">5336<\/td>\n    <td class=\"t15AltRowRightAlign\">Orange<\/td>\n    <td class=\"t15AltRowRightAlign\">8<\/td>\n    <td class=\"t15AltRowRightAlign\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t15RowHeader\">5338<\/td>\n    <td class=\"t15Cell\">Banana<\/td>\n    <td class=\"t15Cell\">6<\/td>\n    <td class=\"t15Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="specifying-cell-appearance-while-creating-a-table-cell-by-cell" class="section level3">
+<h3>Specifying cell appearance while creating a table cell-by-cell</h3>
+<p>The following example shows two different ways of specifying cell styling whilst creating a table cell-by-cell. The first method defines an entirely new cell style (i.e. that is not part of the standard theming). This cell style is then used when styling one of the cells. The second method specifies one additional style declaration that is applied on top of the standard theming.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(basictabler)
+tbl &lt;-<span class="st"> </span>BasicTable<span class="op">$</span><span class="kw">new</span>()
+
+<span class="co"># specify a new cell style</span>
+tbl<span class="op">$</span><span class="kw">addStyle</span>(<span class="dt">styleName=</span><span class="st">&quot;AltCell&quot;</span>, <span class="kw">list</span>(
+  <span class="st">&quot;font-family&quot;</span>=<span class="st">&quot;Arial&quot;</span>,
+  <span class="st">&quot;font-size&quot;</span>=<span class="st">&quot;0.8em&quot;</span>,
+  <span class="st">&quot;font-weight&quot;</span>=<span class="st">&quot;bold&quot;</span>,
+  <span class="dt">padding=</span><span class="st">&quot;2px 2px 2px 8px&quot;</span>,
+  <span class="st">&quot;border&quot;</span>=<span class="st">&quot;2px solid #9C0006&quot;</span>,
+  <span class="st">&quot;text-align&quot;</span>=<span class="st">&quot;right&quot;</span>,
+  <span class="dt">color=</span><span class="st">&quot;#9C0006&quot;</span>,
+  <span class="st">&quot;background-color&quot;</span>=<span class="st">&quot;#FFC7CE&quot;</span>
+))
+
+<span class="co"># build the table</span>
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">cellType=</span><span class="st">&quot;root&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Sale ID&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dt">cellType=</span><span class="st">&quot;columnHeader&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Item&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dt">cellType=</span><span class="st">&quot;columnHeader&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Quantity&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dt">cellType=</span><span class="st">&quot;rowHeader&quot;</span>, <span class="dt">rawValue=</span><span class="dv">5334</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dt">cellType=</span><span class="st">&quot;cell&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Apple&quot;</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dt">cellType=</span><span class="st">&quot;rowHeader&quot;</span>, <span class="dt">rawValue=</span><span class="dv">5336</span>)
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dt">cellType=</span><span class="st">&quot;cell&quot;</span>, <span class="dt">rawValue=</span><span class="st">&quot;Orange&quot;</span>)
+
+<span class="co"># use the new style for the following cell (used instead of the theme styling)</span>
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dt">cellType=</span><span class="st">&quot;cell&quot;</span>, <span class="dt">rawValue=</span><span class="dv">5</span>, <span class="dt">baseStyleName=</span><span class="st">&quot;AltCell&quot;</span>)
+
+<span class="co"># specify an additional style declaration for the following cell (used on top of the theme styling)</span>
+tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">setCell</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dt">cellType=</span><span class="st">&quot;cell&quot;</span>, <span class="dt">rawValue=</span><span class="dv">8</span>, <span class="dt">styleDeclarations=</span><span class="kw">list</span>(<span class="st">&quot;background-color&quot;</span>=<span class="st">&quot;#FFFF00&quot;</span>))
+
+<span class="co"># render the table</span>
+tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t12&quot;</span>)</code></pre></div>
+<div id="htmlwidget-6a83864ec24b7b81653c" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6a83864ec24b7b81653c">{"x":{"tableCss":".t12Table {border-collapse: collapse; }\r\n.t12ColumnHeader {font-family: Arial; font-size: 0.75em; padding: 2px; border: 1px solid lightgray; vertical-align: middle; text-align: center; font-weight: bold; background-color: #F2F2F2; }\r\n.t12RowHeader {font-family: Arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid lightgray; vertical-align: middle; text-align: left; font-weight: bold; background-color: #F2F2F2; }\r\n.t12Cell {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; }\r\n.t12Total {font-family: Arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid lightgray; vertical-align: middle; text-align: right; font-weight: bold; }\r\n.t12AltCell {font-family: Arial; font-size: 0.8em; font-weight: bold; padding: 2px 2px 2px 8px; border: 2px solid #9C0006; text-align: right; color: #9C0006; background-color: #FFC7CE; }\r\n","tableHtml":"<table class=\"t12Table\">\n  <tr>\n    <td class=\"t12RowHeader\">Sale ID<\/td>\n    <td class=\"t12ColumnHeader\">Item<\/td>\n    <td class=\"t12ColumnHeader\">Quantity<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t12RowHeader\">5334<\/td>\n    <td class=\"t12Cell\">Apple<\/td>\n    <td class=\"t12AltCell\">5<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t12RowHeader\">5336<\/td>\n    <td class=\"t12Cell\">Orange<\/td>\n    <td class=\"t12Cell\" style=\"background-color: #FFFF00; \">8<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="changing-stylingformating-after-table-creation-using-tblsetstyling" class="section level2">
+<h2>Changing styling/formating after table creation using <code>tbl$setStyling()</code></h2>
+<p>The individual cells in the table can have their appearance changed by retrieving the cell then applying a style to the cell. The example below shows two different ways of applying cells to an individual cell. These styles apply in addition to the styles coming from the underlying theme, e.g. highlighting a cell:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the colours</span>
 orangeColors &lt;-<span class="st"> </span><span class="kw">list</span>(
   <span class="dt">headerBackgroundColor =</span> <span class="st">&quot;rgb(237, 125, 49)&quot;</span>,
@@ -306,71 +624,36 @@ tbl<span class="op">$</span><span class="kw">addData</span>(<span class="kw">dat
 <span class="co"># theme the table and render</span>
 theme &lt;-<span class="st"> </span><span class="kw">getSimpleColoredTblTheme</span>(<span class="dt">parentTable=</span>tbl, <span class="dt">colors=</span>orangeColors, <span class="dt">fontName=</span><span class="st">&quot;Garamond, arial&quot;</span>)
 tbl<span class="op">$</span>theme &lt;-<span class="st"> </span>theme
-tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t5&quot;</span>)</code></pre></div>
-<div id="htmlwidget-a941b6dd356b386bb11e" style="width:auto;height:auto;" class="basictabler html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a941b6dd356b386bb11e">{"x":{"tableCss":".t5Table {border-collapse: collapse; border: 2px solid rgb(198, 89, 17); }\r\n.t5ColumnHeader {font-family: Garamond, arial; font-size: 0.75em; padding: 2px; border: 1px solid rgb(198, 89, 17); vertical-align: middle; text-align: center; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(237, 125, 49); }\r\n.t5RowHeader {font-family: Garamond, arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid rgb(198, 89, 17); vertical-align: middle; text-align: left; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(237, 125, 49); }\r\n.t5Cell {font-family: Garamond, arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(198, 89, 17); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); }\r\n.t5Total {font-family: Garamond, arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(198, 89, 17); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(248, 198, 165); }\r\n","tableHtml":"<table class=\"t5Table\">\n  <tr>\n    <td class=\"t5ColumnHeader\">Sale ID<\/td>\n    <td class=\"t5ColumnHeader\">Item<\/td>\n    <td class=\"t5ColumnHeader\">Quantity<\/td>\n    <td class=\"t5ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t5RowHeader\">5334<\/td>\n    <td class=\"t5Cell\">Apple<\/td>\n    <td class=\"t5Cell\">5<\/td>\n    <td class=\"t5Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t5RowHeader\">5336<\/td>\n    <td class=\"t5Cell\">Orange<\/td>\n    <td class=\"t5Cell\">8<\/td>\n    <td class=\"t5Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t5RowHeader\">5338<\/td>\n    <td class=\"t5Cell\">Banana<\/td>\n    <td class=\"t5Cell\">6<\/td>\n    <td class=\"t5Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the colours</span>
-greenColors &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">headerBackgroundColor =</span> <span class="st">&quot;rgb(112, 173, 71)&quot;</span>,
-  <span class="dt">headerColor =</span> <span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
-  <span class="dt">cellBackgroundColor=</span><span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
-  <span class="dt">cellColor=</span><span class="st">&quot;rgb(0, 0, 0)&quot;</span>,
-  <span class="dt">totalBackgroundColor =</span> <span class="st">&quot;rgb(182, 216, 158)&quot;</span>,
-  <span class="dt">totalColor=</span><span class="st">&quot;rgb(0, 0, 0)&quot;</span>,
-  <span class="dt">borderColor =</span> <span class="st">&quot;rgb(84, 130, 53)&quot;</span>
-)
 
-<span class="co"># data for the table</span>
-saleIds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5334</span>, <span class="dv">5336</span>, <span class="dv">5338</span>)
-items &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Apple&quot;</span>, <span class="st">&quot;Orange&quot;</span>, <span class="st">&quot;Banana&quot;</span>)
-quantities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">6</span>)
-prices &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.34452354</span>, <span class="fl">0.4732543</span>, <span class="fl">1.3443243</span>)
+<span class="co"># apply an additional highlight to one cell (3rd row, 2nd column)</span>
+tbl<span class="op">$</span><span class="kw">setStyling</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dt">declarations=</span><span class="kw">list</span>(<span class="st">&quot;background-color&quot;</span>=<span class="st">&quot;#FFFF00&quot;</span>))
 
-<span class="co"># construct the table</span>
-<span class="kw">library</span>(basictabler)
-tbl &lt;-<span class="st"> </span>BasicTable<span class="op">$</span><span class="kw">new</span>()
-tbl<span class="op">$</span><span class="kw">addData</span>(<span class="kw">data.frame</span>(saleIds, items, quantities, prices), 
-            <span class="dt">firstColumnAsRowHeaders=</span><span class="ot">TRUE</span>,
-            <span class="dt">explicitColumnHeaders=</span><span class="kw">c</span>(<span class="st">&quot;Sale ID&quot;</span>, <span class="st">&quot;Item&quot;</span>, <span class="st">&quot;Quantity&quot;</span>, <span class="st">&quot;Price&quot;</span>),
-            <span class="dt">columnFormats=</span><span class="kw">list</span>(<span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="st">&quot;%.2f&quot;</span>))
+<span class="co"># apply an additional highlight to one cell (3rd row, 3rd column)</span>
+cellHighlight &lt;-<span class="st"> </span>tbl<span class="op">$</span><span class="kw">createInlineStyle</span>(<span class="dt">declarations=</span><span class="kw">list</span>(<span class="st">&quot;background-color&quot;</span>=<span class="st">&quot;#00FFFF&quot;</span>))
+cell &lt;-<span class="st"> </span>tbl<span class="op">$</span>cells<span class="op">$</span><span class="kw">getCell</span>(<span class="dv">3</span>, <span class="dv">3</span>)
+cell<span class="op">$</span>style &lt;-<span class="st"> </span>cellHighlight
 
-<span class="co"># theme the table and render</span>
-theme &lt;-<span class="st"> </span><span class="kw">getSimpleColoredTblTheme</span>(<span class="dt">parentTable=</span>tbl, <span class="dt">colors=</span>greenColors, <span class="dt">fontName=</span><span class="st">&quot;Helvetica, arial&quot;</span>)
-tbl<span class="op">$</span>theme &lt;-<span class="st"> </span>theme
-tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t6&quot;</span>)</code></pre></div>
-<div id="htmlwidget-2d6a39bfc15dfe8ee07a" style="width:auto;height:auto;" class="basictabler html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2d6a39bfc15dfe8ee07a">{"x":{"tableCss":".t6Table {border-collapse: collapse; border: 2px solid rgb(84, 130, 53); }\r\n.t6ColumnHeader {font-family: Helvetica, arial; font-size: 0.75em; padding: 2px; border: 1px solid rgb(84, 130, 53); vertical-align: middle; text-align: center; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(112, 173, 71); }\r\n.t6RowHeader {font-family: Helvetica, arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid rgb(84, 130, 53); vertical-align: middle; text-align: left; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(112, 173, 71); }\r\n.t6Cell {font-family: Helvetica, arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(84, 130, 53); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); }\r\n.t6Total {font-family: Helvetica, arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(84, 130, 53); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(182, 216, 158); }\r\n","tableHtml":"<table class=\"t6Table\">\n  <tr>\n    <td class=\"t6ColumnHeader\">Sale ID<\/td>\n    <td class=\"t6ColumnHeader\">Item<\/td>\n    <td class=\"t6ColumnHeader\">Quantity<\/td>\n    <td class=\"t6ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t6RowHeader\">5334<\/td>\n    <td class=\"t6Cell\">Apple<\/td>\n    <td class=\"t6Cell\">5<\/td>\n    <td class=\"t6Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t6RowHeader\">5336<\/td>\n    <td class=\"t6Cell\">Orange<\/td>\n    <td class=\"t6Cell\">8<\/td>\n    <td class=\"t6Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t6RowHeader\">5338<\/td>\n    <td class=\"t6Cell\">Banana<\/td>\n    <td class=\"t6Cell\">6<\/td>\n    <td class=\"t6Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the colours</span>
-yellowColors &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">headerBackgroundColor =</span> <span class="st">&quot;rgb(255, 192, 0)&quot;</span>,
-  <span class="dt">headerColor =</span> <span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
-  <span class="dt">cellBackgroundColor=</span><span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
-  <span class="dt">cellColor=</span><span class="st">&quot;rgb(0, 0, 0)&quot;</span>,
-  <span class="dt">totalBackgroundColor =</span> <span class="st">&quot;rgb(255, 242, 204)&quot;</span>,
-  <span class="dt">totalColor=</span><span class="st">&quot;rgb(0, 0, 0)&quot;</span>,
-  <span class="dt">borderColor =</span> <span class="st">&quot;rgb(255, 192, 0)&quot;</span>
-)
-
-<span class="co"># data for the table</span>
-saleIds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5334</span>, <span class="dv">5336</span>, <span class="dv">5338</span>)
-items &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Apple&quot;</span>, <span class="st">&quot;Orange&quot;</span>, <span class="st">&quot;Banana&quot;</span>)
-quantities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">6</span>)
-prices &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.34452354</span>, <span class="fl">0.4732543</span>, <span class="fl">1.3443243</span>)
-
-<span class="co"># construct the table</span>
-<span class="kw">library</span>(basictabler)
-tbl &lt;-<span class="st"> </span>BasicTable<span class="op">$</span><span class="kw">new</span>()
-tbl<span class="op">$</span><span class="kw">addData</span>(<span class="kw">data.frame</span>(saleIds, items, quantities, prices), 
-            <span class="dt">firstColumnAsRowHeaders=</span><span class="ot">TRUE</span>,
-            <span class="dt">explicitColumnHeaders=</span><span class="kw">c</span>(<span class="st">&quot;Sale ID&quot;</span>, <span class="st">&quot;Item&quot;</span>, <span class="st">&quot;Quantity&quot;</span>, <span class="st">&quot;Price&quot;</span>),
-            <span class="dt">columnFormats=</span><span class="kw">list</span>(<span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="st">&quot;%.2f&quot;</span>))
-
-<span class="co"># theme the table and render</span>
-theme &lt;-<span class="st"> </span><span class="kw">getSimpleColoredTblTheme</span>(<span class="dt">parentTable=</span>tbl, <span class="dt">colors=</span>yellowColors, <span class="dt">fontName=</span><span class="st">&quot;Verdana&quot;</span>)
-tbl<span class="op">$</span>theme &lt;-<span class="st"> </span>theme
-tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t7&quot;</span>)</code></pre></div>
-<div id="htmlwidget-c2bf5e33771d50feb262" style="width:auto;height:auto;" class="basictabler html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c2bf5e33771d50feb262">{"x":{"tableCss":".t7Table {border-collapse: collapse; border: 2px solid rgb(255, 192, 0); }\r\n.t7ColumnHeader {font-family: Verdana; font-size: 0.75em; padding: 2px; border: 1px solid rgb(255, 192, 0); vertical-align: middle; text-align: center; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(255, 192, 0); }\r\n.t7RowHeader {font-family: Verdana; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid rgb(255, 192, 0); vertical-align: middle; text-align: left; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(255, 192, 0); }\r\n.t7Cell {font-family: Verdana; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(255, 192, 0); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); }\r\n.t7Total {font-family: Verdana; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(255, 192, 0); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(255, 242, 204); }\r\n","tableHtml":"<table class=\"t7Table\">\n  <tr>\n    <td class=\"t7ColumnHeader\">Sale ID<\/td>\n    <td class=\"t7ColumnHeader\">Item<\/td>\n    <td class=\"t7ColumnHeader\">Quantity<\/td>\n    <td class=\"t7ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t7RowHeader\">5334<\/td>\n    <td class=\"t7Cell\">Apple<\/td>\n    <td class=\"t7Cell\">5<\/td>\n    <td class=\"t7Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t7RowHeader\">5336<\/td>\n    <td class=\"t7Cell\">Orange<\/td>\n    <td class=\"t7Cell\">8<\/td>\n    <td class=\"t7Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t7RowHeader\">5338<\/td>\n    <td class=\"t7Cell\">Banana<\/td>\n    <td class=\"t7Cell\">6<\/td>\n    <td class=\"t7Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+<span class="co"># render the table</span>
+tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t16&quot;</span>)</code></pre></div>
+<div id="htmlwidget-a0731082f2b3d55922db" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a0731082f2b3d55922db">{"x":{"tableCss":".t16Table {border-collapse: collapse; border: 2px solid rgb(198, 89, 17); }\r\n.t16ColumnHeader {font-family: Garamond, arial; font-size: 0.75em; padding: 2px; border: 1px solid rgb(198, 89, 17); vertical-align: middle; text-align: center; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(237, 125, 49); }\r\n.t16RowHeader {font-family: Garamond, arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid rgb(198, 89, 17); vertical-align: middle; text-align: left; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(237, 125, 49); }\r\n.t16Cell {font-family: Garamond, arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(198, 89, 17); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); }\r\n.t16Total {font-family: Garamond, arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(198, 89, 17); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(248, 198, 165); }\r\n","tableHtml":"<table class=\"t16Table\">\n  <tr>\n    <td class=\"t16ColumnHeader\">Sale ID<\/td>\n    <td class=\"t16ColumnHeader\">Item<\/td>\n    <td class=\"t16ColumnHeader\">Quantity<\/td>\n    <td class=\"t16ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t16RowHeader\">5334<\/td>\n    <td class=\"t16Cell\">Apple<\/td>\n    <td class=\"t16Cell\">5<\/td>\n    <td class=\"t16Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t16RowHeader\">5336<\/td>\n    <td class=\"t16Cell\" style=\"background-color: #FFFF00; \">Orange<\/td>\n    <td class=\"t16Cell\" style=\"background-color: #00FFFF; \">8<\/td>\n    <td class=\"t16Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t16RowHeader\">5338<\/td>\n    <td class=\"t16Cell\">Banana<\/td>\n    <td class=\"t16Cell\">6<\/td>\n    <td class=\"t16Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+<p>In the example above, the default cell style from the theme is still applied. The highlight is applied in addition to the default styling. To stop the base styling being applied, create a new named style and set the baseStyleName property on the cell to the name of the new style.</p>
+<p>The <code>tbl$setStyling()</code> function is used in the example above. This function has the following arguments:</p>
+<ul>
+<li><code>rFrom</code> and <code>cFrom</code> are the coordinates of the cell where the styling is to be applied. If the styling is being applied to multiple cells, this is the top-left cell in the rectangular cell range where the styling is to be applied.</li>
+<li><code>rTo</code> and <code>cTo</code> are the coordinates of the bottom right cell when styling is being applied to a rectangular range of cells. If styling is only being applied to a single cell, these arguments are not needed.</li>
+<li><code>cells</code> is a list of cells to apply styling to. Either <code>rFrom</code>/<code>cFrom</code> or <code>cells</code> is typically specified - not both.</li>
+<li><code>baseStyleName</code> is the name of a style in the table theme to apply to the specified cells. Set this explicitly to NULL to revert to the default style specified in the table theme.</li>
+<li><code>style</code> is a <code>TableStyle</code> override object to apply to the specified cells. This is created by calling <code>tbl$createInlineStyle()</code> as shown in the example above.</li>
+<li><code>declarations</code> is a list of style override declarations to apply to the specified cells.</li>
+</ul>
+<p>The <code>tbl$createInlineStyle()</code> function is also used in the example above. This function creates a new unnamed style (that is not part of the table theme) and takes two arguments: <code>baseStyleName</code> specifies the name of the style that the new style will be based on (i.e. will have it’s style properties copied from) and <code>declarations</code> which specifies new/overriding style properties for the new style.</p>
+<p>The <code>lapply()</code> function can be used to set the style for multiple cells to a new inline style:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># apply inline style to multiple cells</span>
+highlight &lt;-<span class="st"> </span>tbl<span class="op">$</span><span class="kw">createInlineStyle</span>(<span class="dt">declarations=</span><span class="kw">list</span>(<span class="st">&quot;background-color&quot;</span>=<span class="st">&quot;#FFCC66&quot;</span>))
+cells &lt;-<span class="st"> </span>tbl<span class="op">$</span><span class="kw">getCells</span>(<span class="dt">specifyCellsAsList=</span><span class="ot">TRUE</span>, <span class="dt">rowNumbers=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
+lst &lt;-<span class="st"> </span><span class="kw">lapply</span>(cells, <span class="cf">function</span>(cell) {cell<span class="op">$</span>style &lt;-<span class="st"> </span>highlight})</code></pre></div>
+<p>For many more examples of styling parts of a table, see the <a href="v05-findingandformatting.html">Finding and Formatting</a> vignette.</p>
 </div>
 <div id="creating-a-new-theme" class="section level2">
 <h2>Creating a New Theme</h2>
@@ -378,7 +661,8 @@ tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt"
 <ul>
 <li>tableStyle - the name of the style applied to the table (i.e. the HTML <code>&lt;table&gt;</code> element).</li>
 <li>rootStyle - the name of the style applied to the empty cell at the top left of the table.</li>
-<li>rowHeaderStyle/colHeaderStyle - the name of the style applied to the row/column header cells.</li>
+<li>rowHeaderStyle - the name of the style applied to the row header cells.</li>
+<li>colHeaderStyle - the name of the style applied to the column header cells.</li>
 <li>cellStyle - the name of the style applied to the cells in the body of the table.</li>
 <li>totalStyle - the name of the style applied to the total cells in the table.</li>
 </ul>
@@ -466,51 +750,61 @@ tbl<span class="op">$</span><span class="kw">addData</span>(<span class="kw">dat
 <span class="co"># theme the table and render</span>
 tbl<span class="op">$</span>theme &lt;-<span class="st"> </span><span class="kw">createCustomTheme</span>(tbl)
 tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t8&quot;</span>)</code></pre></div>
-<div id="htmlwidget-0172786d610e20b52120" style="width:auto;height:auto;" class="basictabler html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0172786d610e20b52120">{"x":{"tableCss":".t8Table {border-collapse: collapse; border: 2px solid #B28DFF; }\r\n.t8ColumnHeader {font-family: \"Courier New\", Courier, monospace; font-size: 0.75em; font-weight: bold; padding: 2px; border: 2px solid #B28DFF; vertical-align: middle; text-align: center; color: #DB49AC; background-color: #FFCCF9; }\r\n.t8RowHeader {font-family: \"Courier New\", Courier, monospace; font-size: 0.75em; font-weight: bold; padding: 2px 8px 2px 2px; border: 1px solid #B28DFF; vertical-align: middle; text-align: left; color: #438EC8; background-color: #ACE7FF; }\r\n.t8Cell {font-family: \"Courier New\", Courier, monospace; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid #B28DFF; text-align: right; color: #FF800D; background-color: #FFFFD1; }\r\n.t8Total {font-family: \"Courier New\", Courier, monospace; font-size: 0.75em; font-weight: bold; padding: 2px 2px 2px 8px; border: 1px solid rgb(84, 130, 53); text-align: right; color: #3BC6B6; background-color: #BFFCC6; }\r\n","tableHtml":"<table class=\"t8Table\">\n  <tr>\n    <td class=\"t8ColumnHeader\">Sale ID<\/td>\n    <td class=\"t8ColumnHeader\">Item<\/td>\n    <td class=\"t8ColumnHeader\">Quantity<\/td>\n    <td class=\"t8ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t8RowHeader\">5334<\/td>\n    <td class=\"t8Cell\">Apple<\/td>\n    <td class=\"t8Cell\">5<\/td>\n    <td class=\"t8Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t8RowHeader\">5336<\/td>\n    <td class=\"t8Cell\">Orange<\/td>\n    <td class=\"t8Cell\">8<\/td>\n    <td class=\"t8Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t8RowHeader\">5338<\/td>\n    <td class=\"t8Cell\">Banana<\/td>\n    <td class=\"t8Cell\">6<\/td>\n    <td class=\"t8Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-afdd014c968052051a7f" style="width:auto;height:auto;" class="basictabler html-widget"></div>
+<script type="application/json" data-for="htmlwidget-afdd014c968052051a7f">{"x":{"tableCss":".t8Table {border-collapse: collapse; border: 2px solid #B28DFF; }\r\n.t8ColumnHeader {font-family: \"Courier New\", Courier, monospace; font-size: 0.75em; font-weight: bold; padding: 2px; border: 2px solid #B28DFF; vertical-align: middle; text-align: center; color: #DB49AC; background-color: #FFCCF9; }\r\n.t8RowHeader {font-family: \"Courier New\", Courier, monospace; font-size: 0.75em; font-weight: bold; padding: 2px 8px 2px 2px; border: 1px solid #B28DFF; vertical-align: middle; text-align: left; color: #438EC8; background-color: #ACE7FF; }\r\n.t8Cell {font-family: \"Courier New\", Courier, monospace; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid #B28DFF; text-align: right; color: #FF800D; background-color: #FFFFD1; }\r\n.t8Total {font-family: \"Courier New\", Courier, monospace; font-size: 0.75em; font-weight: bold; padding: 2px 2px 2px 8px; border: 1px solid rgb(84, 130, 53); text-align: right; color: #3BC6B6; background-color: #BFFCC6; }\r\n","tableHtml":"<table class=\"t8Table\">\n  <tr>\n    <td class=\"t8ColumnHeader\">Sale ID<\/td>\n    <td class=\"t8ColumnHeader\">Item<\/td>\n    <td class=\"t8ColumnHeader\">Quantity<\/td>\n    <td class=\"t8ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t8RowHeader\">5334<\/td>\n    <td class=\"t8Cell\">Apple<\/td>\n    <td class=\"t8Cell\">5<\/td>\n    <td class=\"t8Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t8RowHeader\">5336<\/td>\n    <td class=\"t8Cell\">Orange<\/td>\n    <td class=\"t8Cell\">8<\/td>\n    <td class=\"t8Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t8RowHeader\">5338<\/td>\n    <td class=\"t8Cell\">Banana<\/td>\n    <td class=\"t8Cell\">6<\/td>\n    <td class=\"t8Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="changing-the-appearance-of-individual-cells" class="section level2">
-<h2>Changing the appearance of individual cells</h2>
-<p>The individual cells in the table can have their appearance changed by retrieving the cell then applying a style to the cell. These styles typically apply in addition to the styles coming from the underlying theme, e.g. highlighting a cell:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the colours</span>
-orangeColors &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">headerBackgroundColor =</span> <span class="st">&quot;rgb(237, 125, 49)&quot;</span>,
-  <span class="dt">headerColor =</span> <span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
-  <span class="dt">cellBackgroundColor =</span> <span class="st">&quot;rgb(255, 255, 255)&quot;</span>,
-  <span class="dt">cellColor =</span> <span class="st">&quot;rgb(0, 0, 0)&quot;</span>,
-  <span class="dt">totalBackgroundColor =</span> <span class="st">&quot;rgb(248, 198, 165)&quot;</span>,
-  <span class="dt">totalColor =</span> <span class="st">&quot;rgb(0, 0, 0)&quot;</span>,
-  <span class="dt">borderColor =</span> <span class="st">&quot;rgb(198, 89, 17)&quot;</span>
-)
-
-<span class="co"># data for the table</span>
-saleIds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5334</span>, <span class="dv">5336</span>, <span class="dv">5338</span>)
-items &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Apple&quot;</span>, <span class="st">&quot;Orange&quot;</span>, <span class="st">&quot;Banana&quot;</span>)
-quantities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">6</span>)
-prices &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.34452354</span>, <span class="fl">0.4732543</span>, <span class="fl">1.3443243</span>)
-
-<span class="co"># construct the table</span>
-<span class="kw">library</span>(basictabler)
-tbl &lt;-<span class="st"> </span>BasicTable<span class="op">$</span><span class="kw">new</span>()
-tbl<span class="op">$</span><span class="kw">addData</span>(<span class="kw">data.frame</span>(saleIds, items, quantities, prices), 
-            <span class="dt">firstColumnAsRowHeaders=</span><span class="ot">TRUE</span>,
-            <span class="dt">explicitColumnHeaders=</span><span class="kw">c</span>(<span class="st">&quot;Sale ID&quot;</span>, <span class="st">&quot;Item&quot;</span>, <span class="st">&quot;Quantity&quot;</span>, <span class="st">&quot;Price&quot;</span>),
-            <span class="dt">columnFormats=</span><span class="kw">list</span>(<span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="ot">NULL</span>, <span class="st">&quot;%.2f&quot;</span>))
-
-<span class="co"># theme the table and render</span>
-theme &lt;-<span class="st"> </span><span class="kw">getSimpleColoredTblTheme</span>(<span class="dt">parentTable=</span>tbl, <span class="dt">colors=</span>orangeColors, <span class="dt">fontName=</span><span class="st">&quot;Garamond, arial&quot;</span>)
-tbl<span class="op">$</span>theme &lt;-<span class="st"> </span>theme
-
-<span class="co"># apply an additional highlight to one cell (3rd row, 2nd column)</span>
-cellHighlight &lt;-<span class="st"> </span>tbl<span class="op">$</span><span class="kw">createInlineStyle</span>(<span class="dt">declarations=</span><span class="kw">list</span>(<span class="st">&quot;background-color&quot;</span>=<span class="st">&quot;#FFFF00&quot;</span>))
-cells &lt;-<span class="st"> </span>tbl<span class="op">$</span><span class="kw">getCells</span>(<span class="dt">specifyCellsAsList=</span><span class="ot">TRUE</span>, <span class="dt">cellCoordinates=</span><span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>)))
-cells[[<span class="dv">1</span>]]<span class="op">$</span>style &lt;-<span class="st"> </span>cellHighlight
-<span class="co"># render the table</span>
-tbl<span class="op">$</span><span class="kw">renderTable</span>(<span class="dt">styleNamePrefix=</span><span class="st">&quot;t9&quot;</span>)</code></pre></div>
-<div id="htmlwidget-e8631033fdb8b0ca6251" style="width:auto;height:auto;" class="basictabler html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e8631033fdb8b0ca6251">{"x":{"tableCss":".t9Table {border-collapse: collapse; border: 2px solid rgb(198, 89, 17); }\r\n.t9ColumnHeader {font-family: Garamond, arial; font-size: 0.75em; padding: 2px; border: 1px solid rgb(198, 89, 17); vertical-align: middle; text-align: center; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(237, 125, 49); }\r\n.t9RowHeader {font-family: Garamond, arial; font-size: 0.75em; padding: 2px 8px 2px 2px; border: 1px solid rgb(198, 89, 17); vertical-align: middle; text-align: left; font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(237, 125, 49); }\r\n.t9Cell {font-family: Garamond, arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(198, 89, 17); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); }\r\n.t9Total {font-family: Garamond, arial; font-size: 0.75em; padding: 2px 2px 2px 8px; border: 1px solid rgb(198, 89, 17); vertical-align: middle; text-align: right; color: rgb(0, 0, 0); background-color: rgb(248, 198, 165); }\r\n","tableHtml":"<table class=\"t9Table\">\n  <tr>\n    <td class=\"t9ColumnHeader\">Sale ID<\/td>\n    <td class=\"t9ColumnHeader\">Item<\/td>\n    <td class=\"t9ColumnHeader\">Quantity<\/td>\n    <td class=\"t9ColumnHeader\">Price<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t9RowHeader\">5334<\/td>\n    <td class=\"t9Cell\">Apple<\/td>\n    <td class=\"t9Cell\">5<\/td>\n    <td class=\"t9Cell\">0.34<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t9RowHeader\">5336<\/td>\n    <td class=\"t9Cell\" style=\"background-color: #FFFF00; \">Orange<\/td>\n    <td class=\"t9Cell\">8<\/td>\n    <td class=\"t9Cell\">0.47<\/td>\n  <\/tr>\n  <tr>\n    <td class=\"t9RowHeader\">5338<\/td>\n    <td class=\"t9Cell\">Banana<\/td>\n    <td class=\"t9Cell\">6<\/td>\n    <td class=\"t9Cell\">1.34<\/td>\n  <\/tr>\n<\/table>","settings":[]},"evals":[],"jsHooks":[]}</script>
-<p>In the example above, the default cell style from the theme is still applied. The highlight is applied in addition to the default styling. To stop the base styling being applied, create a new named style and set the baseStyleName property on the cell to the name of the new style.</p>
-<p>For many more examples of styling parts of a table, see the <a href="v05-findingandformatting.html">Finding and Formatting</a> vignette.</p>
+<div id="summary-of-styling-rules" class="section level2">
+<h2>Summary of Styling Rules</h2>
+<p><code>basictabler</code> styles cells using the following rules:</p>
+<ul>
+<li>Each cell in a table has an associated cell type (root / rowHeader / columnHeader / cell / total). This controls the default styling applied to a cell.
+<ul>
+<li>Specify cell type of a new cell: <code>tbl$cells$setCell(1, 2, cellType=&quot;columnHeader&quot;, rawValue=&quot;Item&quot;)</code></li>
+<li>Change cell type of an existing cell: <code>tbl$cells$getCell(3, 2)$cellType &lt;- &quot;columnHeader&quot;</code></li>
+</ul></li>
+<li>The styling theme applied to a table defines a set of styles and the default style for each cell type.
+<ul>
+<li>Create a new simple theme using: <code>getSimpleColoredTblTheme()</code></li>
+<li>Create a new custom theme by writing a function <code>createCustomTheme()</code></li>
+<li>Assign a theme to the table <code>theme</code> property: <code>tbl$theme &lt;- createCustomTheme(tbl)</code></li>
+</ul></li>
+<li>Each individual cell can also have a different style, specified by settings the <code>baseStyleName</code> for the cell.
+<ul>
+<li>Single cell example: <code>tbl$cells$getCell(3, 2)$baseStyleName &lt;- &quot;AltCellStyle&quot;</code></li>
+<li>Alternative single cell example: <code>tbl$setStyling(3, 2, baseStyleName=&quot;AltCellStyle&quot;)</code></li>
+<li>Cell range example: <code>tbl$setStyling(3, 2, 3, 6, baseStyleName=&quot;AltCellStyle&quot;)</code></li>
+</ul></li>
+<li>It is also possible to declare individual style overrides (e.g. a different text colour). These override specific style settings from the named styles.
+<ul>
+<li>Single cell example: <code>tbl$setStyling(3, 2, declarations=list(&quot;text-align&quot;=&quot;left&quot;, &quot;background-color&quot;=&quot;yellow&quot;))</code></li>
+<li>Cell range example: <code>tbl$setStyling(3, 2, 3, 6, declarations=list(&quot;text-align&quot;=&quot;left&quot;, &quot;background-color&quot;=&quot;yellow&quot;))</code></li>
+</ul></li>
+<li>It is possible to specify a new base style and overrides together. The declarations override the settings in the base style.
+<ul>
+<li>Single cell example: <code>tbl$setStyling(3, 2, baseStyleName=&quot;AltCellStyle&quot;, declarations=list(&quot;text-align&quot;=&quot;left&quot;, &quot;background-color&quot;=&quot;yellow&quot;))</code></li>
+<li>Cell range example: <code>tbl$setStyling(3, 2, 3, 6, baseStyleName=&quot;AltCellStyle&quot;, declarations=list(&quot;text-align&quot;=&quot;left&quot;, &quot;background-color&quot;=&quot;yellow&quot;))</code></li>
+</ul></li>
+<li>Instead of specifying the declarations as a list, an inline style can be declared. This is an unnamed style object that is used for one or multiple cells and is not part of the table theme.
+<ul>
+<li>See the “Changing cell appearance after cells have been created” section in this vignette for an example.</li>
+<li>See the “Finding and Formatting” vignette for more examples.</li>
+</ul></li>
+</ul>
+</div>
+<div id="styling-output" class="section level2">
+<h2>Styling Output</h2>
+<p>When rendering to HTML, two styles settings are written by <code>basictabler</code> in the HTML for each table cell:</p>
+<p><strong>HTML class attribute</strong></p>
+<p>Example: &lt; td class=“StyleName” &gt;</p>
+<ul>
+<li>The <code>cell$baseStyleName</code> is used as the HTML class name.</li>
+<li>If no <code>cell$baseStyleName</code> has been explicitly set for a cell, then the base style name (for the relevant cell type) specified in the table theme is used.</li>
+<li>The class names can be prefixed if required - useful when using several tables on the same HTML page.</li>
+<li>It is also possible to generate class names that refer to styles not defined in the table - useful when the styles are defined in an external CSS file.</li>
+</ul>
+<p><strong>HTML style attribute</strong></p>
+<p>Example: &lt; td style=“text-align:left;background-color:yellow;” &gt;</p>
+<p>The cell style override declarations (= the declarations of the inline style) are used as the value of the HTML style attribute for each cell.</p>
 </div>
 <div id="further-reading" class="section level2">
 <h2>Further Reading</h2>

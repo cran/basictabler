@@ -52,27 +52,42 @@ constructing the table, where the elapsed time > 0.1 seconds.}
 \describe{
   \item{Documentation}{For more complete explanations and examples please see
   the extensive vignettes supplied with this package.}
-  \item{\code{new(argumentCheckMode="auto", traceEnabled=FALSE,
-  traceFile=NULL)}}{Create a new table, including optionally enabling debug
-  logging.}
-
+  \item{\code{new(argumentCheckMode="auto", theme=NULL,
+  replaceExistingStyles=FALSE, tableStyle=NULL, headingStyle=NULL,
+  cellStyle=NULL, totalStyle=NULL, traceEnabled=FALSE,
+  traceFile=NULL)}}{Create a new table, optionally specifying the name of a
+  built in theme or CSS style declarations for the different cells within the
+  table.}
   \item{\code{addData(dataFrame=NULL, columnNamesAsColumnHeaders=TRUE,
   explicitColumnHeaders=NULL, rowNamesAsRowHeaders=FALSE,
-  firstColumnAsRowHeaders=FALSE, explicitRowHeaders=NULL,
-  columnFormats=NULL)}}{Generate the table from a data frame, specifying
+  firstColumnAsRowHeaders=FALSE, explicitRowHeaders=NULL, columnFormats=NULL,
+  baseStyleNames=NULL)}}{Generate the table from a data frame, specifying
   headers and value formatting.}
   \item{\code{addMatrix(matrix=NULL, columnNamesAsColumnHeaders=TRUE,
   explicitColumnHeaders=NULL, rowNamesAsRowHeaders=FALSE,
-  explicitRowHeaders=NULL, columnFormats=NULL)}}{Generate the table from a
-  matrix, specifying headers and value formatting.}
+  explicitRowHeaders=NULL, columnFormats=NULL,
+  baseStyleNames=NULL)}}{Generate the table from a matrix, specifying headers
+  and value formatting.l}
+  \item{\code{mergeCells(rFrom, cFrom, rSpan=NULL, cSpan=NULL,
+  rTo=NULL, cTo=NULL)}}{Merge cells in the table.  This does not delete
+  the other cells covered by the merged cell.  When the table is output, the
+  top-left most cell in the merged cell range is rendered over the other
+  cells (which are effectively hidden).}
+  \item{\code{unmergeCells(r, c, errorIfNotFound=TRUE)}}{Delete a merged cell
+  range by specifying any of the cells covered by the merged cell.}
+  \item{\code{applyCellMerges()}}{Updates the isMerged, isMergeRoot and
+  mergeIndex properties of the cells.}
   \item{\code{formatValue(value=NULL, format=NULL)}}{Format a value for
   display, using either sprintf(), format() or a custom formatting function.}
   \item{\code{addStyle(styleName, declarations)}}{Define a new TableStyle and
   add it to the TableStyles collection.}
   \item{\code{createInlineStyle(baseStyleName, declarations)}}{Create a
   TableStyle object that can be used to style individual cells in the table.}
+  \item{\code{setStyling(rFrom=NULL, cFrom=NULL, rTo=NULL, cTo=NULL,
+  cells=NULL, baseStyleName=NULL, style=NULL, declarations=NULL)}}{Set the
+  style settings across a range of cells.}
   \item{\code{resetCells()}}{Clear the cells of the table.}
-  \item{\code{getCells(specifyCellsAsList=FALSE, rowNumbers=NULL,
+  \item{\code{getCells(specifyCellsAsList=TRUE, rowNumbers=NULL,
   columnNumbers=NULL, cellCoordinates=NULL)}}{Retrieve cells by a combination
   of row and/or column numbers.}
   \item{\code{findCells(rowNumbers=NULL, columnNumbers=NULL,

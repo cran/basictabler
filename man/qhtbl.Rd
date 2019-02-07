@@ -7,7 +7,9 @@
 qhtbl(dataFrameOrMatrix, columnNamesAsColumnHeaders = TRUE,
   explicitColumnHeaders = NULL, rowNamesAsRowHeaders = FALSE,
   firstColumnAsRowHeaders = FALSE, explicitRowHeaders = NULL,
-  columnFormats = NULL, ...)
+  columnFormats = NULL, theme = NULL, replaceExistingStyles = FALSE,
+  tableStyle = NULL, headingStyle = NULL, cellStyle = NULL,
+  totalStyle = NULL, ...)
 }
 \arguments{
 \item{dataFrameOrMatrix}{The data frame or matrix containing the data to be
@@ -30,7 +32,26 @@ frame as row headings.}
 either an sprintf() character value, a list of format() arguments or an
 R function that provides custom formatting logic.}
 
-\item{...}{Additional arguments, currently only argumentCheckMode.}
+\item{theme}{Either the name of a built-in theme (default, largeplain,
+compact or blank/none) or a list which specifies the default formatting for
+the table.}
+
+\item{replaceExistingStyles}{TRUE to completely replace the default styling
+with the specified tableStyle, headingStyle, cellStyle and/or totalStyle}
+
+\item{tableStyle}{A list of CSS style declarations that apply to the table.}
+
+\item{headingStyle}{A list of CSS style declarations that apply to the
+heading cells in the table.}
+
+\item{cellStyle}{A list of CSS style declarations that apply to the normal
+cells in the table.}
+
+\item{totalStyle}{A list of CSS style declarations that apply to the total
+cells in the table.}
+
+\item{...}{Additional arguments, currently only argumentCheckMode and
+styleNamePrefix.}
 }
 \value{
 A basic table.
