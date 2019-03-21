@@ -68,7 +68,7 @@
 #'   the extensive vignettes supplied with this package.}
 #'   \item{\code{new(argumentCheckMode="auto", theme=NULL,
 #'   replaceExistingStyles=FALSE, tableStyle=NULL, headingStyle=NULL,
-#'   cellStyle=NULL, totalStyle=NULL, traceEnabled=FALSE,
+#'   cellStyle=NULL, totalStyle=NULL, compatibility=NULL, traceEnabled=FALSE,
 #'   traceFile=NULL)}}{Create a new table, optionally specifying the name of a
 #'   built in theme or CSS style declarations for the different cells within the
 #'   table.}
@@ -137,7 +137,7 @@ BasicTable <- R6::R6Class("BasicTable",
   public = list(
     initialize = function(argumentCheckMode="auto", theme=NULL, replaceExistingStyles=FALSE,
                           tableStyle=NULL, headingStyle=NULL, cellStyle=NULL, totalStyle=NULL,
-                          traceEnabled=FALSE, traceFile=NULL) {
+                          compatibility=NULL, traceEnabled=FALSE, traceFile=NULL) {
       checkArgument(4, TRUE, "BasicTable", "initialize", argumentCheckMode, missing(argumentCheckMode), allowMissing=TRUE, allowNull=FALSE, allowedClasses="character", allowedValues=c("auto", "none", "minimal", "basic", "balanced", "full"))
       checkArgument(4, TRUE, "BasicTable", "initialize", theme, missing(theme), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("character", "list", "TableStyles"), allowedListElementClasses="character")
       checkArgument(4, TRUE, "BasicTable", "initialize", replaceExistingStyles, missing(replaceExistingStyles), allowMissing=TRUE, allowNull=FALSE, allowedClasses="logical")
@@ -145,6 +145,7 @@ BasicTable <- R6::R6Class("BasicTable",
       checkArgument(4, TRUE, "BasicTable", "initialize", headingStyle, missing(headingStyle), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("character", "list", "TableStyle"))
       checkArgument(4, TRUE, "BasicTable", "initialize", cellStyle, missing(cellStyle), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("character", "list", "TableStyle"))
       checkArgument(4, TRUE, "BasicTable", "initialize", totalStyle, missing(totalStyle), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("character", "list", "TableStyle"))
+      checkArgument(4, TRUE, "BasicTable", "initialize", compatibility, missing(compatibility), allowMissing=TRUE, allowNull=TRUE, allowedClasses="list", allowedListElementClasses=c("character", "integer", "numeric", "logical"))
       checkArgument(4, TRUE, "BasicTable", "initialize", traceEnabled, missing(traceEnabled), allowMissing=TRUE, allowNull=FALSE, allowedClasses="logical")
       checkArgument(4, TRUE, "BasicTable", "initialize", traceFile, missing(traceFile), allowMissing=TRUE, allowNull=TRUE, allowedClasses="character")
       if(argumentCheckMode=="auto") {
@@ -160,6 +161,7 @@ BasicTable <- R6::R6Class("BasicTable",
       else if(argumentCheckMode=="balanced") private$p_argumentCheckMode <- 3
       else if(argumentCheckMode=="full") private$p_argumentCheckMode <- 4
       else stop("BasicTable$initialize():  Unknown argumentCheckMode encountered.", call. = FALSE)
+      private$p_compatibility <- compatibility
       private$p_traceEnabled <- traceEnabled
       if(private$p_traceEnabled&(!is.null(traceFile))) {
         private$p_traceFile <- file(traceFile, open="w")
@@ -508,6 +510,12 @@ BasicTable <- R6::R6Class("BasicTable",
         checkArgument(private$p_argumentCheckMode, FALSE, "BasicTable", "mergeCells", cTo, missing(cTo), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("integer", "numeric"))
       }
       if(private$p_traceEnabled==TRUE) self$trace("BasicTable$mergeCells", "Merging cells...", list(rFrom=rFrom, cFrom=cFrom, rSpan=rSpan, cSpan=cSpan, rTo=rTo, cTo=cTo))
+      # check we actually have some cells to merge
+      isRealMerge <- FALSE
+      isRealMerge <- isRealMerge || ((!is.null(rSpan)) && (rSpan > 1))
+      isRealMerge <- isRealMerge || ((!is.null(cSpan)) && (cSpan > 1))
+      if(!isRealMerge) { return(invisible()) }
+      # check no intersecting merged cell
       existingRange <- private$p_mergedCells$findIntersectingRange(rFrom=rFrom, cFrom=cFrom, rSpan=rSpan, cSpan=cSpan, rTo=rTo, cTo=cTo)
       if(!is.null(existingRange)) {
         stop(paste0("BasicTable$mergeCells(): An existing merged cell range intersects with the specified cell range."), call. = FALSE)
@@ -649,7 +657,7 @@ BasicTable <- R6::R6Class("BasicTable",
             if(!missing(style)) { cell$style <- ifelse(is.null(style, NULL, style$getCopy())) }
             if((!missing(declarations))&&(!is.null(declarations))) {
               if (is.null(cell$style)) { cell$style <- TableStyle$new(parentTable=self, declarations=declarations) }
-              else { cell$setPropertyValues(declarations) }
+              else { cell$style$setPropertyValues(declarations) }
             }
           }
         }
@@ -667,7 +675,7 @@ BasicTable <- R6::R6Class("BasicTable",
               if(!missing(style)) { cell$style <- ifelse(is.null(style), NULL, style$getCopy()) }
               if((!missing(declarations))&&(!is.null(declarations))) {
                 if (is.null(cell$style)) { cell$style <- TableStyle$new(parentTable=self, declarations=declarations) }
-                else { cell$setPropertyValues(declarations) }
+                else { cell$style$setPropertyValues(declarations) }
               }
             }
           }
@@ -1069,6 +1077,7 @@ BasicTable <- R6::R6Class("BasicTable",
   ),
   active = list(
     argumentCheckMode = function(value) { return(private$p_argumentCheckMode) },
+    compatibility = function(value) { return(private$p_compatibility) },
     traceEnabled = function(value){
       if(missing(value)) return(invisible(private$p_traceEnabled))
       else {
@@ -1143,6 +1152,7 @@ BasicTable <- R6::R6Class("BasicTable",
     p_mergedCells = NULL,
     p_htmlRenderer = NULL,
     p_openxlsxRenderer = NULL,
+    p_compatibility = NULL,
     p_traceFile = NULL,
     p_timings = NULL,
     # simple mechanism to track the activities/time taken to construct the table
