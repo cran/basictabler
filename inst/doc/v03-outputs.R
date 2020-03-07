@@ -1,4 +1,4 @@
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -14,7 +14,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
             columnFormats=list(NULL, NULL, NULL, "%.2f"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE, comment=""---------------------------
+## ---- message=FALSE, warning=FALSE, comment=""--------------------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -32,7 +32,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 # output table
 tbl
 
-## ---- message=FALSE, warning=FALSE, comment=""---------------------------
+## ---- message=FALSE, warning=FALSE, comment=""--------------------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -51,7 +51,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 cat(paste(tbl$getHtml(), sep="", collapse="\n"))
 cat(tbl$getCss())
 
-## ---- message=FALSE, warning=FALSE, eval=TRUE, comment=""----------------
+## ---- message=FALSE, warning=FALSE, eval=TRUE, comment=""---------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -69,7 +69,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 # output as matrix
 tbl$asMatrix()
 
-## ---- message=FALSE, warning=FALSE, eval=TRUE, comment=""----------------
+## ---- message=FALSE, warning=FALSE, eval=TRUE, comment=""---------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -87,7 +87,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 # output as matrix
 tbl$asMatrix(firstRowAsColumnNames=TRUE, firstColumnAsRowNames=TRUE, rawValue=TRUE)
 
-## ---- message=FALSE, warning=FALSE, eval=TRUE, comment=""----------------
+## ---- message=FALSE, warning=FALSE, eval=TRUE, comment=""---------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")

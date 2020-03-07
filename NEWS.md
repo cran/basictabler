@@ -1,3 +1,9 @@
+basictabler 0.3.1
+================
+
+This is a maintenance release that fixes a couple of compatibility issues around the new default of stringsAsFactors=FALSE in data.frame() in the upcoming R 4.0.0 release.
+
+
 basictabler 0.3.0
 ================
 

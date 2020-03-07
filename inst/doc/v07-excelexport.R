@@ -1,4 +1,4 @@
-## ---- message=FALSE, warning=FALSE, eval=FALSE---------------------------
+## ---- message=FALSE, warning=FALSE, eval=FALSE--------------------------------
 #  # aggregate the sample data to make a small data frame
 #  library(basictabler)
 #  library(dplyr)
@@ -30,7 +30,7 @@
 #                           topRowNumber=1, leftMostColumnNumber=1, applyStyles=FALSE)
 #  saveWorkbook(wb, file="C:\\test.xlsx", overwrite = TRUE)
 
-## ---- message=FALSE, warning=FALSE, eval=FALSE---------------------------
+## ---- message=FALSE, warning=FALSE, eval=FALSE--------------------------------
 #  # aggregate the sample data to make a small data frame
 #  library(basictabler)
 #  library(dplyr)
@@ -63,7 +63,7 @@
 #                           applyStyles=TRUE, mapStylesFromCSS=TRUE)
 #  saveWorkbook(wb, file="C:\\test.xlsx", overwrite = TRUE)
 
-## ---- message=FALSE, warning=FALSE, eval=FALSE---------------------------
+## ---- message=FALSE, warning=FALSE, eval=FALSE--------------------------------
 #  # aggregate the sample data to make a small data frame
 #  library(basictabler)
 #  library(dplyr)

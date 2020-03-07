@@ -1,32 +1,32 @@
-## ---- message=FALSE------------------------------------------------------
+## ---- message=FALSE-----------------------------------------------------------
 # the qhtbl() function is explained later in this vignette
 library(basictabler)
 qhtbl(t(bhmsummary[1:4,]), rowNamesAsRowHeaders=TRUE)
 
-## ---- message=FALSE, warning=FALSE, comment=""---------------------------
+## ---- message=FALSE, warning=FALSE, comment=""--------------------------------
 library(basictabler)
 qtbl(data.frame(a=1:2, b=3:4))
 
-## ---- message=FALSE, eval=FALSE, warning=FALSE, comment=""---------------
+## ---- message=FALSE, eval=FALSE, warning=FALSE, comment=""--------------------
 #  library(basictabler)
 #  tbl <- qtbl(data.frame(a=1:2, b=3:4))
 
-## ---- message=FALSE, eval=FALSE, warning=FALSE, comment=""---------------
+## ---- message=FALSE, eval=FALSE, warning=FALSE, comment=""--------------------
 #  library(basictabler)
 #  tbl <- BasicTable$new()
 #  tbl$addData(data.frame(a=1:2, b=3:4))
 
-## ---- message=FALSE, eval=TRUE, warning=FALSE, comment=""----------------
+## ---- message=FALSE, eval=TRUE, warning=FALSE, comment=""---------------------
 library(basictabler)
 tbl <- BasicTable$new()
 tbl$addData(data.frame(a=1:2, b=3:4))
 tbl$renderTable()
 
-## ---- message=FALSE, eval=TRUE, warning=FALSE, comment=""----------------
+## ---- message=FALSE, eval=TRUE, warning=FALSE, comment=""---------------------
 library(basictabler)
 qhtbl(data.frame(a=1:2, b=3:4))
 
-## ---- message=FALSE, warning=FALSE, comment=""---------------------------
+## ---- message=FALSE, warning=FALSE, comment=""--------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -53,7 +53,7 @@ qhtbl(tocsummary, firstColumnAsRowHeaders=TRUE,
                                     "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
             columnFormats=columnFormats)
 
-## ---- message=FALSE, warning=FALSE, comment=""---------------------------
+## ---- message=FALSE, warning=FALSE, comment=""--------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -96,7 +96,7 @@ tbl$cells$setRow(6, cellTypes=c("rowHeader", "total", "total", "total", "total",
 # render the table
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE, echo=FALSE---------------------------
+## ---- message=FALSE, warning=FALSE, echo=FALSE--------------------------------
 # define the colours
 blue1Colors <- list(
   headerBackgroundColor = "rgb(68, 114, 196)",
@@ -127,7 +127,7 @@ theme <- getSimpleColoredTblTheme(parentTable=tbl, colors=blue1Colors, fontName=
 tbl$theme <- theme
 tbl$renderTable(styleNamePrefix="t3")
 
-## ---- message=FALSE, warning=FALSE, echo=FALSE---------------------------
+## ---- message=FALSE, warning=FALSE, echo=FALSE--------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)

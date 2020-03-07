@@ -1,4 +1,4 @@
-## ---- message=FALSE, warning=FALSE, eval=FALSE---------------------------
+## ---- message=FALSE, warning=FALSE, eval=FALSE--------------------------------
 #  tableStyles$addStyle(styleName="ColumnHeader", list(
 #      "font-family"="arial",
 #      "font-size"="0.75em",
@@ -12,7 +12,7 @@
 #      "xl-wrap-text"="wrap"
 #    ))
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -31,7 +31,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 tbl$theme <- "default"  # this theme is already the default, so this line isn't really needed
 tbl$renderTable(styleNamePrefix="t0")
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -50,7 +50,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 tbl$theme <- "compact"
 tbl$renderTable(styleNamePrefix="t1")
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -69,7 +69,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 tbl$theme <- "largeplain"
 tbl$renderTable(styleNamePrefix="t2")
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # define the font and colours
 simpleBlueTheme <- list(
   fontName="Verdana, Arial",
@@ -100,7 +100,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 tbl$theme <- simpleBlueTheme
 tbl$renderTable(styleNamePrefix="t3")
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # define the colours
 simpleGrayTheme <- list(
   fontName="Courier New, Courier",
@@ -131,7 +131,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 tbl$theme <- simpleGrayTheme
 tbl$renderTable(styleNamePrefix="t4")
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # define the colours
 simpleGreenTheme <- list(
   fontName="Helvetica, arial",
@@ -162,7 +162,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 tbl$theme <- simpleGreenTheme
 tbl$renderTable(styleNamePrefix="t6")
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -200,7 +200,7 @@ tbl <- qtbl(tocsummary, firstColumnAsRowHeaders=TRUE,
 # render table
 tbl$renderTable(styleNamePrefix="t9")
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -234,7 +234,7 @@ tbl$setStyling(2, 1, 5, 1, declarations=list("text-align"="left"))
 # render table
 tbl$renderTable(styleNamePrefix="t10")
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -265,7 +265,7 @@ colStyleNames <- c("Cell", "Cell", "AltCell", "Cell")
 tbl$addData(df, explicitColumnHeaders=colNames, columnFormats=colFormats, baseStyleNames=colStyleNames)
 tbl$renderTable(styleNamePrefix="t11")
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -298,7 +298,7 @@ tbl$cells$setColumn(4, cellTypes="cell", rawValues=prices,
                     formats=list("%.2f"))
 tbl$renderTable(styleNamePrefix="t13")
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # cell types for the cells in each row
 cellTypes <- c("rowHeader", "cell", "cell", "cell")
 
@@ -333,7 +333,7 @@ tbl$cells$setRow(4, cellTypes=cellTypes, formats=formats,
                  rawValues=list(5338, "Banana", 6, 1.3443243))
 tbl$renderTable(styleNamePrefix="t14")
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # cell types for the cells in each row
 cellTypes <- c("rowHeader", "cell", "cell", "cell")
 
@@ -380,7 +380,7 @@ tbl$cells$setRow(4, cellTypes=cellTypes, formats=formats,
                  rawValues=list(5338, "Banana", 6, 1.3443243))
 tbl$renderTable(styleNamePrefix="t15")
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 
 library(basictabler)
 tbl <- BasicTable$new()
@@ -415,7 +415,7 @@ tbl$cells$setCell(3, 3, cellType="cell", rawValue=8, styleDeclarations=list("bac
 # render the table
 tbl$renderTable(styleNamePrefix="t12")
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # define the colours
 orangeColors <- list(
   headerBackgroundColor = "rgb(237, 125, 49)",
@@ -456,13 +456,13 @@ cell$style <- cellHighlight
 # render the table
 tbl$renderTable(styleNamePrefix="t16")
 
-## ---- eval=FALSE---------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------
 #  # apply inline style to multiple cells
 #  highlight <- tbl$createInlineStyle(declarations=list("background-color"="#FFCC66"))
 #  cells <- tbl$getCells(specifyCellsAsList=TRUE, rowNumbers=c(1, 3))
 #  lst <- lapply(cells, function(cell) {cell$style <- highlight})
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 # define the theme and styles
 createCustomTheme <- function(parentTable=NULL, themeName="myCustomTheme") {
   tableStyles <- TableStyles$new(parentTable=parentTable, themeName=themeName)
