@@ -116,7 +116,8 @@ tbl$renderTable()
 cell <- tbl$cells$getCell(2, 4)
 
 # output the cell properties
-summary <- list(rowNumber=cell$rowNumber, columnNumber=cell$columnNumber, cellType=cell$cellType,
+summary <- list(instanceId=cell$instanceId,
+                rowNumber=cell$rowNumber, columnNumber=cell$columnNumber, cellType=cell$cellType,
                 visible=cell$visible, rawValue=cell$rawValue, formattedValue=cell$formattedValue,
                 baseStyleName=ifelse(is.null(cell$baseStyleName), "", cell$baseStyleName), 
                 style=ifelse(is.null(cell$style), "", cell$style$asCSSRule()))
@@ -138,8 +139,12 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
             explicitColumnHeaders=c("Sale ID", "Item", "Quantity", "Price"),
             columnFormats=list(NULL, NULL, NULL, "%.2f"))
 
-# merge the cells and specify new heading
+# merge the cells
 tbl$mergeCells(rFrom=1, cFrom=2, rSpan=1, cSpan=2)
+# or alternatively: tbl$mergeCells(rowNumbers=1, columnNumbers=c(2,3))
+# or alternatively: tbl$mergeCells(rFrom=1, cFrom=2, rTo=1, cTo=3)
+
+# specify the new heading
 cell <- tbl$cells$getCell(1, 2)
 cell$rawValue <- "Item & Qty"
 cell$formattedValue <- "Item & Qty"

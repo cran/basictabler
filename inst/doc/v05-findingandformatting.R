@@ -379,3 +379,37 @@ cells <- tbl$findCells(columnNumbers=5:6, minValue=60, maxValue=100, includeNull
 tbl$setStyling(cells=cells, declarations=list("background-color"="#C6EFCE", "color"="#006100"))
 tbl$renderTable()
 
+## ---- message=FALSE, warning=FALSE--------------------------------------------
+# aggregate the sample data to make a small data frame
+library(basictabler)
+library(dplyr)
+tocsummary <- bhmsummary %>%
+  group_by(TOC) %>%
+  summarise(OnTimeArrivals=sum(OnTimeArrivals),
+            OnTimeDepartures=sum(OnTimeDepartures),
+            TotalTrains=sum(TrainCount)) %>%
+  ungroup() %>%
+  mutate(OnTimeArrivalPercent=OnTimeArrivals/TotalTrains*100,
+         OnTimeDeparturePercent=OnTimeDepartures/TotalTrains*100) %>%
+  arrange(TOC)
+
+# formatting values (explained in the introduction vignette)
+columnFormats=list(NULL, list(big.mark=","), list(big.mark=","), list(big.mark=","), "%.1f", "%.1f")
+
+# create the table
+tbl <- BasicTable$new()
+tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
+            explicitColumnHeaders=c("TOC", "On-Time Arrivals", "On-Time Departures",
+                                    "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
+            columnFormats=columnFormats)
+
+# apply the conditional formatting
+cells <- tbl$getCells(rowNumbers=2:5, columnNumbers=5:6, matchMode="combinations")
+tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="color", mapType="continuous",
+               mappings=list(25, "#FFC7CE", 40, "#FFEB9C", 60, "#C6EFCE", 100))
+tbl$mapStyling(cells=cells, styleProperty="color", valueType="color", mapType="continuous",
+               mappings=list(25, "#9C0006", 40, "#9C5700", 60, "#006100", 100))
+
+# render
+tbl$renderTable()
+

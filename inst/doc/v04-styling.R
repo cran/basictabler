@@ -73,6 +73,7 @@ tbl$renderTable(styleNamePrefix="t2")
 # define the font and colours
 simpleBlueTheme <- list(
   fontName="Verdana, Arial",
+  fontSize="0.75em",
   headerBackgroundColor = "rgb(68, 114, 196)",
   headerColor = "rgb(255, 255, 255)",
   cellBackgroundColor = "rgb(255, 255, 255)",
@@ -104,6 +105,7 @@ tbl$renderTable(styleNamePrefix="t3")
 # define the colours
 simpleGrayTheme <- list(
   fontName="Courier New, Courier",
+  fontSize="0.75em",
   headerBackgroundColor = "rgb(128, 128, 128)",
   headerColor = "rgb(255, 255, 255)",
   cellBackgroundColor = "rgb(255, 255, 255)",
@@ -135,6 +137,7 @@ tbl$renderTable(styleNamePrefix="t4")
 # define the colours
 simpleGreenTheme <- list(
   fontName="Helvetica, arial",
+  fontSize="0.75em",
   headerBackgroundColor = "rgb(112, 173, 71)",
   headerColor = "rgb(255, 255, 255)",
   cellBackgroundColor="rgb(255, 255, 255)",
@@ -182,6 +185,7 @@ columnFormats=list(NULL, list(big.mark=","), list(big.mark=","), list(big.mark="
 # simple theme
 simpleBlueTheme <- list(
   fontName="Verdana, Arial",
+  fontSize="0.75em",
   headerBackgroundColor = "rgb(68, 114, 196)",
   headerColor = "rgb(255, 255, 255)",
   cellBackgroundColor = "rgb(255, 255, 255)",
@@ -417,7 +421,9 @@ tbl$renderTable(styleNamePrefix="t12")
 
 ## ---- message=FALSE, warning=FALSE--------------------------------------------
 # define the colours
-orangeColors <- list(
+orangeTheme <- list(
+  fontName="Garamond, arial",
+  fontSize="0.75em",
   headerBackgroundColor = "rgb(237, 125, 49)",
   headerColor = "rgb(255, 255, 255)",
   cellBackgroundColor = "rgb(255, 255, 255)",
@@ -442,8 +448,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
             columnFormats=list(NULL, NULL, NULL, "%.2f"))
 
 # theme the table and render
-theme <- getSimpleColoredTblTheme(parentTable=tbl, colors=orangeColors, fontName="Garamond, arial")
-tbl$theme <- theme
+tbl$theme <- orangeTheme
 
 # apply an additional highlight to one cell (3rd row, 2nd column)
 tbl$setStyling(3, 2, declarations=list("background-color"="#FFFF00"))
@@ -463,11 +468,71 @@ tbl$renderTable(styleNamePrefix="t16")
 #  lst <- lapply(cells, function(cell) {cell$style <- highlight})
 
 ## ---- message=FALSE, warning=FALSE--------------------------------------------
+library(basictabler)
+library(dplyr)
+tocsummary <- bhmsummary %>%
+  group_by(TOC) %>%
+  summarise(OnTimeArrivals=sum(OnTimeArrivals),
+            OnTimeDepartures=sum(OnTimeDepartures),
+            TotalTrains=sum(TrainCount)) %>%
+  ungroup() %>%
+  mutate(OnTimeArrivalPercent=OnTimeArrivals/TotalTrains*100,
+         OnTimeDeparturePercent=OnTimeDepartures/TotalTrains*100) %>%
+  arrange(TOC)
+
+# formatting values (explained in the introduction vignette)
+columnFormats=list(NULL, list(big.mark=","), list(big.mark=","), list(big.mark=","), "%.1f", "%.1f")
+
+## ---- message=FALSE, warning=FALSE--------------------------------------------
+tbl <- BasicTable$new()
+tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
+            explicitColumnHeaders=c("TOC", "On-Time Arrivals", "On-Time Departures",
+                                    "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
+            columnFormats=columnFormats)
+cells <- tbl$getCells(rowNumbers=2:5, columnNumbers=2:4, matchMode="combinations")
+tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="color", mapType="logic",
+              mappings=list("v==2348", "pink", "v<3000", "red", "3000<=v<15000", 
+                            "yellow", "v>15000", "green"))
+tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="text", mapType="logic",
+              mappings=list("v==1404", "red"))
+tbl$renderTable()
+
+## ---- message=FALSE, warning=FALSE--------------------------------------------
+tbl <- BasicTable$new()
+tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
+            explicitColumnHeaders=c("TOC", "On-Time Arrivals", "On-Time Departures",
+                                    "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
+            columnFormats=columnFormats)
+cells <- tbl$getCells(rowNumbers=2:5, columnNumbers=2:4, matchMode="combinations")
+tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="color", mapType="range",
+              mappings=list(0, "red", 3000, "orange", 5000, "yellow", 15000, "green"))
+tbl$renderTable()
+
+## ---- message=FALSE, warning=FALSE--------------------------------------------
+tbl <- BasicTable$new()
+tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
+            explicitColumnHeaders=c("TOC", "On-Time Arrivals", "On-Time Departures",
+                                    "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
+            columnFormats=columnFormats)
+cells <- tbl$getCells(rowNumbers=2:5, columnNumbers=2:4, matchMode="combinations")
+redclr <- function(x, cell) {
+  clr <- 255-floor(140*cell$columnNumber/3)
+  return(paste0("#",
+                format(as.hexmode(255), width=2),
+                format(as.hexmode(clr), width=2),
+                format(as.hexmode(clr), width=2)))
+}
+tbl$mapStyling(cells=cells, styleProperty="background-color", mappings=redclr)
+tbl$renderTable()
+
+## ---- message=FALSE, warning=FALSE--------------------------------------------
+library(basictabler)
 # define the theme and styles
 createCustomTheme <- function(parentTable=NULL, themeName="myCustomTheme") {
   tableStyles <- TableStyles$new(parentTable=parentTable, themeName=themeName)
   # borders in purple
   tableStyles$addStyle(styleName="Table", list(
+      "display"="table",
       "border-collapse"="collapse",
       "border"="2px solid #B28DFF"
     ))

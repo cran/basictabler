@@ -31,7 +31,7 @@ This 'Quick Start' describes one easy method of styling table cells.  A fuller e
 
 Cells in a table are styled using CSS.  The quickest way to apply styles to individual cells in a table is using:
 
-`tbl$setStyling(rFrom, cFrom, rTo, cTo, cells, baseStyleName, style, declarations)`
+`tbl$setStyling(rFrom, cFrom, rTo, cTo, rowNumbers, columnNumbers, cells, cellType, visible, baseStyleName, style, declarations)`
 
 To apply styles to a single cell, e.g. at row 1, column 2:
 
@@ -40,6 +40,8 @@ To apply styles to a single cell, e.g. at row 1, column 2:
 To apply styles to a range of cells, e.g. rows 2 to 3 and columns 1 to 5:
 
 `tbl$setStyling(2, 1, 3, 5, declarations=list("font-weight"="bold", "text-align"="center")`
+or equivalently:
+`tbl$setStyling(rowNumbers=2:3, columnNumbers=1:5, declarations=list("font-weight"="bold", "text-align"="center")`
 
 The above sets CSS style attributes on the individual cells.  This is quick and easy, though very verbose.  Named styles are more efficient for large tables (hundreds/thousands of cells) and are described in the following sections. 
 
@@ -93,6 +95,8 @@ The `basictabler` package also supports outputting to Excel files.  The Excel ou
 
 The `basictabler` package includes three basic themes:
 
+### Default Theme
+
 ```{r, message=FALSE, warning=FALSE}
 # data for the table
 saleIds <- c(5334, 5336, 5338)
@@ -113,6 +117,8 @@ tbl$theme <- "default"  # this theme is already the default, so this line isn't 
 tbl$renderTable(styleNamePrefix="t0")
 ```
 
+### Compact Theme
+
 ```{r, message=FALSE, warning=FALSE}
 # data for the table
 saleIds <- c(5334, 5336, 5338)
@@ -132,6 +138,8 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 tbl$theme <- "compact"
 tbl$renderTable(styleNamePrefix="t1")
 ```
+
+### Large Plain Theme
 
 ```{r, message=FALSE, warning=FALSE}
 # data for the table
@@ -161,6 +169,7 @@ Simple themes can be defined using a list.  Several examples are shown below.
 # define the font and colours
 simpleBlueTheme <- list(
   fontName="Verdana, Arial",
+  fontSize="0.75em",
   headerBackgroundColor = "rgb(68, 114, 196)",
   headerColor = "rgb(255, 255, 255)",
   cellBackgroundColor = "rgb(255, 255, 255)",
@@ -193,6 +202,7 @@ tbl$renderTable(styleNamePrefix="t3")
 # define the colours
 simpleGrayTheme <- list(
   fontName="Courier New, Courier",
+  fontSize="0.75em",
   headerBackgroundColor = "rgb(128, 128, 128)",
   headerColor = "rgb(255, 255, 255)",
   cellBackgroundColor = "rgb(255, 255, 255)",
@@ -225,6 +235,7 @@ tbl$renderTable(styleNamePrefix="t4")
 # define the colours
 simpleGreenTheme <- list(
   fontName="Helvetica, arial",
+  fontSize="0.75em",
   headerBackgroundColor = "rgb(112, 173, 71)",
   headerColor = "rgb(255, 255, 255)",
   cellBackgroundColor="rgb(255, 255, 255)",
@@ -277,6 +288,7 @@ columnFormats=list(NULL, list(big.mark=","), list(big.mark=","), list(big.mark="
 # simple theme
 simpleBlueTheme <- list(
   fontName="Verdana, Arial",
+  fontSize="0.75em",
   headerBackgroundColor = "rgb(68, 114, 196)",
   headerColor = "rgb(255, 255, 255)",
   cellBackgroundColor = "rgb(255, 255, 255)",
@@ -547,7 +559,9 @@ The individual cells in the table can have their appearance changed by retrievin
 
 ```{r, message=FALSE, warning=FALSE}
 # define the colours
-orangeColors <- list(
+orangeTheme <- list(
+  fontName="Garamond, arial",
+  fontSize="0.75em",
   headerBackgroundColor = "rgb(237, 125, 49)",
   headerColor = "rgb(255, 255, 255)",
   cellBackgroundColor = "rgb(255, 255, 255)",
@@ -572,8 +586,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
             columnFormats=list(NULL, NULL, NULL, "%.2f"))
 
 # theme the table and render
-theme <- getSimpleColoredTblTheme(parentTable=tbl, colors=orangeColors, fontName="Garamond, arial")
-tbl$theme <- theme
+tbl$theme <- orangeTheme
 
 # apply an additional highlight to one cell (3rd row, 2nd column)
 tbl$setStyling(3, 2, declarations=list("background-color"="#FFFF00"))
@@ -593,7 +606,10 @@ The `tbl$setStyling()` function is used in the example above.  This function has
 
 * `rFrom` and `cFrom` are the coordinates of the cell where the styling is to be applied.  If the styling is being applied to multiple cells, this is the top-left cell in the rectangular cell range where the styling is to be applied.
 * `rTo` and `cTo`  are the coordinates of the bottom right cell when styling is being applied to a rectangular range of cells.  If styling is only being applied to a single cell, these arguments are not needed. 
+* `rowNumbers` and `columnNumbers` are integer vectors of row and/or column numbers specifying where the styling is to be applied.  If both `rowNumbers` and `columnNumbers` are specified, then the cells at the intersection of the specified row numbers and column numbers are styled.
 * `cells` is a list of cells to apply styling to.  Either `rFrom`/`cFrom` or `cells` is typically specified - not both.
+* `cellType` is one of the following values that specifies the cell type to be applied to the specified cells:  root, rowHeader, columnHeader, cell, total.  The cellType controls the default styling that is applied to the cell.
+* `visible` The cell visibility (`TRUE` or `FALSE`) to apply to the specified cells.
 * `baseStyleName` is the name of a style in the table theme to apply to the specified cells.  Set this explicitly to NULL to revert to the default style specified in the table theme.
 * `style` is a `TableStyle` override object to apply to the specified cells.  This is created by calling `tbl$createInlineStyle()` as shown in the example above.
 * `declarations` is a list of style override declarations to apply to the specified cells. 
@@ -611,6 +627,124 @@ lst <- lapply(cells, function(cell) {cell$style <- highlight})
 
 For many more examples of styling parts of a table, see the [Finding and Formatting](v05-findingandformatting.html) vignette.
 
+## Changing styling/formatting using `pt$mapStyling()`
+
+Sometimes it is desirable to set the styling more dynamically, i.e. the styling of each cell should vary according to the value of the each cell, e.g. increasingly large numbers have an increasingly intense red cell background colour.  This can be done with the `mapStyling()` method, which has the following arguments:
+
+* `styleProperty` - the name of the style property to set e.g. "background-color".
+* `cells` - a list specifying the `PivotCell` objects to be styled.
+* `valueType` - the type of style value to be set - one of the following values: `text`/`character`, `number`/`numeric`, or `color`/`colour`
+* `mapType` - the type of mapping to be performed - the following mapping types are supported:
+    + `value` - a 1:1 mapping which maps each specified "from" value to the corresponding "to" value, e.g. 100 -> "green".
+    + `logic` - each from value is logical criteria - see more details below.
+    + `range` - values between each pair of "from" values are mapped to the corresponding "to" value, e.g. values in the range 80-100 -> "green".
+    + `continuous` - rescales values between each pair of "from" values into the range of the corresponding pair of "to" values, e.g. if the "from" range
+ is 80-100 and the corresponding "to" range is 0.8-1, then 90 -> 0.9.
+* `mappings` - the mappings to be applied, specified in one of the following three forms:
+    + a list containing pairs of values, e.g. `list(0, "red", 0.4, "yellow", 0.8, "green")`
+    + a list containing "from" and "to" vectors/lists, e.g. `list(from=c(0, 0.4, 0.8), to=c("red", "yellow", "green"))`
+    + a custom mapping function that will be invoked once per cell, e.g. `function(v, cell) { if(isTRUE(v>0.8)) return("green") }`.
++ `styleLowerValues` - a logical value, default `FALSE`, that specifies whether values less than the lowest specified "from" value should be styled using the style specified for the lowest "from" value.
+* `styleHigherValues` - a logical value, default `TRUE`, that specifies whether values greater than the highest specified "from" value should be styled using the style specified for the highest "from" value.
+
+`mapType`="logical" is a generic way of specifying mapping rules, which can be of any of the following forms:
+
+* a specific value, e.g. 12.
+* a specific value equality condition, e.g. `"v==12"`, where v represents the cell value.
+* a value range expression using the following abbreviated form:  "value1<=v<value2", e.g. `"10<=v<15"`.  
+    + Only "<" or "<=" can be used in these abbreviated value range expressions.
+* a standard R logical expression, e.g. `"10<=v && v<15"`.
+    + Basic R functions that test the value can also be used, e.g. `"is.na(v)"`.
+
+Further Notes:
+
+* `mapType`="continuous" cannot be used with `valueType`="text"/"character".
+* A range specified as `list(0, "red", 1000)` is equivalent to "0<=v<1000", i.e. the upper value is excluded from the range.
+* `styleLowerValues` and `styleHigherValues` only apply when `valueType` is "range" or "continuous".
+* Mappings must be supplied in ascending order  when `valueType` is "range" or "continuous".
+
+### Examples
+
+Several examples are given below.  All of these examples use the following data:
+
+```{r, message=FALSE, warning=FALSE}
+library(basictabler)
+library(dplyr)
+tocsummary <- bhmsummary %>%
+  group_by(TOC) %>%
+  summarise(OnTimeArrivals=sum(OnTimeArrivals),
+            OnTimeDepartures=sum(OnTimeDepartures),
+            TotalTrains=sum(TrainCount)) %>%
+  ungroup() %>%
+  mutate(OnTimeArrivalPercent=OnTimeArrivals/TotalTrains*100,
+         OnTimeDeparturePercent=OnTimeDepartures/TotalTrains*100) %>%
+  arrange(TOC)
+
+# formatting values (explained in the introduction vignette)
+columnFormats=list(NULL, list(big.mark=","), list(big.mark=","), list(big.mark=","), "%.1f", "%.1f")
+```
+
+### Style mapping example with `mapType="logic"`
+
+The example pivot table below maps cell colours from cell values using conditional/logical expressions: 
+
+```{r, message=FALSE, warning=FALSE}
+tbl <- BasicTable$new()
+tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
+            explicitColumnHeaders=c("TOC", "On-Time Arrivals", "On-Time Departures",
+                                    "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
+            columnFormats=columnFormats)
+cells <- tbl$getCells(rowNumbers=2:5, columnNumbers=2:4, matchMode="combinations")
+tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="color", mapType="logic",
+              mappings=list("v==2348", "pink", "v<3000", "red", "3000<=v<15000", 
+                            "yellow", "v>15000", "green"))
+tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="text", mapType="logic",
+              mappings=list("v==1404", "red"))
+tbl$renderTable()
+```
+
+### Style mapping example with `mapType="range"`
+
+The example pivot table below maps cell colours from cell values using ranges, i.e. 0-1000 -> "red" and 1000-15000 -> "orange": 
+
+```{r, message=FALSE, warning=FALSE}
+tbl <- BasicTable$new()
+tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
+            explicitColumnHeaders=c("TOC", "On-Time Arrivals", "On-Time Departures",
+                                    "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
+            columnFormats=columnFormats)
+cells <- tbl$getCells(rowNumbers=2:5, columnNumbers=2:4, matchMode="combinations")
+tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="color", mapType="range",
+              mappings=list(0, "red", 3000, "orange", 5000, "yellow", 15000, "green"))
+tbl$renderTable()
+```
+
+### Style mapping example with `mapType="continuous"`
+
+An example of styling using the "continuous" map type can be found in the [Finding and Formatting](v05-findingandformatting.html) vignette.
+
+### Style mapping example with `mapType="function"`
+
+The example pivot table below maps cell colours using a custom function.  The `cell` argument passed to the function is the current cell being styled, e.g. to format based on the column number:
+
+```{r, message=FALSE, warning=FALSE}
+tbl <- BasicTable$new()
+tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
+            explicitColumnHeaders=c("TOC", "On-Time Arrivals", "On-Time Departures",
+                                    "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
+            columnFormats=columnFormats)
+cells <- tbl$getCells(rowNumbers=2:5, columnNumbers=2:4, matchMode="combinations")
+redclr <- function(x, cell) {
+  clr <- 255-floor(140*cell$columnNumber/3)
+  return(paste0("#",
+                format(as.hexmode(255), width=2),
+                format(as.hexmode(clr), width=2),
+                format(as.hexmode(clr), width=2)))
+}
+tbl$mapStyling(cells=cells, styleProperty="background-color", mappings=redclr)
+tbl$renderTable()
+```
+
 ## Creating a New Theme
 
 Since a theme is a collection of styles, creating themes is relatively straightforward.  The names of the styles are then assigned to the different types of cells within a table:
@@ -625,11 +759,13 @@ Since a theme is a collection of styles, creating themes is relatively straightf
 E.g. creating a custom theme that displays a mixture of bright colours (a rather ugly bubble-gum theme):
 
 ```{r, message=FALSE, warning=FALSE}
+library(basictabler)
 # define the theme and styles
 createCustomTheme <- function(parentTable=NULL, themeName="myCustomTheme") {
   tableStyles <- TableStyles$new(parentTable=parentTable, themeName=themeName)
   # borders in purple
   tableStyles$addStyle(styleName="Table", list(
+      "display"="table",
       "border-collapse"="collapse",
       "border"="2px solid #B28DFF"
     ))
@@ -718,19 +854,19 @@ tbl$renderTable(styleNamePrefix="t8")
     + Specify cell type of a new cell:  `tbl$cells$setCell(1, 2, cellType="columnHeader", rawValue="Item")`
     + Change cell type of an existing cell:  ` tbl$cells$getCell(3, 2)$cellType <- "columnHeader"`
 * The styling theme applied to a table defines a set of styles and the default style for each cell type.
-    + Create a new simple theme using:  `getSimpleColoredTblTheme()`
-    + Create a new custom theme by writing a function `createCustomTheme()`
+    + Create a new simple theme using a list and assigning this to the `tbl$theme` field.
+    + Create a new custom theme by writing a function `createCustomTheme()`.
     + Assign a theme to the table `theme` property:  `tbl$theme <- createCustomTheme(tbl)`
 * Each individual cell can also have a different style, specified by settings the `baseStyleName` for the cell.
-    + Single cell example:  `tbl$cells$getCell(3, 2)$baseStyleName <- "AltCellStyle"`
-    + Alternative single cell example:  `tbl$setStyling(3, 2, baseStyleName="AltCellStyle")`
-    + Cell range example: `tbl$setStyling(3, 2, 3, 6, baseStyleName="AltCellStyle")`
+    + Single cell example:  `tbl$cells$getCell(3, 2)$baseStyleName <- "AltCellStyle"`.
+    + Alternative single cell example:  `tbl$setStyling(3, 2, baseStyleName="AltCellStyle")`.
+    + Cell range example: `tbl$setStyling(3, 2, 3, 6, baseStyleName="AltCellStyle")`.
 * It is also possible to declare individual style overrides  (e.g. a different text colour).  These override specific style settings from the named styles.
-    + Single cell example:  `tbl$setStyling(3, 2, declarations=list("text-align"="left", "background-color"="yellow"))`
-    + Cell range example: `tbl$setStyling(3, 2, 3, 6, declarations=list("text-align"="left", "background-color"="yellow"))`
+    + Single cell example:  `tbl$setStyling(3, 2, declarations=list("text-align"="left", "background-color"="yellow"))`.
+    + Cell range example: `tbl$setStyling(3, 2, 3, 6, declarations=list("text-align"="left", "background-color"="yellow"))`.
 * It is possible to specify a new base style and overrides together.  The declarations override the settings in the base style. 
-    + Single cell example:  `tbl$setStyling(3, 2, baseStyleName="AltCellStyle", declarations=list("text-align"="left", "background-color"="yellow"))`
-    + Cell range example: `tbl$setStyling(3, 2, 3, 6, baseStyleName="AltCellStyle", declarations=list("text-align"="left", "background-color"="yellow"))`
+    + Single cell example:  `tbl$setStyling(3, 2, baseStyleName="AltCellStyle", declarations=list("text-align"="left", "background-color"="yellow"))`.
+    + Cell range example: `tbl$setStyling(3, 2, 3, 6, baseStyleName="AltCellStyle", declarations=list("text-align"="left", "background-color"="yellow"))`.
 * Instead of specifying the declarations as a list, an inline style can be declared.  This is an unnamed style object that is used for one or multiple cells and is not part of the table theme.
     + See the "Changing cell appearance after cells have been created" section in this vignette for an example.
     + See the "Finding and Formatting" vignette for more examples.
