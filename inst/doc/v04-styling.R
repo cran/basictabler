@@ -180,7 +180,8 @@ tocsummary <- bhmsummary %>%
   arrange(TOC)
 
 # column formats
-columnFormats=list(NULL, list(big.mark=","), list(big.mark=","), list(big.mark=","), "%.1f", "%.1f")
+columnFormats=list(NULL, list(big.mark=","), 
+                   list(big.mark=","), list(big.mark=","), "%.1f", "%.1f")
 
 # simple theme
 simpleBlueTheme <- list(
@@ -197,8 +198,9 @@ simpleBlueTheme <- list(
 
 # headings in red text, cells in light gray
 tbl <- qtbl(tocsummary, firstColumnAsRowHeaders=TRUE,
-            explicitColumnHeaders=c("TOC", "On-Time Arrivals", "On-Time Departures",
-                                    "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
+            explicitColumnHeaders=c("TOC", "On-Time Arrivals", 
+                                    "On-Time Departures", "Total Trains", 
+                                    "On-Time Arrival %", "On-Time Departure %"),
             columnFormats=columnFormats, theme=simpleBlueTheme)
 
 # render table
@@ -219,12 +221,14 @@ tocsummary <- bhmsummary %>%
   arrange(TOC)
 
 # column formats
-columnFormats=list(NULL, list(big.mark=","), list(big.mark=","), list(big.mark=","), "%.1f", "%.1f")
+columnFormats=list(NULL, list(big.mark=","), 
+                   list(big.mark=","), list(big.mark=","), "%.1f", "%.1f")
 
 # create the table
 tbl <- qtbl(tocsummary, firstColumnAsRowHeaders=FALSE,
-            explicitColumnHeaders=c("TOC", "On-Time Arrivals", "On-Time Departures",
-                                    "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
+            explicitColumnHeaders=c("TOC", "On-Time Arrivals", 
+                                    "On-Time Departures", "Total Trains", 
+                                    "On-Time Arrival %", "On-Time Departure %"),
             columnFormats=columnFormats, 
             tableStyle=list("border-color"="maroon"),
             headingStyle=list("color"="cornsilk", "background-color"="maroon", 
@@ -266,7 +270,8 @@ tbl$addStyle(styleName="AltCell", list(
 colStyleNames <- c("Cell", "Cell", "AltCell", "Cell")
 
 # populate the table
-tbl$addData(df, explicitColumnHeaders=colNames, columnFormats=colFormats, baseStyleNames=colStyleNames)
+tbl$addData(df, explicitColumnHeaders=colNames, 
+            columnFormats=colFormats, baseStyleNames=colStyleNames)
 tbl$renderTable(styleNamePrefix="t11")
 
 ## ---- message=FALSE, warning=FALSE--------------------------------------------
@@ -413,8 +418,10 @@ tbl$cells$setCell(3, 2, cellType="cell", rawValue="Orange")
 # use the new style for the following cell (used instead of the theme styling)
 tbl$cells$setCell(2, 3, cellType="cell", rawValue=5, baseStyleName="AltCell")
 
-# specify an additional style declaration for the following cell (used on top of the theme styling)
-tbl$cells$setCell(3, 3, cellType="cell", rawValue=8, styleDeclarations=list("background-color"="#FFFF00"))
+# specify an additional style declaration for the following cell (used on 
+# top of the theme styling)
+tbl$cells$setCell(3, 3, cellType="cell", rawValue=8, 
+                  styleDeclarations=list("background-color"="#FFFF00"))
 
 # render the table
 tbl$renderTable(styleNamePrefix="t12")
@@ -468,6 +475,23 @@ tbl$renderTable(styleNamePrefix="t16")
 #  lst <- lapply(cells, function(cell) {cell$style <- highlight})
 
 ## ---- message=FALSE, warning=FALSE--------------------------------------------
+x <- data.frame(a=c(1,2,3),b=c(4,5,6),c=c(7,8,9))
+tbl <- BasicTable$new()
+tbl$addData(x)
+tbl$setStyling(rowNumbers=3, columnNumbers=2, 
+               declarations=list("border"="1px solid red"))
+tbl$renderTable()
+
+## ---- message=FALSE, warning=FALSE--------------------------------------------
+x <- data.frame(a=c(1,2,3),b=c(4,5,6),c=c(7,8,9))
+tbl <- BasicTable$new()
+tbl$addData(x)
+tbl$setStyling(rowNumbers=3, columnNumbers=2, 
+               declarations=list("border"="1px solid red"),
+               applyBorderToAdjacentCells=TRUE)
+tbl$renderTable()
+
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 library(basictabler)
 library(dplyr)
 tocsummary <- bhmsummary %>%
@@ -481,38 +505,45 @@ tocsummary <- bhmsummary %>%
   arrange(TOC)
 
 # formatting values (explained in the introduction vignette)
-columnFormats=list(NULL, list(big.mark=","), list(big.mark=","), list(big.mark=","), "%.1f", "%.1f")
+columnFormats=list(NULL, list(big.mark=","), list(big.mark=","), 
+                   list(big.mark=","), "%.1f", "%.1f")
 
 ## ---- message=FALSE, warning=FALSE--------------------------------------------
 tbl <- BasicTable$new()
 tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
-            explicitColumnHeaders=c("TOC", "On-Time Arrivals", "On-Time Departures",
-                                    "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
+            explicitColumnHeaders=c("TOC", "On-Time Arrivals", 
+                                    "On-Time Departures", "Total Trains", 
+                                    "On-Time Arrival %", "On-Time Departure %"),
             columnFormats=columnFormats)
 cells <- tbl$getCells(rowNumbers=2:5, columnNumbers=2:4, matchMode="combinations")
-tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="color", mapType="logic",
-              mappings=list("v==2348", "pink", "v<3000", "red", "3000<=v<15000", 
-                            "yellow", "v>15000", "green"))
-tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="text", mapType="logic",
-              mappings=list("v==1404", "red"))
+tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="color", 
+               mapType="logic",
+               mappings=list("v==2348", "pink", "v<3000", "red", "3000<=v<15000", 
+                             "yellow", "v>15000", "green"))
+tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="text", 
+               mapType="logic", mappings=list("v==1404", "red"))
 tbl$renderTable()
 
 ## ---- message=FALSE, warning=FALSE--------------------------------------------
 tbl <- BasicTable$new()
 tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
-            explicitColumnHeaders=c("TOC", "On-Time Arrivals", "On-Time Departures",
-                                    "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
+            explicitColumnHeaders=c("TOC", "On-Time Arrivals", 
+                                    "On-Time Departures", "Total Trains", 
+                                    "On-Time Arrival %", "On-Time Departure %"),
             columnFormats=columnFormats)
 cells <- tbl$getCells(rowNumbers=2:5, columnNumbers=2:4, matchMode="combinations")
-tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="color", mapType="range",
-              mappings=list(0, "red", 3000, "orange", 5000, "yellow", 15000, "green"))
+tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="color", 
+               mapType="range",
+               mappings=list(0, "red", 3000, "orange", 5000, 
+                             "yellow", 15000, "green"))
 tbl$renderTable()
 
 ## ---- message=FALSE, warning=FALSE--------------------------------------------
 tbl <- BasicTable$new()
 tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
-            explicitColumnHeaders=c("TOC", "On-Time Arrivals", "On-Time Departures",
-                                    "Total Trains", "On-Time Arrival %", "On-Time Departure %"),
+            explicitColumnHeaders=c("TOC", "On-Time Arrivals", 
+                                    "On-Time Departures", "Total Trains", 
+                                    "On-Time Arrival %", "On-Time Departure %"),
             columnFormats=columnFormats)
 cells <- tbl$getCells(rowNumbers=2:5, columnNumbers=2:4, matchMode="combinations")
 redclr <- function(x, cell) {

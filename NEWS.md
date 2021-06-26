@@ -1,3 +1,19 @@
+basictabler 1.0.2
+================
+
+Improvements
+----------------
+
+Tables can now be exported to a wider variety of file formats using the flextabler package.  Supported formats including Microsoft Word, Microsoft PowerPoint and PDF.  See the Outputs vignette for more details. 
+
+It is now easier to format the borders for specific cells.  See the "Formatting cell borders for specific cells" section of the Styling vignette for more details.
+
+Bug Fixes
+----------------
+
+Resolved error "Error in columnValues[r - rowOffset] <- v : replacement has length zero" that sometimes occurred when executing bt$asDataFrame().
+
+
 basictabler 1.0.1
 ================
 

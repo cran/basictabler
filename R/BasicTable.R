@@ -114,6 +114,7 @@ BasicTable <- R6::R6Class("BasicTable",
       private$p_mergedCells <- TableCellRanges$new(self)
       private$p_htmlRenderer <- TableHtmlRenderer$new(parentTable=self)
       private$p_openxlsxRenderer <-TableOpenXlsxRenderer$new(parentTable=self)
+      private$p_flexTableRenderer <- FlexTableRenderer$new(parentTable=self)
       private$p_timings <- list()
       # apply theming and styles
       if(is.null(theme)) {
@@ -841,9 +842,12 @@ BasicTable <- R6::R6Class("BasicTable",
     #' @param style A `TableStyle` object to apply.
     #' @param declarations CSS style declarations to apply in the form of a list,
     #' e.g. `list("font-weight"="bold", "color"="#0000FF")`
+    #' @param applyBorderToAdjacentCells TRUE to override the border in
+    #' neighbouring cells, e.g. the left border of the current cell becomes the
+    #' right border of the cell to the left.
     #' @return No return value.
     setStyling = function(rFrom=NULL, cFrom=NULL, rTo=NULL, cTo=NULL, rowNumbers=NULL, columnNumbers=NULL, cells=NULL,
-                          cellType=NULL, visible=NULL, baseStyleName=NULL, style=NULL, declarations=NULL) {
+                          cellType=NULL, visible=NULL, baseStyleName=NULL, style=NULL, declarations=NULL, applyBorderToAdjacentCells=FALSE) {
       if(private$p_argumentCheckMode > 0) {
         checkArgument(private$p_argumentCheckMode, TRUE, "BasicTable", "setStyling", rFrom, missing(rFrom), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("integer", "numeric"))
         checkArgument(private$p_argumentCheckMode, TRUE, "BasicTable", "setStyling", cFrom, missing(cFrom), allowMissing=TRUE, allowNull=TRUE, allowedClasses=c("integer", "numeric"))
@@ -857,6 +861,7 @@ BasicTable <- R6::R6Class("BasicTable",
         checkArgument(private$p_argumentCheckMode, TRUE, "BasicTable", "setStyling", baseStyleName, missing(baseStyleName), allowMissing=TRUE, allowNull=TRUE, allowedClasses="character")
         checkArgument(private$p_argumentCheckMode, TRUE, "BasicTable", "setStyling", style, missing(style), allowMissing=TRUE, allowNull=TRUE, allowedClasses="TableStyle")
         checkArgument(private$p_argumentCheckMode, TRUE, "BasicTable", "setStyling", declarations, missing(declarations), allowMissing=TRUE, allowNull=TRUE, allowedClasses="list", allowedListElementClasses=c("character", "integer", "numeric"))
+        checkArgument(private$p_argumentCheckMode, TRUE, "BasicTable", "setStyling", applyBorderToAdjacentCells, missing(applyBorderToAdjacentCells), allowMissing=TRUE, allowNull=FALSE, allowedClasses="logical")
       }
       if(private$p_traceEnabled==TRUE) self$trace("BasicTable$setStyling", "Setting styling...")
       if(missing(cellType)&&missing(visible)&&missing(baseStyleName)&&missing(style)&&missing(declarations)) { stop("BasicTable$setStyling():  Please specify at least one of callType, visible, baseStyleName, style or declarations.", call. = FALSE) }
@@ -876,6 +881,7 @@ BasicTable <- R6::R6Class("BasicTable",
               if((!missing(declarations))&&(!is.null(declarations))) {
                 if (is.null(cell$style)) { cell$style <- TableStyle$new(parentTable=self, declarations=declarations) }
                 else { cell$style$setPropertyValues(declarations) }
+                if (isTRUE(applyBorderToAdjacentCells)) { private$applyBorderToAdjacentCells(cell=cell, declarations=declarations) }
               }
             }
           }
@@ -942,6 +948,7 @@ BasicTable <- R6::R6Class("BasicTable",
               if((!missing(declarations))&&(!is.null(declarations))) {
                 if (is.null(cell$style)) { cell$style <- TableStyle$new(parentTable=self, declarations=declarations) }
                 else { cell$style$setPropertyValues(declarations) }
+                if (isTRUE(applyBorderToAdjacentCells)) { private$applyBorderToAdjacentCells(cell=cell, declarations=declarations) }
               }
             }
           }
@@ -1706,6 +1713,7 @@ BasicTable <- R6::R6Class("BasicTable",
           else v <- cell$formattedValue
           if(is.null(v)) v <- NA
           else if(is.factor(v)) v <- as.character(v)
+          if(length(v)==0) next
           columnValues[r - rowOffset] <- v
         }
         dfColumns[[c - columnOffset]] <- columnValues
@@ -1864,7 +1872,7 @@ BasicTable <- R6::R6Class("BasicTable",
     #' @param useFormattedValueIfRawValueIsNull `TRUE` to use the formatted cell value
     #'   instead of the raw cell value if the raw value is `NULL`.
     #'   `FALSE` to always use the raw value.  Default `TRUE`.
-    #' @param applyStyles Default `TRUE` to write styling information to the cell.
+    #' @param applyStyles Default `TRUE` to write styling information to cells.
     #' @param mapStylesFromCSS Default `TRUE` to automatically convert CSS style
     #' declarations to their Excel equivalents.
     #' @return No return value.
@@ -1889,6 +1897,31 @@ BasicTable <- R6::R6Class("BasicTable",
                                                   outputValuesAs=outputValuesAs, useFormattedValueIfRawValueIsNull=useFormattedValueIfRawValueIsNull,
                                                   applyStyles=applyStyles, mapStylesFromCSS=mapStylesFromCSS)
       if(private$p_traceEnabled==TRUE) self$trace("BasicTable$writeToExcelWorksheet", "Written to worksheet.")
+    },
+
+    #' @description
+    #' Convert table to a flextable table..
+    #' @details
+    #' See the Outputs vignette for more details.
+    #' @param applyStyles Default `TRUE` to write styling information for cells.
+    #' @param mapStylesFromCSS Default `TRUE` to automatically convert CSS style
+    #' declarations to their flextable equivalents.
+    #' @return A table from the flextable package.
+    asFlexTable = function(applyStyles=TRUE, mapStylesFromCSS=TRUE) {
+      if(private$p_argumentCheckMode > 0) {
+        checkArgument(private$p_argumentCheckMode, FALSE, "BasicTable", "asFlexTable", applyStyles, missing(applyStyles), allowMissing=TRUE, allowNull=FALSE, allowedClasses="logical")
+        checkArgument(private$p_argumentCheckMode, FALSE, "BasicTable", "asFlexTable", mapStylesFromCSS, missing(mapStylesFromCSS), allowMissing=TRUE, allowNull=FALSE, allowedClasses="logical")
+      }
+      if (!requireNamespace("flextable", quietly = TRUE)) {
+        stop("BasicTable$asFlexTable():  The flextable package is needed to convert the table to a table from the flextable package.  Please install it.", call. = FALSE)
+      }
+      if (!requireNamespace("officer", quietly = TRUE)) {
+        stop("BasicTable$asFlexTable():  The officer package is needed to convert the table to a table from the flextable package.  Please install it.", call. = FALSE)
+      }
+      if(private$p_traceEnabled==TRUE) self$trace("BasicTable$asFlexTable", "Converting to flextable table...")
+      ft <- private$p_flexTableRenderer$asFlexTable(applyStyles=applyStyles, mapStylesFromCSS=mapStylesFromCSS)
+      if(private$p_traceEnabled==TRUE) self$trace("BasicTable$asFlexTable", "Converted to flextable table.")
+      return(ft)
     },
 
     #' @description
@@ -2096,6 +2129,7 @@ BasicTable <- R6::R6Class("BasicTable",
     p_mergedCells = NULL,
     p_htmlRenderer = NULL,
     p_openxlsxRenderer = NULL,
+    p_flexTableRenderer = NULL,
     p_compatibility = NULL,
     p_traceFile = NULL,
     p_timings = NULL,
@@ -2104,6 +2138,53 @@ BasicTable <- R6::R6Class("BasicTable",
     addTiming = function(descr, timeStart) {
       timeEnd <- proc.time()
       private$p_timings[[length(private$p_timings)+1]] <- list(descr=descr, time=timeEnd-timeStart)
+    },
+    applyBorderToAdjacentCells = function(cell, declarations) {
+      # get border properties
+      border <- declarations$border
+      borderTop <- declarations[["border-top"]]
+      borderRight <- declarations[["border-right"]]
+      borderBottom <- declarations[["border-bottom"]]
+      borderLeft <- declarations[["border-left"]]
+      xlBorder <- declarations[["xl-border"]]
+      xlBorderTop <- declarations[["xl-border-top"]]
+      xlBorderRight <- declarations[["xl-border-right"]]
+      xlBorderBottom <- declarations[["xl-border-bottom"]]
+      xlBorderLeft <- declarations[["xl-border-left"]]
+      r <- cell$rowNumber
+      c <- cell$columnNumber
+      # bottom border of cell above
+      if (r > 1) {
+        cl <- private$p_cells$getCell(r=r-1, c=c)
+        if (!is.null(border)) { self$setStyling(cells=cl, declarations=list("border-bottom"=border)) }
+        if (!is.null(borderTop)) { self$setStyling(cells=cl, declarations=list("border-bottom"=borderTop)) }
+        if (!is.null(xlBorder)) { self$setStyling(cells=cl, declarations=list("xl-border-bottom"=xlBorder)) }
+        if (!is.null(xlBorderTop)) { self$setStyling(cells=cl, declarations=list("xl-border-bottom"=xlBorderTop)) }
+      }
+      # left border of cell to the right
+      if (c < private$p_cells$columnCount) {
+        cl <- private$p_cells$getCell(r=r, c=c+1)
+        if (!is.null(border)) { self$setStyling(cells=cl, declarations=list("border-left"=border)) }
+        if (!is.null(borderRight)) { self$setStyling(cells=cl, declarations=list("border-left"=borderRight)) }
+        if (!is.null(xlBorder)) { self$setStyling(cells=cl, declarations=list("xl-border-left"=xlBorder)) }
+        if (!is.null(xlBorderRight)) { self$setStyling(cells=cl, declarations=list("xl-border-left"=xlBorderRight)) }
+      }
+      # top border of the cell below
+      if (r < private$p_cells$rowCount) {
+        cl <- private$p_cells$getCell(r=r+1, c=c)
+        if (!is.null(border)) { self$setStyling(cells=cl, declarations=list("border-top"=border)) }
+        if (!is.null(borderBottom)) { self$setStyling(cells=cl, declarations=list("border-top"=borderBottom)) }
+        if (!is.null(xlBorder)) { self$setStyling(cells=cl, declarations=list("xl-border-top"=xlBorder)) }
+        if (!is.null(xlBorderBottom)) { self$setStyling(cells=cl, declarations=list("xl-border-top"=xlBorderBottom)) }
+      }
+      # right border of cell to the left
+      if (c > 1) {
+        cl <- private$p_cells$getCell(r=r, c=c-1)
+        if (!is.null(border)) { self$setStyling(cells=cl, declarations=list("border-right"=border)) }
+        if (!is.null(borderLeft)) { self$setStyling(cells=cl, declarations=list("border-right"=borderLeft)) }
+        if (!is.null(xlBorder)) { self$setStyling(cells=cl, declarations=list("xl-border-right"=xlBorder)) }
+        if (!is.null(xlBorderLeft)) { self$setStyling(cells=cl, declarations=list("xl-border-right"=xlBorderLeft)) }
+      }
     }
   )
 )
