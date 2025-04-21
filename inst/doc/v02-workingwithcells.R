@@ -1,4 +1,4 @@
-## ---- message=FALSE, eval=TRUE, warning=FALSE, comment=""---------------------
+## ----message=FALSE, eval=TRUE, warning=FALSE, comment=""----------------------
 library(basictabler)
 tbl <- BasicTable$new()
 tbl$cells$setCell(1, 1, cellType="root", rawValue="Sale ID")
@@ -19,7 +19,7 @@ tbl$cells$setCell(4, 3, cellType="cell", rawValue=6)
 tbl$cells$setCell(4, 4, cellType="cell", rawValue=1.34)
 tbl$renderTable()
 
-## ---- message=FALSE, eval=TRUE, warning=FALSE, comment=""---------------------
+## ----message=FALSE, eval=TRUE, warning=FALSE, comment=""----------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -40,7 +40,7 @@ tbl$cells$setColumn(4, cellTypes="cell", rawValues=prices,
                     formats=list("%.2f"))
 tbl$renderTable()
 
-## ---- message=FALSE, eval=TRUE, warning=FALSE, comment=""---------------------
+## ----message=FALSE, eval=TRUE, warning=FALSE, comment=""----------------------
 # cell types for the cells in each row
 cellTypes <- c("rowHeader", "cell", "cell", "cell")
 
@@ -63,7 +63,7 @@ tbl$cells$setRow(4, cellTypes=cellTypes, formats=formats,
                  rawValues=list(5338, "Banana", 6, 1.3443243))
 tbl$renderTable()
 
-## ---- message=FALSE, eval=TRUE, warning=FALSE, comment=""---------------------
+## ----message=FALSE, eval=TRUE, warning=FALSE, comment=""----------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -96,7 +96,7 @@ cat(class(rowValues), ": ", paste(rowValues, collapse=", "))
 columnValues <- tbl$cells$getColumnValues(3)
 cat(class(columnValues), ": ", paste(columnValues, collapse=", "))
 
-## ---- message=FALSE, eval=TRUE, warning=FALSE, comment=""---------------------
+## ----message=FALSE, eval=TRUE, warning=FALSE, comment=""----------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -124,7 +124,7 @@ summary <- list(instanceId=cell$instanceId,
 description <- paste(paste(names(summary), unlist(summary), sep="="), collapse="\n")
 cat(description)
 
-## ---- message=FALSE, eval=TRUE, warning=FALSE, comment=""---------------------
+## ----message=FALSE, eval=TRUE, warning=FALSE, comment=""----------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -151,7 +151,7 @@ cell$formattedValue <- "Item & Qty"
 
 tbl$renderTable()
 
-## ---- message=FALSE, eval=TRUE, warning=FALSE, comment=""---------------------
+## ----message=FALSE, eval=TRUE, warning=FALSE, comment=""----------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")

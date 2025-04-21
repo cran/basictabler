@@ -1,18 +1,18 @@
-## ---- message=FALSE, warning=FALSE, eval=FALSE--------------------------------
-#  tableStyles$addStyle(styleName="ColumnHeader", list(
-#      "font-family"="arial",
-#      "font-size"="0.75em",
-#      padding="2px",
-#      border="1px solid blue",
-#      "vertical-align"="middle",
-#      "text-align"="center",
-#      "font-weight"="bold",
-#      color="blue",
-#      "background-color"="#FFFFFF",
-#      "xl-wrap-text"="wrap"
-#    ))
+## ----message=FALSE, warning=FALSE, eval=FALSE---------------------------------
+# tableStyles$addStyle(styleName="ColumnHeader", list(
+#     "font-family"="arial",
+#     "font-size"="0.75em",
+#     padding="2px",
+#     border="1px solid blue",
+#     "vertical-align"="middle",
+#     "text-align"="center",
+#     "font-weight"="bold",
+#     color="blue",
+#     "background-color"="#FFFFFF",
+#     "xl-wrap-text"="wrap"
+#   ))
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -31,7 +31,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 tbl$theme <- "default"  # this theme is already the default, so this line isn't really needed
 tbl$renderTable(styleNamePrefix="t0")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -50,7 +50,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 tbl$theme <- "compact"
 tbl$renderTable(styleNamePrefix="t1")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -69,7 +69,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 tbl$theme <- "largeplain"
 tbl$renderTable(styleNamePrefix="t2")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # define the font and colours
 simpleBlueTheme <- list(
   fontName="Verdana, Arial",
@@ -101,7 +101,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 tbl$theme <- simpleBlueTheme
 tbl$renderTable(styleNamePrefix="t3")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # define the colours
 simpleGrayTheme <- list(
   fontName="Courier New, Courier",
@@ -133,7 +133,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 tbl$theme <- simpleGrayTheme
 tbl$renderTable(styleNamePrefix="t4")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # define the colours
 simpleGreenTheme <- list(
   fontName="Helvetica, arial",
@@ -165,7 +165,7 @@ tbl$addData(data.frame(saleIds, items, quantities, prices),
 tbl$theme <- simpleGreenTheme
 tbl$renderTable(styleNamePrefix="t6")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -206,7 +206,7 @@ tbl <- qtbl(tocsummary, firstColumnAsRowHeaders=TRUE,
 # render table
 tbl$renderTable(styleNamePrefix="t9")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -242,7 +242,7 @@ tbl$setStyling(2, 1, 5, 1, declarations=list("text-align"="left"))
 # render table
 tbl$renderTable(styleNamePrefix="t10")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -274,7 +274,7 @@ tbl$addData(df, explicitColumnHeaders=colNames,
             columnFormats=colFormats, baseStyleNames=colStyleNames)
 tbl$renderTable(styleNamePrefix="t11")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # data for the table
 saleIds <- c(5334, 5336, 5338)
 items <- c("Apple", "Orange", "Banana")
@@ -307,7 +307,7 @@ tbl$cells$setColumn(4, cellTypes="cell", rawValues=prices,
                     formats=list("%.2f"))
 tbl$renderTable(styleNamePrefix="t13")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # cell types for the cells in each row
 cellTypes <- c("rowHeader", "cell", "cell", "cell")
 
@@ -342,7 +342,7 @@ tbl$cells$setRow(4, cellTypes=cellTypes, formats=formats,
                  rawValues=list(5338, "Banana", 6, 1.3443243))
 tbl$renderTable(styleNamePrefix="t14")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # cell types for the cells in each row
 cellTypes <- c("rowHeader", "cell", "cell", "cell")
 
@@ -389,7 +389,7 @@ tbl$cells$setRow(4, cellTypes=cellTypes, formats=formats,
                  rawValues=list(5338, "Banana", 6, 1.3443243))
 tbl$renderTable(styleNamePrefix="t15")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 
 library(basictabler)
 tbl <- BasicTable$new()
@@ -426,7 +426,7 @@ tbl$cells$setCell(3, 3, cellType="cell", rawValue=8,
 # render the table
 tbl$renderTable(styleNamePrefix="t12")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # define the colours
 orangeTheme <- list(
   fontName="Garamond, arial",
@@ -468,13 +468,13 @@ cell$style <- cellHighlight
 # render the table
 tbl$renderTable(styleNamePrefix="t16")
 
-## ---- eval=FALSE--------------------------------------------------------------
-#  # apply inline style to multiple cells
-#  highlight <- tbl$createInlineStyle(declarations=list("background-color"="#FFCC66"))
-#  cells <- tbl$getCells(specifyCellsAsList=TRUE, rowNumbers=c(1, 3))
-#  lst <- lapply(cells, function(cell) {cell$style <- highlight})
+## ----eval=FALSE---------------------------------------------------------------
+# # apply inline style to multiple cells
+# highlight <- tbl$createInlineStyle(declarations=list("background-color"="#FFCC66"))
+# cells <- tbl$getCells(specifyCellsAsList=TRUE, rowNumbers=c(1, 3))
+# lst <- lapply(cells, function(cell) {cell$style <- highlight})
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 x <- data.frame(a=c(1,2,3),b=c(4,5,6),c=c(7,8,9))
 tbl <- BasicTable$new()
 tbl$addData(x)
@@ -482,7 +482,7 @@ tbl$setStyling(rowNumbers=3, columnNumbers=2,
                declarations=list("border"="1px solid red"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 x <- data.frame(a=c(1,2,3),b=c(4,5,6),c=c(7,8,9))
 tbl <- BasicTable$new()
 tbl$addData(x)
@@ -491,7 +491,7 @@ tbl$setStyling(rowNumbers=3, columnNumbers=2,
                applyBorderToAdjacentCells=TRUE)
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 library(basictabler)
 library(dplyr)
 tocsummary <- bhmsummary %>%
@@ -508,7 +508,7 @@ tocsummary <- bhmsummary %>%
 columnFormats=list(NULL, list(big.mark=","), list(big.mark=","), 
                    list(big.mark=","), "%.1f", "%.1f")
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 tbl <- BasicTable$new()
 tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
             explicitColumnHeaders=c("TOC", "On-Time Arrivals", 
@@ -524,7 +524,7 @@ tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="text",
                mapType="logic", mappings=list("v==1404", "red"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 tbl <- BasicTable$new()
 tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
             explicitColumnHeaders=c("TOC", "On-Time Arrivals", 
@@ -538,7 +538,7 @@ tbl$mapStyling(cells=cells, styleProperty="background-color", valueType="color",
                              "yellow", 15000, "green"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 tbl <- BasicTable$new()
 tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
             explicitColumnHeaders=c("TOC", "On-Time Arrivals", 
@@ -556,7 +556,7 @@ redclr <- function(x, cell) {
 tbl$mapStyling(cells=cells, styleProperty="background-color", mappings=redclr)
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 library(basictabler)
 # define the theme and styles
 createCustomTheme <- function(parentTable=NULL, themeName="myCustomTheme") {

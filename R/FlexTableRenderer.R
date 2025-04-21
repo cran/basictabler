@@ -6,7 +6,7 @@
 #'
 #' @docType class
 #' @importFrom R6 R6Class
-#' @format \code{\link{R6Class}} object.
+#' @format \code{\link[R6]{R6Class}} object.
 #' @examples
 #' # This class should not be used by end users.  It is an internal class
 #' # created only by the BasicTable class.  It is used when converting to a
@@ -36,6 +36,8 @@ FlexTableRenderer <- R6::R6Class("FlexTableRenderer",
     #'   written.
     #' @param columnNumber The column number of the cell where the value is to be
     #'   written.
+    #' @param totalRowCount Used when writing the cell border.
+    #' @param totalColumnCount Used when writing the cell border.
     #' @param value The value to be written.  Since the flextable is created
     #'   from a data frame, this argument can be omitted.
     #' @param applyStyles `TRUE` (default) to also set the styling of the cell,
@@ -272,7 +274,7 @@ FlexTableRenderer <- R6::R6Class("FlexTableRenderer",
       private$p_parentTable$applyCellMerges()
 
       # create the flextable (based on formatted values, since flextables store the data as dataframes, so don't support different data types in the same column)
-      ft <- flextable::flextable(private$p_parentTable$asDataFrame(rawValue=FALSE))
+      ft <- flextable::flextable(private$p_parentTable$asDataFrame(rawValue=FALSE), cwidth=0, cheight=0)
       ft <- flextable::delete_part(ft, part="header")
       ft <- flextable::delete_part(ft, part="footer")
       ft <- flextable::border_remove(ft)
@@ -323,7 +325,8 @@ FlexTableRenderer <- R6::R6Class("FlexTableRenderer",
       }
 
       # set as autofit
-      ft <- flextable::autofit(ft)
+      # removed since this can't be undone (and the caller could easily call this explicitly)
+      # ft <- flextable::autofit(ft)
 
       # FlexTableStyles collection builds up a collection of styles. This
       # follows the same pattern used by the OpenXlsx renderer - even though

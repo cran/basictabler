@@ -1,4 +1,4 @@
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -23,7 +23,7 @@ tbl$addData(tocsummary, firstColumnAsRowHeaders=TRUE,
             columnFormats=columnFormats)
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -52,7 +52,7 @@ cells <- tbl$getCells(rowNumbers=c(1, 3))
 tbl$setStyling(cells=cells, declarations=list("background-color"="#FFCC66"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -81,7 +81,7 @@ cells <- tbl$getCells(columnNumbers=2)
 tbl$setStyling(cells=cells, declarations=list("background-color"="#FFCC66"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -111,7 +111,7 @@ tbl$setStyling(cells=cells, declarations=list("background-color"="#FFCC66"))
 cat("The raw value of the cell is", cells[[1]]$rawValue, "and the formatted value is", cells[[1]]$formattedValue, ".")
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -140,7 +140,7 @@ cells <- tbl$getCells(cellCoordinates=list(c(2, 3), c(3, 4), c(5, 6)))
 tbl$setStyling(cells=cells, declarations=list("background-color"="#FFCC66"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -169,7 +169,7 @@ cells <- tbl$getCells(rowNumbers=2, columnNumbers=4, cellCoordinates=list(c(5, 6
 tbl$setStyling(cells=cells, declarations=list("background-color"="#FFCC66"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -198,7 +198,7 @@ cells <- tbl$getCells(specifyCellsAsList=FALSE, rowNumbers=c(1, 3))
 tbl$setStyling(cells=cells, declarations=list("background-color"="#00FF00"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -227,7 +227,7 @@ cells <- tbl$getCells(specifyCellsAsList=FALSE, columnNumbers=2)
 tbl$setStyling(cells=cells, declarations=list("background-color"="#00FF00"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -257,7 +257,7 @@ tbl$setStyling(cells=cells, declarations=list("background-color"="#00FF00"))
 cat("The raw value of the cell is", cells[[1]]$rawValue, "and the formatted value is", cells[[1]]$formattedValue, ".")
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -286,7 +286,7 @@ cells <- tbl$getCells(specifyCellsAsList=FALSE, rowNumbers=c(2, 3, 5), columnNum
 tbl$setStyling(cells=cells, declarations=list("background-color"="#00FF00"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -315,7 +315,7 @@ cells <- tbl$getCells(specifyCellsAsList=FALSE, rowNumbers=c(2, NA, 5), columnNu
 tbl$setStyling(cells=cells, declarations=list("background-color"="#00FF00"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -344,7 +344,7 @@ cells <- tbl$findCells(columnNumbers=5:6, minValue=0, maxValue=40, includeNull=F
 tbl$setStyling(cells=cells, declarations=list("background-color"="#FFC7CE", "color"="#9C0006"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
@@ -379,7 +379,7 @@ cells <- tbl$findCells(columnNumbers=5:6, minValue=60, maxValue=100, includeNull
 tbl$setStyling(cells=cells, declarations=list("background-color"="#C6EFCE", "color"="#006100"))
 tbl$renderTable()
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 # aggregate the sample data to make a small data frame
 library(basictabler)
 library(dplyr)
